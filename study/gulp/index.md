@@ -8,16 +8,23 @@ public/
 	src/
 		index.html
 		img/
-		js/
+		
 		scss/
 	dist/
 		index.html
 		img/
 		js/
+			apps/
+			libs/
 		css/
-	lib/
-		vanilla.js
-		fancybox.js
+	js/
+		apps/
+		libs/
 gulpfile.js
 package.json
 ```
+
+#### 필수파일
+
+[gulpfile.js](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/gulpfile.js)
+[package.json](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/package.json)
