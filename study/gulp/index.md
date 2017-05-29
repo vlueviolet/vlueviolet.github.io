@@ -1,6 +1,6 @@
 # Gulp
 
-#### Folder Structure
+### Folder Structure
 
 ```javascript
 node_modules/		// gulp 설치시 자동생성,별도로 생성할 필요없음
@@ -26,7 +26,7 @@ package.json
 
 
 ```
-#### 순서
+### 순서
 1. 폴더구조 생성
 2. 작업위치에서 CMD 열기
 	##### 현재 위치에서 CMD 여는 방법
@@ -39,6 +39,6 @@ npm install gulp -g
 npm install gulp --save-dev
 ```
 
-#### 필수파일
+### 필수파일
 [gulpfile.js](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/gulpfile.js)
 [package.json](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/package.json)
