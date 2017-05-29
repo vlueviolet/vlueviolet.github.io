@@ -48,7 +48,8 @@ gulp
 + [package.json](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/package.json)
 
 
-### 
+### 참고링크
 + [Gulp Plugin](http://gulpjs.com/plugins/)
 + [Gulp 설치 등 설명](https://github.com/eu81273/gulp-step-by-step)
++ [Gulp 입문1](http://programmingsummaries.tistory.com/356)
 + [Gulp 입문2](http://programmingsummaries.tistory.com/377)
