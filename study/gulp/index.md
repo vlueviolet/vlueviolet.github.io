@@ -6,6 +6,7 @@
 <br>
 <br>
 <br>
+
 ### Folder Structure
 
 ```javascript
@@ -32,6 +33,7 @@ package.json		// gulp에서 사용할 플러그인 목록모음으로 npm instal
 <br>
 <br>
 <br>
+
 ### 순서
 0. node.js와 npm이 설치되어야 한다.
 1. 폴더구조 생성
@@ -53,6 +55,7 @@ gulp
 <br>
 <br>
 <br>
+
 ### 필수파일
 + [gulpfile.js](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/gulpfile.js)<br>
 + [package.json](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/package.json)
@@ -60,6 +63,7 @@ gulp
 <br>
 <br>
 <br>
+
 ### 참고링크
 + [Gulp Plugin](http://gulpjs.com/plugins/)
 + [Gulp 설치 등 설명](https://github.com/eu81273/gulp-step-by-step)
