@@ -5,24 +5,20 @@
 ```javascript
 node_modules/		// gulp 설치시 자동생성,별도로 생성할 필요없음
 
-/* 생성해야 할 폴더구조 (s) */
+////////////////////////// 생성해야 할 폴더구조 (s)
 src/
 	index.html
 	img/
-
 	scss/
 dist/
 	index.html
 	img/
-	js/
-		apps/
-		libs/
 	css/
 js/
 	apps/
 	libs/
 gulpfile.js		// gulp 기본 셋팅파일
-/* 생성해야 할 폴더구조 (e) */
+////////////////////////// 생성해야 할 폴더구조 (e)
 
 // gulp에서 사용할 플러그인 목록모음으로 [npm init] 명령어 실행후에 생성됨
 // 생성된 이후 자신이 갖고있는 내용으로 대체하면됨
