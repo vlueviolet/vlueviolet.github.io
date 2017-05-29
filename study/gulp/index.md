@@ -38,6 +38,10 @@ npm init
 npm install gulp -g
 npm install gulp --save-dev
 ```
+4. gulp 실행
+```javascript
+gulp
+```
 
 ### 필수파일
 [gulpfile.js](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/gulpfile.js)<br>
