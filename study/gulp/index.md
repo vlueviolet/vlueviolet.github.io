@@ -2,10 +2,10 @@
 
 + 프로젝트 시 반복적인 일을 줄이기 위한 셋팅 자동화 툴
 + 새로고침 자동화나 코드 minify나, scss파일의 merge 등 플러그인이 제공되어 사용할 수 있다.
-
-
-
-
+<br>
+<br>
+<br>
+<br>
 ### Folder Structure
 
 ```javascript
@@ -28,9 +28,10 @@ package.json		// gulp에서 사용할 플러그인 목록모음으로 npm instal
 ////////////////////////// 생성해야 할 폴더구조 (e)
 
 ```
-
-
-
+<br>
+<br>
+<br>
+<br>
 ### 순서
 0. node.js와 npm이 설치되어야 한다.
 1. 폴더구조 생성
@@ -48,15 +49,17 @@ npm install gulp --save-dev
 ```javascript
 gulp
 ```
-
-
-
+<br>
+<br>
+<br>
+<br>
 ### 필수파일
 + [gulpfile.js](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/gulpfile.js)<br>
 + [package.json](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/study/gulp/package.json)
-
-
-
+<br>
+<br>
+<br>
+<br>
 ### 참고링크
 + [Gulp Plugin](http://gulpjs.com/plugins/)
 + [Gulp 설치 등 설명](https://github.com/eu81273/gulp-step-by-step)
