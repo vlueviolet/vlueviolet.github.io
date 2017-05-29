@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
+var uglify = require('gulp-uglify');    //javascript minify
 var cssmin = require('gulp-cssmin');
 var rename = require('gulp-rename');
 var autoprefixer = require('gulp-autoprefixer');
@@ -14,11 +14,12 @@ var del = require('del');
 var watch = require('gulp-watch');
 var wait = require('gulp-wait');
 var concatCss = require('gulp-concat-css');
-var browserSync = require('browser-sync').create();
+var browserSync = require('browser-sync').create(); //브라우저 새로고침
 
 var bases = {
     src: './src/',
-    dest: './dist'
+    dest: './dist',
+    present : './'
 };
 
 var paths = {
@@ -40,7 +41,7 @@ gulp.task('minify-js', ['clean-min-js-files'], function() {
     return gulp.src(paths.js)
         .pipe(concat('gulp_test.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(bases.dist + 'js'))
+        .pipe(gulp.dest(bases.present + 'js'))
         .pipe(browserSync.reload({
             stream: true
         }));
@@ -124,7 +125,7 @@ gulp.task('clean-css-files', function() {
 });
 
 gulp.task('clean-min-js-files', function() {
-    return del(bases.dist + 'js/*.min.js');
+    return del(bases.present + 'js/*.min.js');
 });
 
 gulp.task('generate-sass', function() {
