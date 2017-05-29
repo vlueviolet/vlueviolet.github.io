@@ -18,12 +18,8 @@ js/
 	apps/
 	libs/
 gulpfile.js		// gulp 기본 셋팅파일
+package.json		// gulp에서 사용할 플러그인 목록모음으로 npm install시 이 파일의 플러그인 목록을 가져다가 설치하게됨
 ////////////////////////// 생성해야 할 폴더구조 (e)
-
-// gulp에서 사용할 플러그인 목록모음으로 [npm init] 명령어 실행후에 생성됨
-// 생성된 이후 자신이 갖고있는 내용으로 대체하면됨
-package.json
-
 
 ```
 ### 순서
@@ -31,10 +27,10 @@ package.json
 2. 작업위치에서 CMD 열기
 	##### 현재 위치에서 CMD 여는 방법
 	폴더 아이콘에서 [Shift+우클릭]하면, [여기에서 명령 창 열기] 클릭
-3. CMD 창에 다음 명령어 입력
+3. CMD 창에 다음 명령어 입력 (node.js 설치후)
 ```javascript
-node.js 설치후
-npm init	// 여기서 package.json 파일이 생성되는데, 안에 내용은 내가 가진 파일로 대체
+npm install
+npm init
 npm install gulp -g
 npm install gulp --save-dev
 ```
