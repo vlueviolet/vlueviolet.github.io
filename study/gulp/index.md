@@ -62,6 +62,11 @@ gulp
 #### vbs, bat관련 시작프로그램 레지스트리
 <br>
 
++ 실행
+```javascript
+windows > regedit 입력
+```
+
 + 관리자
 ```javascript
 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
