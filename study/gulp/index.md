@@ -69,12 +69,10 @@ gulp
 ```javascript
 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
 ```
-
 + 사용자권한
 ```javascript
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
 ```
-<br>
 <br>
 <br>
 
