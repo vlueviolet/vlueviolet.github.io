@@ -59,6 +59,23 @@ gulp
 <br>
 <br>
 
+### bat, vbs 로 쉽게 실행하기
+매번 이 과정을 거치기 싫다면?
+<br><br>
+#### vbs, bat관련 시작프로그램 레지스트리
+<br>
++ 관리자
+```javascript
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+```
++ 사용자권한
+```javascript
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+```
+<br>
+<br>
+<br>
+
 ### 참고링크
 + [Gulp Plugin](http://gulpjs.com/plugins/)
 + [Gulp 설치 등 설명](https://github.com/eu81273/gulp-step-by-step)
