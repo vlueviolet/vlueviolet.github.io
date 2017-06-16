@@ -29,6 +29,7 @@ package.json		// gulp에서 사용할 플러그인 목록모음으로 npm instal
 ```
 <br>
 <br>
+
 ### 순서
 0. node.js와 npm이 설치되어야 한다.
 1. 폴더구조 생성
@@ -46,6 +47,7 @@ npm install gulp --save-dev
 ```javascript
 gulp
 ```
+
 <br>
 <br>
 
