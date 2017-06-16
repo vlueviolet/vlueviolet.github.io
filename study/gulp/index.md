@@ -65,10 +65,13 @@ gulp
 #### vbs, bat관련 시작프로그램 레지스트리
 <br>
 + 관리자
+
 ```javascript
 HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
 ```
+
 + 사용자권한
+
 ```javascript
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
 ```
