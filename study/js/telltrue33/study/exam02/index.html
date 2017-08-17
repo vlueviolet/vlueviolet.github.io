@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>exam1</title>
+<style>
+body{font-size:14px;line-height:1.5}
+h1,h2,h3,h4,h5,h6{font-size:14px}
+ul,li{list-style:none}
+.box{position:relative;width:300px;height:300px}
+.box li{display:none;position:absolute;left:0;top:0;right:0;bottom:0}
+</style>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+    <!-- header [s] -->
+    <div id="header">@</div>
+    <!-- header [e] -->
+    <hr />
+    <!-- container [s] -->
+    <div id="container">
+        <button class="btn btn-prev">Prev</button><button class="btn btn-next">Next</button>
+        <ul class="box">
+            <li style="display:block;background:red">1</li>
+            <li style="background:green">2</li>
+            <li style="background:blue">3</li>
+            <li style="background:yellow">4</li>
+            <li style="background:orange">5</li>
+            <li style="background:skyblue">6</li>
+            <li style="background:gray">7</li>
+        </ul>
+    </div>
+    <!-- container [e] -->
+    <hr />
+    <!-- footer [s] -->
+    <div id="footer">@</div>
+    <!-- footer [e] -->
+<!-- [ Javascript Area ] -->
+<!-- Libs -->
+<script src="../js/libs/jquery-1.12.4.min.js"></script>
+<!-- Apps -->
+<script>
+$(function () {
+    var btnPrev = $('.btn-prev'),
+        btnNext = $('.btn-next'),
+        animateSelector = $('.box'),
+        animateSelectorChild = animateSelector.children(),
+        currentIndex = 0,
+        oldIndex = currentIndex;
+
+    var funcName = function () {
+        animateSelectorChild.eq(oldIndex).stop().fadeOut('fast');
+        animateSelectorChild.eq(currentIndex).stop().fadeIn('fast');
+        oldIndex = currentIndex;
+    };
+
+    var prevFunc = function () {
+        currentIndex = currentIndex - 1;
+        if (currentIndex < 0) {
+            currentIndex = animateSelectorChild.length - 1;
+        }
+        funcName();
+    };
+
+    var nextFunc = function () {
+        currentIndex = currentIndex + 1;
+        if (currentIndex >= animateSelectorChild.length) {
+            currentIndex = 0;
+        }
+        funcName();
+    };
+
+    btnPrev.on('click', prevFunc);
+    btnNext.on('click', nextFunc);
+});
+</script>
+</div>
+</body>
+</html>

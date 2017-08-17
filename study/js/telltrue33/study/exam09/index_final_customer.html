@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>exam - thema</title>
+<style>
+/* temporary css */
+*{margin:0;padding:0}
+body{font-size:14px;font-family:"나눔고딕",NanumGothic,"굴림",Gulim,Sans-serif;line-height:1.5}
+h1,h2,h3,h4,h5,h6{font-size:14px}
+ul,li{list-style:none}
+button{font-size:14px;font-family:"나눔고딕",NanumGothic,"굴림",Gulim,Sans-serif;line-height:1.5;cursor:pointer}
+button::-moz-focus-inner{padding:0;border:0}
+.slide_box{position:relative;max-width:880px;margin:0 auto}
+.slide_tab{position:absolute;left:0;bottom:0;right:0;z-index:30;padding:15px 0;font-size:0;line-height:0;text-align:center}
+.slide_tab ul{display:inline-block;vertical-align:top}
+.slide_tab ul li{float:left;margin:0 3px}
+.slide_tab ul li a{display:inline-block;width:12px;height:12px;border-radius:100%;background:#ccc;vertical-align:top}
+.slide_tab ul li.active a{background:skyblue;box-shadow:0 0 1px 1px rgba(0,0,0,.5)}
+.slide_tab .slide_control button.active{background:skyblue}
+.slide_cont{overflow:hidden;position:relative;height:440px}
+.slide_article{display:none;position:absolute;left:0;top:0;width:100%;height:440px}
+.slide_article.active{z-index:10}
+.slide_article div{height:100%}
+.slide_setting{font-size:0;line-height:0}
+.slide_setting .slide_btn button{position:absolute;top:50%;right:0;z-index:30;margin:0 20px}
+.slide_setting .slide_btn button:first-child{left:0;right:auto}
+
+.customer_form{position:fixed;right:10px;top:10px;z-index:999;width:280px;padding:10px;font-size:12px}
+.customer_form .customer_form_dimmed{position:absolute;left:0;top:0;width:100%;height:100%;background:#000;opacity:0.2;filter:alpha(opacity=20)}
+.customer_form select,.customer_form input,.customer_form textarea,.customer_form button{font-size:12px;line-height:1.5;vertical-align:top}
+.customer_form ul{position:relative}
+.customer_form ul li{margin-top:7px;zoom:1}
+.customer_form ul li:first-child{margin-top:0}
+.customer_form ul li:after{display:block;clear:both;content:''}
+.customer_form ul li select,.customer_form ul li input,.customer_form ul li textarea{border:0 none;background:#eee}
+.customer_form ul li select{height:18px}
+.customer_form ul li .tit{float:left;width:80px}
+.customer_form ul li .cont{float:left;width:200px}
+.customer_form ul li .cont input[type="text"]{width:50%;height:18px}
+.customer_form ul li .code_form{display:block}
+.customer_form ul li .code_form span{display:block}
+.customer_form ul li .code_form textarea{width:100%;max-width:100%}
+.customer_form .btn_ok{position:relative;margin-top:10px;padding-top:10px;border-top:1px solid #eee}
+
+.customer_code{margin:10px;padding:10px;border:1px solid #ccc;background:#eee;font-size:12px}
+/* //temporary css */
+</style>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+    <!-- header [s] -->
+    <div id="header">@</div>
+    <!-- header [e] -->
+    <hr />
+    <!-- container [s] -->
+    <div id="container">
+        <div class="slide_box">
+            <div class="slide_tab">
+                <ul class="slide_control">
+                    <li><button type="button" class="slide_play">재생</button></li>
+                    <li><button type="button" class="slide_stop">정지</button></li>
+                </ul>
+                <ul class="slide_dots">
+                    <li class="active"><a href="#slide1">테마1</a></li>
+                    <li><a href="#slide2">테마2</a></li>
+                    <li><a href="#slide3">테마3</a></li>
+                    <li><a href="#slide4">테마4</a></li>
+                    <li><a href="#slide5">테마5</a></li>
+                    <li><a href="#slide6">테마6</a></li>
+                    <li><a href="#slide7">테마7</a></li>
+                    <li><a href="#slide8">테마8</a></li>
+                </ul>
+            </div>
+            <div class="slide_cont">
+                <div id="slide1" class="slide_article"><div style="background:red">컨텐츠1</div></div>
+                <div id="slide2" class="slide_article"><div style="background:orange">컨텐츠2</div></div>
+                <div id="slide3" class="slide_article"><div style="background:yellow">컨텐츠3</div></div>
+                <div id="slide4" class="slide_article"><div style="background:green">컨텐츠4</div></div>
+                <div id="slide5" class="slide_article"><div style="background:blue">컨텐츠5</div></div>
+                <div id="slide6" class="slide_article"><div style="background:skyblue">컨텐츠6</div></div>
+                <div id="slide7" class="slide_article"><div style="background:navy">컨텐츠7</div></div>
+                <div id="slide8" class="slide_article"><div style="background:#eee">컨텐츠8</div></div>
+            </div>
+            <div class="slide_setting">
+                <div class="slide_btn">
+                    <button type="button">이전</button><button type="button">다음</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="customer_wrap">
+            <div class="customer_form">
+                <span class="customer_form_dimmed"></span>
+                <ul>
+                    <li>
+                        <span class="tit"><label for="type">type : </label></span>
+                        <span class="cont">
+                            <select id="type" data-type="string">
+                                <option>default</option>
+                                <option>fade</option>
+                                <option>slide</option>
+                            </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="tit"><label for="speed">speed : </label></span>
+                        <span class="cont">
+                            <input type="text" id="speed" data-type="number">&nbsp;<span class="">(1000 = 1초)</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="tit"><label for="direction">direction : </label></span>
+                        <span class="cont">
+                            <select id="direction" data-type="string">
+                                <option>left</option>
+                                <option>right</option>
+                            </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="tit"><label for="autoplay">autoplay : </label></span>
+                        <span class="cont">
+                            <input type="text" id="autoplay" data-type="number">&nbsp;<span class="">(1000 = 1초)</span>
+                        </span>
+                    </li>
+                </ul>
+                <p class="btn_ok"><button type="button">OK</button></p>
+            </div>
+            <div class="customer_code"><pre></pre></div>
+        </div>
+    </div>
+    <!-- container [e] -->
+    <hr />
+    <!-- footer [s] -->
+    <div id="footer">@</div>
+    <!-- footer [e] -->
+<!-- [ Javascript Area ] -->
+<!-- Libs -->
+<script src="../js/libs/jquery-1.12.4.min.js"></script>
+<script src="../js/libs/jquery.ba-outside-events.min.js"></script>
+<script>
+(function (win, $) {
+    'use strict';
+    win.examProject = win.examProject || {};
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+    win.examProject.slidePlay = function (args) {
+        var defParams = {
+            type : 'default', // default, fade, slide
+            boxElement : '.slide_box',
+            tabElement : '.slide_dots',
+            contElement : '.slide_cont',
+            controlElement : '.slide_control',
+            playElement : '.slide_play',
+            stopElement : '.slide_stop',
+            prevElement : '.slide_btn button:eq(0)',
+            nextElement : '.slide_btn button:eq(1)',
+            currentNumElement : '.slide_num .current',
+            totalNumElement : '.slide_num .total',
+            customEvents : '.customSlide',
+            activeClass : 'active',
+            activeIndex : 1,
+            direction : 'left',
+            autoplay : 0,
+            speed : 150,
+            viewBefore : null,
+            viewAfter : null
+        };
+        this.opts = $.extend({}, defParams, (args || {}));
+        if (!(this.slideObj = $(this.opts.boxElement)).length) return;
+        this.init();
+    };
+    win.examProject.slidePlay.prototype = {
+        init : function () {
+            this.setElements();
+            this.setOpts();
+            this.setDirection();
+            this.initLayout();
+            this.setAutoPlay();
+            this.bindEvents();
+        },
+        setElements : function () {
+            this.castTab = this.slideObj.find(this.opts.tabElement);
+            this.castTabChild = this.castTab.children();
+            this.castCont = this.slideObj.find(this.opts.contElement);
+            this.castContChild = this.castCont.children();
+            this.castControl = this.slideObj.find(this.opts.controlElement);
+            this.castPlayBtn = this.castControl.find(this.opts.playElement);
+            this.castStopBtn = this.castControl.find(this.opts.stopElement);
+            this.castPrevBtn = this.slideObj.find(this.opts.prevElement);
+            this.castNextBtn = this.slideObj.find(this.opts.nextElement);
+            this.castNumCurrent = this.slideObj.find(this.opts.currentNumElement);
+            this.castNumTotal = this.slideObj.find(this.opts.totalNumElement);
+        },
+        setOpts : function () {
+            this.direction = this.opts.direction;
+        },
+        setDirection : function () {
+            if (this.opts.type === 'slide') {
+                if (this.direction === 'left') {
+                    this.defaultWhich = {
+                        'left' : '100%'
+                    };
+                    this.moveWhich = {
+                        'left' : '-100%'
+                    };
+                } else if (this.direction === 'right') {
+                    this.defaultWhich = {
+                        'left' : '-100%'
+                    };
+                    this.moveWhich = {
+                        'left' : '100%'
+                    };
+                }
+            }
+        },
+        initLayout : function () {
+            var initHash = win.location.hash,
+                hashTarget = this.castContChild.filter(initHash),
+                focusOutTagClass = 'js-focusout',
+                focusOutTag = '<span class="' + focusOutTagClass + '" tabindex="0" style="overflow:hidden;position:absolute;left:0;top:0;z-index:-1;width:1px;height:1px;font-size:0;line-height:0"></span>';
+            if (!this.castCont.prev().hasClass(focusOutTagClass)) {
+                this.castCont.before(focusOutTag);
+            }
+            if (!this.castCont.next().hasClass(focusOutTagClass)) {
+                this.castCont.after(focusOutTag);
+            }
+            this.currentIndex = (hashTarget.length) ? hashTarget.index() : (this.opts.activeIndex - 1);
+            this.castTabChild.removeClass(this.opts.activeClass);
+            this.castCont.attr('tabIndex', 0);
+            this.castContOutFocus = this.castCont.siblings('.' + focusOutTagClass).hide();
+            this.castContChild.hide();
+            this.castNumTotal.text(this.castTabChild.length);
+            this.onIndexFiltering();
+            this.castTabChild.eq(this.currentIndex).addClass(this.opts.activeClass);
+            this.castContChild.eq(this.currentIndex).stop(true, true).show().addClass(this.opts.activeClass);
+            this.oldIndex = this.currentIndex;
+            this.indexUpdate();
+        },
+        setAutoPlay : function () {
+            if (!this.opts.autoplay) {
+                this.castControl.hide();
+                this.stopView();
+            } else {
+                this.opts.autoplay = (this.opts.autoplay <= 500) ? 500 : this.opts.autoplay;
+                this.castControl.show();
+                this.stopView();
+                this.playView();
+            }
+        },
+        bindEvents : function () {
+            this.castTabChild.on('click' + this.opts.customEvents, '>a', $.proxy(this.onClickFunc, this));
+            this.castPrevBtn.on('click' + this.opts.customEvents, $.proxy(this.onPrevFunc, this));
+            this.castNextBtn.on('click' + this.opts.customEvents, $.proxy(this.onNextFunc, this));
+            this.castPlayBtn.on('click' + this.opts.customEvents, $.proxy(this.onPlayFunc, this));
+            this.castStopBtn.on('click' + this.opts.customEvents, $.proxy(this.onStopFunc, this));
+            this.castContOutFocus.on('focusin' + this.opts.customEvents, $.proxy(this.onContOutFunc, this));
+            if (this.opts.autoplay) {
+                this.slideObj.on('mouseenter' + this.opts.customEvents + ' focusin' + this.opts.customEvents, $.proxy(this.onObjInFunc, this));
+                this.slideObj.on('mouseleave' + this.opts.customEvents, $.proxy(this.onObjOutFunc, this));
+            }
+        },
+        outSideEvents : function () {
+            this.slideObj.on('focusoutside', $.proxy(this.onObjFocusOutside, this));
+        },
+        onClickFunc : function (e) {
+            e.preventDefault();
+            var target = $(e.currentTarget);
+            this.currentIndex = target.closest('li').index();
+            if (this.currentIndex === this.oldIndex) return;
+            if (this.currentIndex < this.oldIndex) {
+                this.direction = 'right';
+                this.setDirection();
+            } else {
+                this.direction = 'left';
+                this.setDirection();
+            }
+            this.btnTarget = this.castCont;
+            this.clickFocusTarget = target;
+            this.castContOutFocus.show();
+            this.hashUpdate();
+            this.stopView();
+            this.viewLayout();
+            this.indexUpdate();
+        },
+        onPrevFunc : function () {
+            this.currentIndex -= 1;
+            this.direction = 'right';
+            this.onIndexFiltering()
+            this.setDirection();
+            this.hashUpdate();
+            this.stopView();
+            this.viewLayout();
+            this.indexUpdate();
+        },
+        onNextFunc : function () {
+            this.currentIndex += 1;
+            this.direction = 'left';
+            this.onIndexFiltering();
+            this.setDirection();
+            this.hashUpdate();
+            this.stopView();
+            this.viewLayout();
+            this.indexUpdate();
+        },
+        onPlayFunc : function () {
+            if (this.clickPlayType) return;
+            this.clickPlayType = true;
+            this.clickStopType = false;
+            this.playView();
+        },
+        onStopFunc : function () {
+            if (this.clickStopType) return;
+            this.clickPlayType = false;
+            this.clickStopType = true;
+            this.stopView();
+        },
+        onContOutFunc : function () {
+            if (this.clickFocusTarget) {
+                this.clickFocusTarget.focus();
+                this.castContOutFocus.hide();
+                this.clickFocusTarget = null;
+            }
+        },
+        onObjInFunc : function (e) {
+            if (e.type === 'focusin') {
+                if (this.focusingType) return;
+                this.focusingType = true;
+                this.outSideEvents();
+            }
+            this.stopView();
+        },
+        onObjOutFunc : function () {
+            this.focusingType = false;
+            this.clickPlayType = false;
+            if (!this.clickPlayType && !this.clickStopType) {
+                this.stopView();
+                this.playView();
+            }
+            this.slideObj.off('focusoutside');
+        },
+        onObjFocusOutside : function () {
+            this.slideObj.triggerHandler('mouseleave' + this.opts.customEvents);
+        },
+        onIndexFiltering : function () {
+            if (this.currentIndex < 0) {
+                this.currentIndex = this.castTabChild.length - 1;
+            }
+            if (this.currentIndex >= this.castTabChild.length) {
+                this.currentIndex = 0;
+            }
+        },
+        playView : function () {
+            this.clickStopType = false;
+            this.autoPlayTime = win.setInterval($.proxy(function () {
+                this.currentIndex += 1;
+                this.onIndexFiltering();
+                this.setDirection();
+                this.hashUpdate();
+                this.viewLayout();
+                this.indexUpdate();
+            }, this), this.opts.autoplay);
+            this.castPlayBtn.addClass(this.opts.activeClass);
+            this.castStopBtn.removeClass(this.opts.activeClass);
+        },
+        stopView : function () {
+            this.clickPlayType = false;
+            if (this.opts.autoplay || (this.autoPlayTime !== null)) {
+                this.castPlayBtn.removeClass(this.opts.activeClass);
+                this.castStopBtn.addClass(this.opts.activeClass);
+                win.clearTimeout(this.autoPlayTime);
+                this.autoPlayTime = null;
+            }
+        },
+        viewLayout : function () {
+            var _this = this;
+            this.castTabChild.eq(this.currentIndex).addClass(this.opts.activeClass);
+            this.castTabChild.eq(this.oldIndex).removeClass(this.opts.activeClass);
+            this.castContChild.eq(this.currentIndex).addClass(this.opts.activeClass);
+            this.castContChild.eq(this.oldIndex).removeClass(this.opts.activeClass);
+            this.outCallback('viewBefore');
+            if (this.opts.type === 'default') {
+                this.castContChild.eq(this.currentIndex).stop(true, true).show();
+                this.castContChild.eq(this.oldIndex).stop(true, true).hide();
+                this.showAfterBugFunc();
+            } else if (this.opts.type === 'fade') {
+                this.castContChild.eq(this.currentIndex).stop(true, true).fadeIn(this.opts.speed, $.proxy(this.slideViewAfter, this));
+                this.castContChild.eq(this.oldIndex).stop(true, true).fadeOut(this.opts.speed);
+            } else if (this.opts.type === 'slide') {
+                this.castContChild.eq(this.currentIndex).stop(true, true).css(this.defaultWhich).show().animate({'left' : 0}, this.opts.speed, function () {
+                    $(this).css('left', '');
+                    _this.slideViewAfter();
+                });
+                this.castContChild.eq(this.oldIndex).stop(true, true).animate(this.moveWhich, this.opts.speed, function () {
+                    $(this).hide().css('left', '');
+                });
+            }
+            this.oldIndex = this.currentIndex;
+        },
+        showAfterBugFunc : function () {
+            win.clearTimeout(this.showAfterTimeout);
+            this.showAfterTimeout = win.setTimeout($.proxy(this.slideViewAfter, this), 30);
+        },
+        slideViewAfter : function () {
+            if (this.opts.type === 'slide') {
+                this.direction = this.opts.direction;
+            }
+            if (this.btnTarget) {
+                this.btnTarget.focus();
+                this.btnTarget = null;
+            }
+            this.outCallback('viewAfter');
+        },
+        indexUpdate : function () {
+            var indexNum = this.currentIndex + 1;
+            this.castNumCurrent.text(indexNum);
+        },
+        hashUpdate : function () {
+            // var hashName = this.castContChild.eq(this.currentIndex).attr('id');
+            // win.location.hash = '#' + hashName;
+        },
+        outCallback : function (type) {
+            var callbackObject = this.opts[type];
+            if (callbackObject !== null) {
+                callbackObject();
+            }
+        },
+        unBindEvents : function () {
+            this.castTabChild.off('click' + this.opts.customEvents);
+            this.castPrevBtn.off('click' + this.opts.customEvents);
+            this.castNextBtn.off('click' + this.opts.customEvents);
+            this.castPlayBtn.off('click' + this.opts.customEvents);
+            this.castStopBtn.off('click' + this.opts.customEvents);
+            this.slideObj.off('mouseenter' + this.opts.customEvents + ' focusin' + this.opts.customEvents);
+            this.slideObj.off('mouseleave' + this.opts.customEvents);
+            this.slideObj.off('focusoutside');
+        },
+        reInit : function () {
+            this.unBindEvents();
+            this.setOpts();
+            this.setDirection();
+            this.setElements();
+            this.setAutoPlay();
+            this.bindEvents();
+        }
+    };
+
+    win.examProject.yoursObject = function () {
+        this.init();
+    };
+    win.examProject.yoursObject.prototype = {
+        init : function () {
+            this.setElements();
+            this.setLayer();
+            this.optsViewSync();
+            this.customerCodeViewFunc();
+            this.bindEvents();
+        },
+        setElements : function () {
+            this.btnis = $('.btn_ok button');
+            this.customForm = $('.customer_form');
+            this.customFormList = this.customForm.find('ul');
+            this.customFormLabel = this.customForm.find('label');
+            this.customCodePre = $('.customer_code pre');
+        },
+        bindEvents : function () {
+            this.btnis.on('click', $.proxy(this.btnOkFunc, this));
+            // this.customFormList.on('keyup', 'input[type=text]', $.proxy(this.keyDownFunc, this));
+            // this.customFormList.on('change', 'input[type=checkbox], input[type=radio], select', $.proxy(this.keyChangeFunc, this));
+        },
+        btnOkFunc : function (e) {
+            e.preventDefault();
+            this.customerCodeEnterFunc();
+            this.customerCodeViewFunc();
+        },
+        keyDownFunc : function (e) {
+            var keyCode = e.keyCode || e.which,
+                target = $(e.target);
+            win.clearTimeout(this.keyDownTime);
+            this.keyDownTime = win.setTimeout($.proxy(function () {
+                this.keyChangeFunc();
+            }, this), 350);
+        },
+        keyChangeFunc : function () {
+            this.btnis.triggerHandler('click');
+        },
+        setLayer : function () {
+            this.mySlide = new win.examProject.slidePlay();
+            this.basicSlideOpts = this.mySlide.opts;
+        },
+        optsViewSync : function () {
+            for (var i = 0, max = this.customFormLabel.length; i < max; i++) {
+                var formId = this.customFormLabel.eq(i).attr('for'),
+                    target = $('#' + formId);
+                if (this.basicSlideOpts.hasOwnProperty(formId)) {
+                    target.val(this.basicSlideOpts[formId]);
+                }
+            }
+        },
+        customerCodeEnterFunc : function () {
+            var targetCode = {},
+                codeLength = false;
+            for (var i = 0, max = this.customFormLabel.length; i < max; i++) {
+                var formId = this.customFormLabel.eq(i).attr('for'),
+                    target = $('#' + formId),
+                    targetType = target.data('type'),
+                    targetVal = target.val();
+                if (this.basicSlideOpts[formId] !== targetVal) {
+                    if (!targetVal) {
+                        target.val(this.basicSlideOpts[formId]);
+                    }
+                    if (targetType === 'number') {
+                        targetVal = Number(targetVal);
+                    }
+                    targetCode[formId] = targetVal;
+                }
+            }
+            this.mySlide.opts = $.extend({}, this.basicSlideOpts, targetCode);
+            this.mySlide.reInit();
+        },
+        customerCodeViewFunc : function () {
+            var codeLine = [];
+            codeLine.push('var mySlide = new window.examProject.slidePlay(');
+            for (var i = 0, max = this.customFormLabel.length; i < max; i++) {
+                var formId = this.customFormLabel.eq(i).attr('for'),
+                    target = $('#' + formId),
+                    targetType = target.data('type'),
+                    targetVal = target.val();
+                if (this.basicSlideOpts[formId] != targetVal) {
+                    if (codeLine.length === 1) {
+                        codeLine.push('{\n');
+                    } else if (codeLine.length >= 3) {
+                        codeLine.push(',\n');
+                    }
+                    if (targetType === 'number') {
+                        codeLine.push('&nbsp;&nbsp;&nbsp;' + formId + ' : ' + targetVal);
+                    } else {
+                        codeLine.push('&nbsp;&nbsp;&nbsp;' + formId + ' : "' + targetVal + '"');
+                    }
+                }
+            }
+            if (codeLine.length >= 2) {
+                codeLine.push('\n}');
+            }
+            codeLine.push(');');
+            this.customCodePre.get(0).innerHTML = codeLine.join('');
+        }
+    };
+    $(function () {
+        win.examYours = new win.examProject.yoursObject();
+    });
+})(window, window.jQuery);
+</script>
+</div>
+</body>
+</html>

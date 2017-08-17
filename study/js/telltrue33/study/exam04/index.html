@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>exam1</title>
+<style>
+body{font-size:14px;line-height:1.5}
+h1,h2,h3,h4,h5,h6{font-size:14px}
+ul,li{list-style:none}
+table{width:100%;table-layout:fixed;border-collapse:collapse}
+</style>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+    <!-- header [s] -->
+    <div id="header">@</div>
+    <!-- header [e] -->
+    <hr />
+    <!-- container [s] -->
+    <div id="container">
+        <div class="push_html">
+        </div>
+        <div class="plus_html">
+        </div>
+    </div>
+    <!-- container [e] -->
+    <hr />
+    <!-- footer [s] -->
+    <div id="footer">@</div>
+    <!-- footer [e] -->
+<!-- [ Javascript Area ] -->
+<!-- Libs -->
+<script src="../js/libs/jquery-1.12.4.min.js"></script>
+<!-- Apps -->
+<script>
+$(function () {
+    var arrayObj = [['data1', 'data2', 'attribute2', 'attribute1', 'attribute20'],
+        ['attribute19','data1', 'data2', 'attribute2', 'attribute1'],
+        ['attribute20', 'attribute19','data1', 'data2', 'attribute2'],
+        ['attribute1', 'attribute20', 'attribute19','data1','datalast'],
+        ['attribute1', 'attribute20']];
+
+    // push
+    var tagPush = [];
+    tagPush.push('<table>');
+    tagPush.push('<tbody>');
+    for (var i = 0, max = arrayObj.length; i < max; i++) {
+        tagPush.push('<tr>');
+        for (var td = 0, tmax = 5; td < tmax; td++) {
+            if (arrayObj[i][td]) {
+                tagPush.push('<td>' + arrayObj[i][td] + '</td>');
+            } else {
+                tagPush.push('<td>없음</td>');
+            }
+        }
+        tagPush.push('</tr>');
+    }
+    tagPush.push('</tbody>');
+    tagPush.push('</table>');
+    $('.push_html').get(0).innerHTML = tagPush.join('');
+
+    // +=
+    var tagPlus = '';
+    tagPlus += '<table>';
+    tagPlus += '<tbody>';
+    for (var i = 0, max = arrayObj.length; i < max; i++) {
+        tagPlus += '<tr>';
+        for (var td = 0, tmax = 5; td < tmax; td++) {
+            if (arrayObj[i][td]) {
+                tagPlus += '<td>' + arrayObj[i][td] + '</td>';
+            } else {
+                tagPlus += '<td>없음</td>';
+            }
+        }
+        tagPlus += '</tr>';
+    }
+    tagPlus += '</tbody>';
+    tagPlus += '</table>';
+    $('.plus_html').get(0).innerHTML = tagPlus;
+});
+</script>
+</div>
+</body>
+</html>

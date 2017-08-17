@@ -1,1 +1,72 @@
-hello wolrd
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+<link rel="stylesheet" href="css/font.css">
+<link rel="stylesheet" href="css/index.css">
+<title>index</title>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+<!-- header [s] -->
+<div id="header">
+	<h1>Index</h1>
+</div>
+<!-- header [e] -->
+
+<!-- container [s] -->
+<div id="container">
+	<ul class="list">
+		<li class="depth">
+			<a href="study/gulp/"><span>Gulp</span></a>
+			<ul class="list2">
+			<li class="depth3"><a href="lesson/lesson.html"><span>lesson : 자바스크립트, jquery</span></a></li>
+			</ul>
+		</li>
+		<li class="depth">
+			<a href="study/js/"><span>JS</span></a>
+			<ul class="list2">
+			<li class="depth2"><a target="_blank" href="study/js/prototype.md"><span>Prototype이란?</span></a></li>
+			</ul>
+		</li>
+
+	</ul>
+</div>
+<!-- container [e] -->
+
+
+<!-- footer [s] -->
+<div id="footer"></div>
+<!-- footer [e] -->
+</div>
+
+<script type="text/javascript" src="js/libs/jquery-1.12.4.min.js"></script>
+<script>
+	(function (win, $) {
+		'use strict';
+		var obj = {
+			init : function () {
+				this.setElements();
+				this.bindEvents();
+			},
+			setElements : function () {
+				this.listObj = $('.depth > a');
+			},
+			bindEvents : function () {
+				this.listObj.on('click', $.proxy(this.clickFunc,this));
+			},
+			clickFunc : function (e) {
+				e.stopPropagation();
+				this._this = $(e.currentTarget);
+				this._this.parent().toggleClass('on');
+			}
+		};
+		$(function(){
+			obj.init();
+		});
+	})(window, window.jQuery);
+</script>
+</body>
+</html>
