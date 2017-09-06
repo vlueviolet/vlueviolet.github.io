@@ -1,5 +1,15 @@
 # 개발 업무 대응
 
+## 업무 전 확인할 것
+* ajax 영역 확인 : dom changed 되는 영역에 대한 처리를 어떻게 할 것인지
+* 기본으로 가져가는 플러그인 :
+    * [outsideEvent](http://benalman.com/projects/jquery-outside-events-plugin/)<br>
+            * 특정요소의 바깥부분에 마우스이벤트를 주고 싶을때 사용<br>
+            * 일반 이벤트처럼 쓰게되면 매번 실행이 되기 때문에, 특정요소의 **활성화/비활성화** 에 따라 **on/off** 되도록 한다.<br>
+            * support Browser : ALL
+    * [domchanged](https://github.com/nasaorc/jquery-domchanged-plugin) : dom 변경 체크하는 플러그인 (support Browser : ALL)
+    * [jquery.animate-enhanced](https://github.com/benbarnett/jQuery-Animate-Enhanced) : 애니메이션을 더 효과적으로 쓸수 있도록 css 속성을 자동으로 치환 (support Browser : ALL)
+
 ## Dom Changed
 ### [Plugin] jquery.domchanged 사용
 dom 이 변경되었을 경우의 체크하는 [이벤트 플러그인](https://github.com/nasaorc/jquery-domchanged-plugin) (support Browser : ALL)
