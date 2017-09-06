@@ -2,7 +2,7 @@
 
 ## 업무 전 확인할 것
 * ajax 영역 확인 : dom changed 되는 영역에 대한 처리를 어떻게 할 것인지
-* 기본으로 가져가는 플러그인 :
+* 기본으로 추가하는 플러그인
     * [outsideEvent](http://benalman.com/projects/jquery-outside-events-plugin/)<br>
             * 특정요소의 바깥부분에 마우스이벤트를 주고 싶을때 사용<br>
             * 일반 이벤트처럼 쓰게되면 매번 실행이 되기 때문에, 특정요소의 **활성화/비활성화** 에 따라 **on/off** 되도록 한다.<br>
@@ -12,8 +12,7 @@
             * support Browser : ALL
     * [jquery.animate-enhanced](https://github.com/benbarnett/jQuery-Animate-Enhanced)<br>
             * 애니메이션을 더 효과적으로 쓸수 있도록 css 속성을 자동으로 치환<br>
-            * 애니메이션을 1번만 사용하게 되는 버그가 있는데, 이를 해결하기 위해서는 avoidCSSTransitions를 넣어서 enhanced를 안쓰겠다고 해줘야 함.<br>* 참고 : [http://hsvn.hivelab.co.kr/cjo/lh/motion/exam01/index.html](http://hsvn.hivelab.co.kr/cjo/lh/motion/exam01/index.html)<br>
-            * support Browser : ALL
+            * 애니메이션을 1번만 사용하게 되는 버그가 있는데, 이를 해결하기 위해서는 avoidCSSTransitions를 넣어서 enhanced를 안쓰겠다고 해줘야 함.<br>* 참고 : [http://hsvn.hivelab.co.kr/cjo/lh/motion/exam01/index.html](http://hsvn.hivelab.co.kr/cjo/lh/motion/exam01/index.html)<br>* support Browser : ALL
 
 ## Dom Changed
 ### jquery.domchanged 사용
