@@ -7,8 +7,13 @@
             * 특정요소의 바깥부분에 마우스이벤트를 주고 싶을때 사용<br>
             * 일반 이벤트처럼 쓰게되면 매번 실행이 되기 때문에, 특정요소의 **활성화/비활성화** 에 따라 **on/off** 되도록 한다.<br>
             * support Browser : ALL
-    * [domchanged](https://github.com/nasaorc/jquery-domchanged-plugin) : dom 변경 체크하는 플러그인 (support Browser : ALL)
-    * [jquery.animate-enhanced](https://github.com/benbarnett/jQuery-Animate-Enhanced) : 애니메이션을 더 효과적으로 쓸수 있도록 css 속성을 자동으로 치환 (support Browser : ALL)
+    * [domchanged](https://github.com/nasaorc/jquery-domchanged-plugin)<br>
+            * dom 변경 체크하는 플러그인<br>
+            * support Browser : ALL
+    * [jquery.animate-enhanced](https://github.com/benbarnett/jQuery-Animate-Enhanced)<br>
+            * 애니메이션을 더 효과적으로 쓸수 있도록 css 속성을 자동으로 치환<br>
+            * 애니메이션을 1번만 사용하게 되는 버그가 있는데, 이를 해결하기 위해서는 avoidCSSTransitions를 넣어서 enhanced를 안쓰겠다고 해줘야 함.<br>* 참고 : [http://hsvn.hivelab.co.kr/cjo/lh/motion/exam01/index.html](http://hsvn.hivelab.co.kr/cjo/lh/motion/exam01/index.html)<br>
+            * support Browser : ALL
 
 ## Dom Changed
 ### jquery.domchanged 사용
