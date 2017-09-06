@@ -11,8 +11,7 @@
     * [jquery.animate-enhanced](https://github.com/benbarnett/jQuery-Animate-Enhanced) : 애니메이션을 더 효과적으로 쓸수 있도록 css 속성을 자동으로 치환 (support Browser : ALL)
 
 ## Dom Changed
-### [Plugin] jquery.domchanged 사용
-dom 이 변경되었을 경우의 체크하는 [이벤트 플러그인](https://github.com/nasaorc/jquery-domchanged-plugin) (support Browser : ALL)
+### jquery.domchanged 사용
 이 플러그인은 크롬에서 dom changed를 확인 할 수 없고, ajax 동작시에만 확인 가능하다.
 
 ### reInit() 제공
