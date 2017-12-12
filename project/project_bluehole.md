@@ -15,15 +15,26 @@ https://air.bluehole.net/main.do
 
 주요 업무
 월드맵
+이미지 이동 스크립트
 https://air.bluehole.net/static/worldmap.do
 초보자 가이드
+영상제어
 https://air.bluehole.net/beginnerguide.do
+미디어
+slick display:none, block 이슈
+https://air.bluehole.net/board/media/list.do
 
-##### 멤버
+개발에 전달한 메소드
+사용한 플러그인 PC/M
+slick
+roundabout
+##### 멤버 (회원관리)
 ##### 자녀관리
 ##### 약관
 ##### 인게임
 ##### 단독 팝업
 #### Mobile
 #### Launcher
+게임 런처에 웹이 들어감
+http://hsvn.hivelab.co.kr/bluehole_platform/launcher/@index.html
 #### App
