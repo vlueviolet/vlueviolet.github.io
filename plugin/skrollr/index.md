@@ -1,4 +1,4 @@
-### Skrollr
+## Skrollr
 * Parallax 효과를 주는 플러그인
 * https://prinzhorn.github.io/skrollr/
 
