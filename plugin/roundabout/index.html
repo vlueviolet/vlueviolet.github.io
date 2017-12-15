@@ -4,54 +4,38 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="robots" content="all">
-<title>미디어</title>
+<title>Roundabout</title>
 <link rel="stylesheet" type="text/css" href="css/common.css">
 </head>
 <body>
-<!-- [D] 전페이지 공통 건너띄기 링크 제공 -->
-<ul id="skip">
-<li><a href="#lnb" onclick="document.getElementById('lnb').tabIndex=-1;document.getElementById('lnb').focus();return false;">주 메뉴 바로가기</a></li>
-<li><a href="#container" onclick="document.getElementById('container').tabIndex=-1;document.getElementById('container').focus();return false">본문 바로가기</a></li>
-</ul>
-<!-- //[D] 전페이지 공통 건너띄기 링크 제공 -->
-<!-- [D] WRAP -->
-<div id="wrap">
-	<!-- [D] HEADER -->
-	<div id="header">
+<div class="media_tab_cont">
+	<div class="media_wrap">
+		<h3 class="blind">이미지</h3>
+		<ul id="carousel" class="media_area">
+		<li>
+			<div class="cont">
+				<span class="img_cont"><img src="img/img.png" alt=""></span>
+				<span class="txt">텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트</span>
+			</div>
+		</li>
+		<li>
+			<a href="#" class="cont" data-media="md_order_1">
+				<span class="img_cont"><img src="img/@small.jpg" alt=""></span>
+				<span class="txt">텍스트텍스트텍스트텍스트텍스트텍스트</span>
+			</a>
+		</li>
+		<li>
+			<a href="#" class="cont" data-media="md_order_3">
+				<span class="img_cont"><img src="img/@big.jpg" alt=""></span>
+				<span class="txt">텍스트텍스트텍스트텍스트텍스트텍스트</span>
+			</a>
+		</li>
+		</ul>
+		<button type="button" class="btn_prev">이전</button>
+		<button type="button" class="btn_next">다음</button>
+		<div class="paging"><div class="inner"></div></div>
 	</div>
-	<!-- //[D] HEADER -->
-	<!-- [D] CONTAINER -->
-	<div class="media_tab_cont">
-		<div class="media_wrap">
-			<h3 class="blind">이미지</h3>
-			<ul id="carousel" class="media_area">
-			<li>
-				<div class="cont">
-					<span class="img_cont"><img src="img/media_soon.jpg" alt=""></span>
-					<span class="txt">텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트</span>
-				</div>
-			</li>
-			<li>
-				<a href="#" class="cont" data-media="md_order_1">
-					<span class="img_cont"><img src="img/@small.jpg" alt=""></span>
-					<span class="txt">텍스트텍스트텍스트텍스트텍스트텍스트</span>
-				</a>
-			</li>
-			<li>
-				<a href="#" class="cont" data-media="md_order_3">
-					<span class="img_cont"><img src="img/@big.jpg" alt=""></span>
-					<span class="txt">텍스트텍스트텍스트텍스트텍스트텍스트</span>
-				</a>
-			</li>
-			</ul>
-			<button type="button" class="btn_prev">이전</button>
-			<button type="button" class="btn_next">다음</button>
-			<div class="paging"><div class="inner"></div></div>
-		</div>
-	</div>
-	<!-- //[D] CONTAINER -->
 </div>
-<!-- //[D] WRAP -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/jquery.roundabout.min.js"></script>

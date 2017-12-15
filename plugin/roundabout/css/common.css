@@ -17,16 +17,8 @@ button{overflow:visible;border:0;background-color:transparent;cursor:pointer}
 button::-moz-focus-inner{padding:0;border:0}
 button,input{outline-style:none}
 .blind,legend,caption span{overflow:hidden;position:absolute;top:0;left:0;width:1px;height:1px;font-size:1px;line-height:100px;white-space:nowrap}
-#skip{height:0}
-#skip a{display:block;position:absolute;left:0;top:-100px;width:100%;height:25px;text-align:center}
-#skip a:focus,#skip a:active{position:absolute;top:0;z-index:90;padding:10px 0;background:#000;font-weight:bold;color:#fff;font-size:20px;text-decoration:none}
-.btn_next,.btn_prev{display:inline-block;overflow:hidden;background:url(../img/sp.png) no-repeat;width:1px;height:1px;font-size:1px;text-indent:9999px;white-space:nowrap}
-
-/* 미디어 */
-.slick-prev,.btn_prev{width:29px;height:47px;background-position:-174px -98px}
-.slick-next,.btn_next{width:29px;height:47px;background-position:-205px -98px}
 .media_wrap{position:relative;margin-top:70px;padding-top:2px}
-.media_wrap .btn_prev,.media_wrap .btn_next{position:absolute;top:50%;left:0;margin-top:-64px;}
+.media_wrap .btn_prev,.media_wrap .btn_next{position:absolute;top:50%;left:0;width:30px;height:47px;margin-top:-64px}
 .media_wrap .btn_next{right:0;left:auto}
 .media_area:after{display:block;clear:both;content:''}
 .media_wrap .roundabout-holder{width:240px;height:376px;margin:0 auto;padding:0}
