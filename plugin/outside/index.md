@@ -1,4 +1,4 @@
-### Outside
+## Outside
 
 * http://benalman.com/projects/jquery-outside-events-plugin/
 * https://github.com/cowboy/jquery-outside-events
