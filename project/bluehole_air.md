@@ -1,4 +1,4 @@
-# Bluehole Project
+# Bluehole A:IR (에어)
 
 ### 업무 지원 및 범위
 	* PC/M
