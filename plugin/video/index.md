@@ -13,5 +13,43 @@
 ####  jQuery Video 선택자
 ```
 var video = $('video');
-var videoElement = video.get(0);
+this.video = this.guideStart.find('video');
+this.video.get(0).play();
+//또는
+this.video2 = this.guideStart.find('video');
+this.video2[0].play();
+this.video2[0].loop = true;
+```
+
+#### 재생 확인 (사운드, 비디오 canplay 체크)
+```
+mediaSupportFunc : function () {
+    var canPlayCount = 0,
+        videoCanType = false,
+        soundCanType = false;
+    this.allVideo.on('canplay canplaythrough', $.proxy(function () {
+        if(canPlayCount < this.allVideo.length) {
+            canPlayCount++;
+        }
+        if(canPlayCount >= this.allVideo.length) {
+            videoCanType = true;
+        }
+        if (canPlayCount > this.allVideo.length) {
+            videoCanType = false;
+            return;
+        }
+    }, this));
+
+    this.sound.on('canplay canplaythrough', $.proxy(function () {
+        soundCanType = true;
+    }, this));
+
+    while(!(videoCanType && soundCanType)) {	// 조건에 맞을때까지 확인
+        this.initLayout();
+        this.soundFunc();
+        this.allVideo.off('canplay canplaythrough');
+        this.sound.off('canplay canplaythrough');
+        return;
+    }
+}
 ```
