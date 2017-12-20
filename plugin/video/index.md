@@ -20,6 +20,11 @@ this.video2 = this.guideStart.find('video');
 this.video2[0].play();
 this.video2[0].loop = true;
 ```
+#### 특정 시간대 재생하려면 아래와 같이 한다.
+```
+video[0].currentTime = 2	//2초에 현재 시간을 설정한다.
+video[0].play();	// 재생한다.
+```
 
 #### 재생 확인 (사운드, 비디오 canplay 체크)
 ```
@@ -54,7 +59,19 @@ mediaSupportFunc : function () {
 }
 ```
 
+#### 재생시간을 체크해주는 이벤트 : timeupdate
+video 컨트롤 할때 유용하게 사용할 수 있는 이벤트이다.<br>
+setInterval과 같이 비디오 재생을 계속 체크해주는 html5 video에서 제공하는 이벤트인데, interval만큼 부담스러운 이벤트는 아니다.
+```
+this.ingVideo.on("timeupdate", $.proxy(function () {
+	// 함수내용
+});
+
+this.ingVideo.off("timeupdate");	// 이벤트를 다 사용했다면, double 체크가 되지 않도록 off 시켜준다.
+```
+
 #### 이슈
+##### 문제
 currentTime을 찍어보면 0,1,2,...와 같이 균일하지 않고, 아래와 같이 1초 간격을 쪼개어 나타난다.
 특정영역에서 멈추고, 다시 재생할때 정수 단위가 아닌 소수점 단위로 멈추기 때문에 원하는 시간에 멈추지 않는 이슈가 있다.
 ```
@@ -68,14 +85,11 @@ currentTime을 찍어보면 0,1,2,...와 같이 균일하지 않고, 아래와 �
 2.60238
 2.852537
 ```
-그럴땐, 영상 제작팀에 멈춰야하는 시간대에 1초간 delay를 달라고 해야하며,<br>
-1초 이내에는 반드시 멈추기 때문에 부서간 협의가 반드시 필요하다.
+##### 해결
+위의 경우는 네트웍 환경이나 사용자 마다 다르게 나타나고 프레임을 찍는 횟수가 불규칙하기 때문에
+1) 프레임을 동일하게 맞출 수 있는 방법을 모색하거나,<br>
+2) 영상 제작팀에 멈춰야하는 시간대에 1초간 delay를 주도록 하는 것이 좋다. (1초 안에는 반드시 멈추기 때문)<br>
 
-특정 시간대 재생하려면 아래와 같이 한다.
-```
-video[0].currentTime = 2	//2초에 현재 시간을 설정한다.
-video[0].play();	// 재생한다.
-```
 
 ##### 작업
 qa.hivelab.co.kr:4000/bluehole_guide/12_interactive.html
