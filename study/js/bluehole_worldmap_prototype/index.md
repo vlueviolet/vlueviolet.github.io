@@ -82,6 +82,8 @@ zoomInFunc : function () {
     }, this));
 },
 ```
+#### 테스트
+http://hsvn.hivelab.co.kr/bluehole_platform/pc/cbt/map_test/prototype/map2.html
 
 #### 리얼
 https://air.bluehole.net/static/worldmap.do
