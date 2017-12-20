@@ -91,6 +91,9 @@ currentTime을 찍어보면 0,1,2,...와 같이 균일하지 않고, 아래와 �
 2) 영상 제작팀에 멈춰야하는 시간대에 1초간 delay를 주도록 하는 것이 좋다. (1초 안에는 반드시 멈추기 때문)<br>
 
 
+##### 테스트
+http://qa.hivelab.co.kr:4000/bluehole_guide/guide_test/11_guide.html
+
 ##### 작업
 http://qa.hivelab.co.kr:4000/bluehole_guide/12_interactive.html
 
