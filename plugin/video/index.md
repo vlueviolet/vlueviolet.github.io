@@ -92,7 +92,7 @@ currentTime을 찍어보면 0,1,2,...와 같이 균일하지 않고, 아래와 �
 
 
 ##### 작업
-qa.hivelab.co.kr:4000/bluehole_guide/12_interactive.html
+http://qa.hivelab.co.kr:4000/bluehole_guide/12_interactive.html
 
 ##### 리얼
 https://air.bluehole.net/beginnerguide.do
