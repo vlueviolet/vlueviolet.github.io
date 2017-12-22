@@ -1,5 +1,5 @@
 ## Video/Audio jQuery 제어
-<br><br>
+<br>
 ###  Video/Audio 선택자 및 기본제어
 #### Video
 ```
@@ -19,7 +19,7 @@ if(this.ingVideo[0].ended) {
     //조건문 실행문
 }
 ```
-<br><br>
+
 #### Audio
 ```
 // 기본 선택자
@@ -38,12 +38,13 @@ this.sound.stop().animate({volume: 0}, 1000, $.proxy(function () {
     this.sound[0].volume = 1;
 }, this));
 ```
+<br>
 #### 특정 시간대 재생하려면 아래와 같이 한다.
 ```
 this.video[0].currentTime = 2   //2초에 현재 시간을 설정한다.
 this.video[0].play();   // 재생한다.
 ```
-<br><br>
+<br>
 #### 재생 확인 (사운드, 비디오 canplay 체크)
 ```
 canPlayCheck : function () {
@@ -76,7 +77,7 @@ canPlayCheck : function () {
     }
 }
 ```
-<br><br>
+<br>
 #### 재생시간을 체크해주는 이벤트 : timeupdate
 video 컨트롤 할때 유용하게 사용할 수 있는 이벤트이다.<br>
 setInterval과 같이 비디오 재생을 계속 체크해주는 html5 video에서 제공하는 이벤트인데, interval만큼 부담스러운 이벤트는 아니다.
@@ -111,7 +112,7 @@ console.log(this.video[0].currentTime);
 3.714384
 3.964607
 ```
-<br><br>
+<br>
 ##### 해결
 위의 경우는 네트웍 환경이나 사용자 마다 다르게 나타나고 프레임을 찍는 횟수가 불규칙하기 때문에
 1) 프레임을 동일하게 맞출 수 있는 방법을 모색하거나,<br>
