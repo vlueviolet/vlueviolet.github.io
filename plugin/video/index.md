@@ -1,16 +1,6 @@
-## Video/Audio 제어
-
-### html5 video 태그
-* html5 비디오
-    * Video https://www.w3schools.com/tags/ref_av_dom.asp
-    * https://msdn.microsoft.com/ko-kr/library/hh924822(v=vs.85).aspx
-    * https://msdn.microsoft.com/ko-kr/library/hh924820(v=vs.85).aspx
-* 비디오 이벤트 확인 http://samples.msdn.microsoft.com/Workshop/samples/media/videoevents.htm
-* 자바스크립트 비디오 제어  https://msdn.microsoft.com/ko-kr/library/hh924823
-* 미디어 이벤트 https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
-* 프레임 제어 하는듯한 플러그인 (연구 필요) https://github.com/allensarkisyan/VideoFrame
-
-###  jQuery Video/Audio 선택자 및 기본제어
+## Video/Audio jQuery 제어
+<br><br>
+###  Video/Audio 선택자 및 기본제어
 #### Video
 ```
 // 기본 선택자
@@ -26,10 +16,10 @@ this.video[0].loop = true;
 
 // Video 재생위치가 마지막일때
 if(this.ingVideo[0].ended) {
-
+    //조건문 실행문
 }
 ```
-
+<br><br>
 #### Audio
 ```
 // 기본 선택자
@@ -53,7 +43,7 @@ this.sound.stop().animate({volume: 0}, 1000, $.proxy(function () {
 this.video[0].currentTime = 2   //2초에 현재 시간을 설정한다.
 this.video[0].play();   // 재생한다.
 ```
-
+<br><br>
 #### 재생 확인 (사운드, 비디오 canplay 체크)
 ```
 canPlayCheck : function () {
@@ -86,18 +76,18 @@ canPlayCheck : function () {
     }
 }
 ```
-
+<br><br>
 #### 재생시간을 체크해주는 이벤트 : timeupdate
 video 컨트롤 할때 유용하게 사용할 수 있는 이벤트이다.<br>
 setInterval과 같이 비디오 재생을 계속 체크해주는 html5 video에서 제공하는 이벤트인데, interval만큼 부담스러운 이벤트는 아니다.
 ```
 this.ingVideo.on("timeupdate", $.proxy(function () {
-	// 함수내용
+    // 함수내용
 });
 
-this.ingVideo.off("timeupdate");	// 이벤트를 다 사용했다면, double 체크가 되지 않도록 off 시켜준다.
+this.ingVideo.off("timeupdate");    // 이벤트를 다 사용했다면, double 체크가 되지 않도록 off 시켜준다.
 ```
-
+<br><br>
 #### 이슈
 ##### 문제
 currentTime을 찍어보면 0,1,2,...와 같이 균일하지 않고, 아래와 같이 1초 간격을 쪼개어 나타난다.
@@ -106,7 +96,8 @@ currentTime을 찍어보면 0,1,2,...와 같이 균일하지 않고, 아래와 �
 
 ```
 console.log(this.video[0].currentTime);
-
+```
+```
 0.000674
 0.214229
 0.715187
@@ -120,11 +111,26 @@ console.log(this.video[0].currentTime);
 3.714384
 3.964607
 ```
+<br><br>
 ##### 해결
 위의 경우는 네트웍 환경이나 사용자 마다 다르게 나타나고 프레임을 찍는 횟수가 불규칙하기 때문에
 1) 프레임을 동일하게 맞출 수 있는 방법을 모색하거나,<br>
 2) 영상 제작팀에 멈춰야하는 시간대에 1초간 delay를 주도록 하는 것이 좋다. (1초 안에는 반드시 멈추기 때문)<br>
+<br><br>
 
+#### Reference
+* html5 비디오
+Video https://www.w3schools.com/tags/ref_av_dom.asp
+https://msdn.microsoft.com/ko-kr/library/hh924822(v=vs.85).aspx
+https://msdn.microsoft.com/ko-kr/library/hh924820(v=vs.85).aspx
+* 비디오 이벤트 확인
+http://samples.msdn.microsoft.com/Workshop/samples/media/videoevents.htm
+* 자바스크립트 비디오 제어
+https://msdn.microsoft.com/ko-kr/library/hh924823
+* 미디어 이벤트
+https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
+* 프레임 제어 하는듯한 플러그인 (연구 필요)
+https://github.com/allensarkisyan/VideoFrame
 
 ##### 테스트
 http://qa.hivelab.co.kr:4000/bluehole_guide/guide_test/11_guide.html
