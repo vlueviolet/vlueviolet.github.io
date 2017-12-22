@@ -1,4 +1,4 @@
-## Video/Audio jQuery 제어
+## jQuery > Video/Audio 제어
 <br>
 
 ###  Video/Audio 선택자 및 기본제어
@@ -41,12 +41,14 @@ this.sound.stop().animate({volume: 0}, 1000, $.proxy(function () {
 ```
 <br>
 #### 특정 시간대 재생하려면 아래와 같이 한다.
+
 ```
 this.video[0].currentTime = 2   //2초에 현재 시간을 설정한다.
 this.video[0].play();   // 재생한다.
 ```
 <br>
 #### 재생 확인 (사운드, 비디오 canplay 체크)
+
 ```
 canPlayCheck : function () {
     var canPlayCount = 0,
