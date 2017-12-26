@@ -127,9 +127,9 @@ console.log(this.video[0].currentTime);
 
 #### Reference
 * html5 비디오
-Video https://www.w3schools.com/tags/ref_av_dom.asp
-https://msdn.microsoft.com/ko-kr/library/hh924822(v=vs.85).aspx
-https://msdn.microsoft.com/ko-kr/library/hh924820(v=vs.85).aspx
+    * Video https://www.w3schools.com/tags/ref_av_dom.asp
+    * https://msdn.microsoft.com/ko-kr/library/hh924822(v=vs.85).aspx
+    * https://msdn.microsoft.com/ko-kr/library/hh924820(v=vs.85).aspx
 * 비디오 이벤트 확인
 http://samples.msdn.microsoft.com/Workshop/samples/media/videoevents.htm
 * 자바스크립트 비디오 제어
