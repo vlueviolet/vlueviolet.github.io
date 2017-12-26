@@ -6,5 +6,5 @@
 https://github.com/vlueviolet/vlueviolet.github.io/tree/master/study/js/double_outside
 
 ### Double Outside
-double_outside/case1.html
-double_outside/case2.html
+https://vlueviolet.github.io/plugin/outside/double_outside/case1.html
+https://vlueviolet.github.io/plugin/outside/double_outside/case2.html
