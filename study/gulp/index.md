@@ -31,7 +31,7 @@ package.json		// gulp에서 사용할 플러그인 목록모음으로 npm instal
 <br>
 
 ### 순서
-0. node.js와 npm이 설치되어야 한다.
+0. node.js가 설치되어야 한다. https://nodejs.org/ko/
 1. 폴더구조 생성
 2. 작업위치에서 CMD 열기
 	##### 현재 위치에서 CMD 여는 방법
