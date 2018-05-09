@@ -164,6 +164,7 @@ button::-moz-focus-inner{padding:0;border:0}
            this.layerObj.triggerHandler('clickoutside');
         },
         outSideEvents : function (type) {
+            console.log(1);
             if (type) {
                 if (this.layerWrap.is(':visible')) {
                     if (this.opts.focusLoop) {
@@ -203,6 +204,7 @@ button::-moz-focus-inner{padding:0;border:0}
             this.outCallback('viewAfter');
         },
         layerClickOutside : function () {
+            console.log('layerClickOutside')
             this.outCallback('closeBefore');
             win.clearTimeout(this.closeBeforeTimeout);
             this.closeBeforeTimeout = win.setTimeout($.proxy(this.hideBeforeBugFunc, this), 30);

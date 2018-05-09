@@ -16,7 +16,7 @@ button::-moz-focus-inner{padding:0;border:0}
 .btn_pos button{margin:0;padding:0;width:100px;height:100px;border:1px solid #ccc;}
 .layer_area{display:none;position:fixed;left:0;top:0;right:0;bottom:0;width:100%;height:100%}
 .layer_area .layer_dimmed{position:absolute;left:0;top:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.3;filter:alpha(opacity=30);}
-.layer_pos{position:absolute;left:50%;top:50%;width:400px;height:400px;margin:-220px 0 0 -220px;padding:20px; background:#fff}
+.layer_pos{position:absolute;left:50%;top:50%;width:400px;height:400px;margin:-220px 0 0 -220px;padding:20px;border:1px solid grey;background:#fff}
 .layer_pos2{width:200px;height:200px;margin:-100px 0 0 -100px}
 .layer_close{position:absolute;right:20px;top:20px}
 /* //temporary css */
@@ -42,8 +42,8 @@ button::-moz-focus-inner{padding:0;border:0}
                     <li>내용5</li>
                 </ul>
                 <div><a href="#" class="btn_test">test</a></div>
-                <p class="layer_close"><button>닫기</button></p>
             </div>
+                <p class="layer_close"><button>닫기</button></p>
         </div>
         <div class="layer_area js-layer_area2">
             <span class="layer_dimmed">&nbsp;</span>
@@ -109,7 +109,6 @@ button::-moz-focus-inner{padding:0;border:0}
             this.nextTag.on('focusin', $.proxy(this.nextFocusFunc, this));
         },
         outsideEvent : function (type) {
-            console.log('layer1 : ' + type);
             if (type) {
                 this.layerPos.on('clickoutside', $.proxy(this.layerOutside, this));
             } else {
@@ -117,6 +116,7 @@ button::-moz-focus-inner{padding:0;border:0}
             }
         },
         onClickFunc : function (e) {
+            console.log(e)
             this.target = $(e.currentTarget);
             this.layerArea.show();
             this.layerPos.focus();
@@ -185,6 +185,7 @@ button::-moz-focus-inner{padding:0;border:0}
             }
         },
         onClickFunc : function (e) {
+            console.log(e)
             this.target = $(e.currentTarget);
             if (this.opts.showBefore != null) {
                 this.opts.showBefore();
@@ -196,9 +197,7 @@ button::-moz-focus-inner{padding:0;border:0}
             }, this), 30);
         },
         layerOutside : function () {
-            console.log(this.opts.showAfter);
             if (this.opts.showAfter != null) {
-                console.log(111);
                 this.opts.showAfter();
             }
             this.layerArea.hide();
