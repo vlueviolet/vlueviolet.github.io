@@ -5,18 +5,18 @@
     win.UIO.accordion = (function () {
         return {
             init : function () {
-                this.setElement();
+                this.setElements();
                 this.setOpts();
                 this.bindEvents();
             },
-            setElement : function () {
-                this.listCont = $('.week_item');
+            setElements : function () {
+                this.listCont = $('.list_item');
             },
             setOpts : function () {
                 this.activeClass = 'on';
             },
             bindEvents : function () {
-                this.listCont.on('click', '.summary', $.proxy(this.clickFunc, this));
+                this.listCont.on('click', '.list_cont', $.proxy(this.clickFunc, this));
             },
             clickFunc : function (e) {
                 e.preventDefault();
