@@ -1,0 +1,243 @@
+@charset "UTF-8";
+/* notosans */
+@font-face {
+  font-family: 'notokr';
+  src: url(font/notokr-regular.eot);
+  src: url(font/notokr-regular.eot?#iefix) format("embedded-opentype"), url(font/notokr-regular.woff) format("woff"), url(font/notokr-regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: 'notokr';
+  font-weight: 600;
+  src: url(font/notokr-bold.eot);
+  src: url(font/notokr-bold.eot?#iefix) format("embedded-opentype"), url(font/notokr-bold.woff) format("woff"), url(font/notokr-bold.ttf) format("truetype");
+}
+
+/* Reset */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, p, table, th, td, form, fieldset, legend, textarea, input, select, textarea, button, article, aside, dialog, footer, header, section, footer, nav, figure, main {
+  margin: 0;
+  padding: 0;
+}
+
+article, aside, dialog, footer, header, section, footer, nav, figure, main {
+  display: block;
+}
+
+html, body {
+  min-height: 100%;
+  -webkit-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+}
+
+body, input, select, textarea, button {
+  font-family: 'notokr', '돋움', Dotum, sans-serif;
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+fieldset, li, img {
+  border: 0;
+  vertical-align: top;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  overflow: visible;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+address, caption, em {
+  font-style: normal;
+}
+
+a, a:focus, a:active, a:hover {
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+main, section {
+  display: block;
+}
+
+.blind, caption span, legend {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  font-size: 1px;
+  line-height: 100px;
+  white-space: nowrap;
+}
+
+body {
+  font-family: 'notokr', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  outline: none;
+}
+
+a,
+button {
+  font-family: 'notokr', sans-serif;
+  outline: none;
+}
+
+ul:after,
+ol:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+
+.blind,
+caption span,
+legend,
+figcaption {
+  overflow: hidden;
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+hr {
+  display: none;
+}
+
+a,
+a:focus,
+a:active,
+a:hover {
+  text-decoration: none;
+}
+
+a:hover,
+a:active,
+a:focus {
+  background-color: transparent;
+}
+
+table {
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+#wrap {
+  position: relative;
+  height: 100%;
+}
+
+#header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:60px;
+  background:#000;
+}
+
+.btn_menu{
+  overflow: hidden;
+  position: relative;
+  width: 52px;
+  height: 60px;
+  line-height: 999px;
+  outline: none;
+}
+
+.btn_menu:before{
+  position: absolute;
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  width: 24px;
+  height: 17px;
+  margin: -9px 0 0 -12px;
+  background: url(../img/btn_menu.png) no-repeat;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  content: '';
+}
+
+#nav{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background:rgba(0,0,0,0.7);
+}
+.nav_box{
+  position:absolute;
+  top:0;
+  left:-100%;
+  bottom:0;
+  width:100%;
+}
+.inner{
+  overflow:auto;
+  width: 70%;
+  height:100%;
+  background-color: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+.list li a{
+  display:block;
+  height:59px;
+  padding:0 15px;
+  border-bottom:1px solid #e5e5e5;
+  font-size:16px;
+  color:#000;
+  line-height: 60px;
+}
+.btn_close{
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 70%;
+  width: 62px;
+  height: 62px;
+  line-height: 999px;
+}
+.btn_close:before{
+  display: block;
+    position: absolute;
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    background-image:url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 43.8 43.8' preserveAspectRatio='xMidYMid' fill='rgb%28250%2C250%2C250%29'%3E%3Cpath d='M43.8 2.8L41 0 21.9 19.1 2.8 0 0 2.8l19.1 19.1L0 41l2.8 2.8 19.1-19.1L41 43.8l2.8-2.8-19.1-19.1z'/%3E%3C/svg%3E");
+    background-size: 100% auto;
+    content: '';
+}
+@media screen and (max-width: 800px) {
+  
+}
