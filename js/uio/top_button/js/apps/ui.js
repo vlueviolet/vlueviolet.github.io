@@ -10,7 +10,7 @@
             },
             setElements : function () {
                 this.topBtn = $('.btn_top');
-                this.minOffsetTop = 0;
+                this.minOffsetTop = $('#wrap').offset().top;    // 특정 element의 offset 값으로 하면 레이어 팝업 scroll 제어에 편함
             },
             bindEvents : function () {
                 $(win).on('scroll', $.proxy(this.scrollFunc, this));
