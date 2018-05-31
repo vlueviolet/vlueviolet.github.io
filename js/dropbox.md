@@ -1,3 +1,4 @@
+```javascript
 /**
  * 드롭다운 공통 컴포넌트
  */
@@ -69,3 +70,4 @@ $(function() {
 //	var dropdown = new CommDropdown();
 	 
 });
+```
