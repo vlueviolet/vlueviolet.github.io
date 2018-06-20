@@ -1,7 +1,6 @@
 UIO 인덱스
 
-아코디언 
-(vlueviolet.github.io/js/uio/accordion/simple/index.html)
+[아코디언](vlueviolet.github.io/js/uio/accordion/simple/index.html)
 
 아코디언 슬라이드 다운
 vlueviolet.github.io/js/uio/accordion/slide_down/index.html
