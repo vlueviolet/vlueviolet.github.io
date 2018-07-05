@@ -54,30 +54,6 @@
 </div>
 <a href="works/#" class="btn_top">Top</a>
 <script type="text/javascript" src="js/libs/jquery-1.12.4.min.js"></script>
-<script>
-	(function (win, $) {
-		'use strict';
-		var obj = {
-			init : function () {
-				this.setElements();
-				this.bindEvents();
-			},
-			setElements : function () {
-				this.listObj = $('.depth > a');
-			},
-			bindEvents : function () {
-				this.listObj.on('click', $.proxy(this.clickFunc,this));
-			},
-			clickFunc : function (e) {
-				e.stopPropagation();
-				this._this = $(e.currentTarget);
-				this._this.parent().toggleClass('on');
-			}
-		};
-		$(function(){
-			obj.init();
-		});
-	})(window, window.jQuery);
-</script>
+<script type="text/javascript" src="js/apps/ui.js"></script>
 </body>
 </html>
