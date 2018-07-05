@@ -3,7 +3,7 @@
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, p, table, th, td, form, fieldset, legend, textarea, input, select, textarea, button, article, aside, dialog, footer, header, section, footer, nav, figure, main {
   margin: 0;
   padding: 0;
-  font-family: "roboto", sans-serif;
+  font-family: "notokr", sans-serif;
   font-size: 12px;
   font-weight: 400;
   color:##4c4c4c;
@@ -77,7 +77,7 @@ input::-ms-reveal {
 }
 
 @font-face {
-  font-family: "roboto";
+  font-family: "notokr";
   src: url("font/notokr-regular.eot") format("eot");
   src: url("font/notokr-regulareot?#iefix") format("embedded-opentype"), url("font/notokr-regular.woff") format("woff"), url("font/notokr-regular.woff2") format("woff2"), url("font/notokr-regular.ttf") format("truetype");
   font-weight: 100;
