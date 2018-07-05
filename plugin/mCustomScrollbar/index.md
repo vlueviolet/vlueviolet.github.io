@@ -2,6 +2,7 @@
 
 스크롤 디자인 변경하는 플러그인
 
+* 데모 http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/complete_examples.html
 * 파일 다운 https://github.com/malihu/malihu-custom-scrollbar-plugin
 * 옵션 확인 http://manos.malihu.gr/jquery-custom-content-scroller/
 * support ie7+, modern (except mobile)
