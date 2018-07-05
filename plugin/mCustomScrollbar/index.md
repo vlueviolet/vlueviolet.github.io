@@ -10,12 +10,12 @@
 #### 실행방법
 ```javascript
 // 기본 실행
-$(".content").mCustomScrollbar({
+$(selector).mCustomScrollbar({
     options..
 });
 
 // 콜백함수 사용
-$(".content").mCustomScrollbar({
+$(selector).mCustomScrollbar({
     options..
     callbacks:{
         onScroll:function(){
@@ -26,4 +26,9 @@ $(".content").mCustomScrollbar({
 function myCustomFn(el){
     console.log(el.mcs.top);
 }
+```
+
+#### destroy
+```javascript
+$(selector).mCustomScrollbar("destroy");
 ```
