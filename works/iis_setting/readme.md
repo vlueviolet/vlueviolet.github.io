@@ -46,3 +46,6 @@
 헤더, 푸터 등을 단순히 php를 활용해서 html에 include 하는 형태라면, 아래와 같이 [처리기 매핑]을 수정해야 한다.<br>
 <br>
 ![](https://raw.githubusercontent.com/vlueviolet/vlueviolet.github.io/master/works/iis_setting/img/img13.png)
+
+
+### IIS PHP 관리자 설치 오류시 직접 설치 주소 : http://blog.daum.net/jungsangun/7691268
