@@ -49,3 +49,4 @@
 
 
 ### IIS PHP 관리자 설치 오류시 직접 설치 주소 : http://blog.daum.net/jungsangun/7691268
+### HTML 매핑 추가 http://bananamandoo.tistory.com/41
