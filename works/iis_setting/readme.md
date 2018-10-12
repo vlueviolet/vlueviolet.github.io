@@ -23,7 +23,7 @@
   주석(;)으로 되어있다면 ;를 삭제해서 주석을 풀어준다. 변경할 코드는 아래와 같다.
   ![](https://raw.githubusercontent.com/vlueviolet/vlueviolet.github.io/master/works/iis_setting/img/img12.png)
 
-  + default_charser = "UTF-8"
+  + default_charset = "UTF-8"
   + date.timezone = "Asia/Seoul"
   + short_open_tag = On
   + extension_dir = ".\ext"
@@ -32,6 +32,7 @@
   + cgi_fix_pathinfo = 1 
   + fastcgi.impersonate = 1 
   + fastcgi.loggin = 0 : 이것도 설정해 두지 않으면, IIS에선 계속 HTTP500 에러가 난다고 한다.
+  + short_open_tag = On
   <br><br>
 
 5. [Register new PHP version] 을 클릭해서 [php-cgi.exe]가 있는 폴더 경로를 넣어준다.<br>
