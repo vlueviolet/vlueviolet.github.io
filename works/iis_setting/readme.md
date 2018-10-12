@@ -29,7 +29,7 @@
   + extension_dir = ".\ext"
   + log_errors = On
   + cgi.force_redirect = 0 : 이걸 1로 해두면 IIS에서 PHP가 죽는다고 하니 0으로 설정 요망 
-  + cgi_fix_pathinfo = 1 
+  + cgi.fix_pathinfo = 1 
   + fastcgi.impersonate = 1 
   + fastcgi.loggin = 0 : 이것도 설정해 두지 않으면, IIS에선 계속 HTTP500 에러가 난다고 한다.
   + short_open_tag = On
