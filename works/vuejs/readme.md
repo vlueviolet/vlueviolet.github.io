@@ -1,4 +1,7 @@
 # Vuex
+* actions, mutations를 사용해야함
+* ![vuex cycle](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/works/vuejs/images/vuex.png?raw=true)
+
 ## basic
 * ... 같은 es6 문법의 확장 연산자(spread operator)를 사용하려면, Babel stage-2 이상의 라이브러리 설치 및 babel preset 에 추가가 필요하다.
 ```javascript
@@ -36,5 +39,4 @@ const getters = {
 
 ## actions
 * 비동기 로직에 사용
-* ![vuex cycle](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/works/vuejs/images/vuex.png?raw=true)
 * https://joshua1988.github.io/web-development/vuejs/vuex-actions-modules/
