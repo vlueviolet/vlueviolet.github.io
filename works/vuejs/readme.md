@@ -1,7 +1,6 @@
 # Vuex
 * actions, mutations를 사용해야함
-![vuex cycle](https://github.com/vlueviolet/vlueviolet.github.io/blob/master/works/vuejs/images/vuex.png?raw=true)
-![vuex cycle](./images/vuex.png?raw=true)
+![vuex cycle](./images/vuex.png){: width="100" height="auto"}
 <br><br>
 ## basic
 * ... 같은 es6 문법의 확장 연산자(spread operator)를 사용하려면, Babel stage-2 이상의 라이브러리 설치 및 babel preset 에 추가가 필요하다.
