@@ -36,5 +36,5 @@ const getters = {
 
 ## actions
 * 비동기 로직에 사용
-* ![vuex cycle](/images/vuex.png)
+* ![vuex cycle](/vlueviolet/vlueviolet.github.io/blob/master/works/vuejs/images/vuex.png?raw=true)
 * https://joshua1988.github.io/web-development/vuejs/vuex-actions-modules/
