@@ -1,4 +1,7 @@
-# Array.from 메서드로 진짜 배열 만들기
+# Array.from
+<br>
+# Array.frome
+## 진짜 배열 만들기
 가짜배열을 진짜 배열로 만들어 주는 메소드
 <br><br>
 
@@ -19,6 +22,7 @@ arguments는 파라메터 개수가 유동적일때 사용하면 유용하다. �
 <br>
 하지만, 이런 배열과 비슷한 배열은 진짜 배열이 아니기때문에<br>
 arguments.map()과 같이 배열에 사용하는 함수에서는 오류가 난다.<br>
+
 ```javascript
 function addMark () {
     let newData = arguments.map(function (value) {
