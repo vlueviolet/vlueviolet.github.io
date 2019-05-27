@@ -23,7 +23,7 @@ mySet.add("crong");
 console.log(toString.call(mySet)); // object
 
 // 값 체크
-console.log(mySet.has("crong")); // true
+console.log(mySet.has("crong"));  // true
 
 mySet.forEach(function(value) {
   // 중복된 값을 제거하여 노출, crong이 중복 제거됨
@@ -67,13 +67,13 @@ let arr = [1,2,3,4];
 let myWeakSet = new WeakSet();
 
 // 참조를 갖는 배열이므로 정상 출력
-myWeakSet.add(arr); // WeakSet {Array(4)}
+myWeakSet.add(arr);           // WeakSet {Array(4)}
 // 참조를 갖는 함수이므로 정상 출력
 myWeakSet.add(function() {}); // WeakSet {ƒ}
 // integer, string, null 같은 데이터이므로 참조가 없어 유효하지 않은 에러 출력
-myWeakSet.add(111); // 에러, Invalid value used in weak set
-myWeakSet.add('111'); // 에러, Invalid value used in weak set
-myWeakSet.add(null); // 에러, Invalid value used in weak set
+myWeakSet.add(111);     // 에러, Invalid value used in weak set
+myWeakSet.add('111');   // 에러, Invalid value used in weak set
+myWeakSet.add(null);    // 에러, Invalid value used in weak set
 
 console.log(myWeakSet)
 ```
@@ -81,7 +81,7 @@ console.log(myWeakSet)
 
 ### 참조를 모니터링하는 WeakSet
 <b>만약, 객체가 null 또는 필요가 없어지면 가비지 컬렉션 대상이 되어<br>
-WeakSet에서 이 정보가 없어지게 된다. 즉 참조를 모니터링하고 있다.<b>
+WeakSet에서 이 정보가 없어지게 된다. 즉 참조를 모니터링하고 있다.</b>
 
 ```javascript
 let arr = [1,2,3,4];
