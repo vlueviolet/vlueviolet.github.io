@@ -8,7 +8,9 @@ var str = 'hello world~~';
 var text = 'hello';
 console.log(str.startWith(text));   // true
 ```
+
 <br>
+
 ## endWith(text)
 text로 끝나는 문자열 일치 여부 반환
 ```javascript
@@ -17,6 +19,7 @@ var text = '~~';
 console.log(str.endWith(text));		// true
 ```
 <br>
+
 ## includes(text)
 text를 포함하고 있는지 여부 반환
 ```javascript
