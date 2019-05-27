@@ -3,6 +3,7 @@ filter, includes, from을 사용해서 문자열 'e'가 포함된 노드로 구�
 
 <br>
 ## 방법 1
+
 ```javascript
 function print() {
     let array = Array.from(document.querySelectorAll('li'));    // li 노드로 구성된 배열
@@ -15,7 +16,9 @@ function print() {
 }
 print();
 ```
+
 <br><br>
+
 ## 방법 2
 ```javascript
 function print() {
