@@ -80,8 +80,8 @@ console.log(myWeakSet)
 <br>
 
 ### 참조를 모니터링하는 WeakSet
-<b><u>만약, 객체가 null 또는 필요가 없어지면 가비지 컬렉션 대상이 되어<br>
-  WeakSet에서 이 정보가 없어지게 된다. 즉 참조를 모니터링하고 있다.</u></b>
+**<u>만약, 객체가 null 또는 필요가 없어지면 가비지 컬렉션 대상이 되어<br>
+  WeakSet에서 이 정보가 없어지게 된다. 즉 참조를 모니터링하고 있다.</u>**
 
 ```javascript
 let arr = [1,2,3,4];
