@@ -1,5 +1,5 @@
 # let
-javascript는 스코프 체인에 의해 지역 스코프에서 i를 찾고, 없으면 전역으로 올라가서 값을 찾는다.<br
+javascript는 스코프 체인에 의해 지역 스코프에서 i를 찾고, 없으면 전역으로 올라가서 값을 찾는다.<br>
 아래와 같은 경우는 console.log(i)가 for문에 속하는 i가 아니지만 스코프 체인에 의해 100이 출력된다.
 ```javascript
 function cal () {
