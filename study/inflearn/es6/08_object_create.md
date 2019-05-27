@@ -11,7 +11,6 @@ const data = {
 ```
 
 object에서 키와 value가 동일하면 축약 가능
-
 ```javascript
 function getObj() {
     const name = 'crong';
