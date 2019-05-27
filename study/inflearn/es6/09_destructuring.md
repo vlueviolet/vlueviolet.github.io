@@ -107,7 +107,9 @@ function getNewsUrl([{url}]) {    // 파라메터로 전달할때 distructuring 
     console.log(url);
 }
 ```
+
 <br>
+
 ### case 2
 event를 전달받을때 필요한 값만 전달 할 수 있다.
 ```html
