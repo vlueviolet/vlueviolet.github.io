@@ -1,6 +1,6 @@
 # Array.from
 <br>
-# Array.frome
+
 ## 진짜 배열 만들기
 가짜배열을 진짜 배열로 만들어 주는 메소드
 <br><br>
@@ -35,6 +35,7 @@ addMark(1,2,3,4,5);
 <br>
 javascript에는 이런 가짜 배열이 arguments, querySelectorAll, nodeList 등 이런 가짜 배열들이 존재하는데,<br>
 이런 가짜배열을 진짜 배열로 만들어 주는 것이 바로 from이다.
+
 ```javascript
 function addMark () {
     let newArray = Array.from(arguments);	// arguments로 부터 배열을 만든다.
