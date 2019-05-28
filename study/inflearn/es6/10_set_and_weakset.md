@@ -1,4 +1,5 @@
 # Set & WeakSet
+* array를 개선한 자료구조
 
 ## Set 으로 유니크한 배열만들기
 
