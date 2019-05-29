@@ -46,3 +46,7 @@ click 이벤트에 걸려있는 함수가 실행될때, 해당 함수 스코프�
 이런걸 closure라고 함
 <br><br>
 let으로 이벤트 리스너가 생성될때, i의 스코프가 정해지기때문에 해당 function에서 이 값을 참조할 수 있음
+
+
+## 추가 링크
+* var, let, const : https://gist.github.com/LeoHeo/7c2a2a6dbcf80becaaa1e61e90091e5d
