@@ -26,3 +26,7 @@ text를 포함하고 있는지 여부 반환
 var str = 'hello world~~';
 console.log(str.includes('world')); // true
 ```
+
+<br>
+## 그 외 추가된 메소드
+* http://gnujoow.github.io//dev/2016/10/14/Dev6-es6-array-helper/
