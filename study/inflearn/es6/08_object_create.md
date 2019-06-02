@@ -1,6 +1,7 @@
 # Object > 간단히 객체 생성하기 (오브젝트 선언방법)
 <br>
 object 생성시 키, 함수(function) 생략 가능
+
 ```javascript
 const data = {
     name,
@@ -8,6 +9,8 @@ const data = {
     age
 };
 ```
+
+<br>
 
 object에서 키와 value가 동일하면 축약 가능
 ```javascript
@@ -35,4 +38,4 @@ function getObj() {
 }
 var obj = getObj();
 console.log(obj);
-```￼
+```

@@ -10,6 +10,7 @@ let jung = data[1];
 console.log(jisu, jung)
 ```
 <br>
+
 [jisu,,jung] 같이 배열화하여 값 할당 가능
 ```javascript
 let data = ['crong', 'honux', 'jk', 'jinny'];
@@ -17,6 +18,7 @@ let data = ['crong', 'honux', 'jk', 'jinny'];
 let [jisu,,jung] = data;
 console.log(jisu, jung)
 ```
+
 <br><br>
 
 ## Destructuring Object
@@ -43,7 +45,9 @@ myName, myAge이 변수명임
 let {name: myName, age: myAge} = obj;
 console.log(myName, myAge); // crong, 10
 ```
+
 <br><br>
+
 ## Destructuring 활용 JSON파싱
 필요한 변수를 추출할 수 있음
 ```javascript
@@ -72,6 +76,7 @@ let [, {topic, url}] = news;
 console.log(topic, url)
 ```
 <br><br>
+
 ## Destructuring 활용_Event객체전달
 파라메터를 활용해서 distructuring을 쓰면 파싱을 쉽게 할 수 있다.
 
@@ -102,6 +107,8 @@ function getNewsUrl([{url}]) {    // 파라메터로 전달할때 distructuring 
     console.log(url);
 }
 ```
+
+<br>
 
 ### case 2
 event를 전달받을때 필요한 값만 전달 할 수 있다.

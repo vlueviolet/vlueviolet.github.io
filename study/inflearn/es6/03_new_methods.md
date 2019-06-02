@@ -8,7 +8,9 @@ var str = 'hello world~~';
 var text = 'hello';
 console.log(str.startWith(text));   // true
 ```
+
 <br>
+
 ## endWith(text)
 text로 끝나는 문자열 일치 여부 반환
 ```javascript
@@ -17,9 +19,15 @@ var text = '~~';
 console.log(str.endWith(text));		// true
 ```
 <br>
+
 ## includes(text)
 text를 포함하고 있는지 여부 반환
 ```javascript
 var str = 'hello world~~';
 console.log(str.includes('world')); // true
 ```
+
+<br>
+
+## 그 외 추가된 메소드
+* http://gnujoow.github.io//dev/2016/10/14/Dev6-es6-array-helper/

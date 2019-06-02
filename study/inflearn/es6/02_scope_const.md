@@ -1,9 +1,10 @@
 # const
 
-## const - 선언된 변수 지키
+## const - 선언된 변수 지키기
 * 변화가 있으면 안되는 경우에 사용한다.
 * 이는 수정불가의 의미가 아니라, 재할당이 안된다는 것이다.
 <br>
+
 ```javascript
 const home = 'my home';
 home = 'my house';

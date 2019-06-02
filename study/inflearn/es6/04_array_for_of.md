@@ -44,6 +44,7 @@ for (let value of data) {
 // 결과에 for-in처럼 function이 찍히지 않고, data 배열의 값이 잘 찍힌다.
 ```
 <br>
+
 string에서 사용한다면, 캐릭터 단위로 출력함
 ```javascript
 var str = 'hello world ~!!';
