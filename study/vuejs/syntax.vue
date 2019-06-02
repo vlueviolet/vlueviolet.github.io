@@ -35,11 +35,11 @@ export default {
         }
     },
     //데이터 포멧 제어
-	filters: {
-		// Moment date filter
-		moment: function (date) {
-			return moment.unix(date).format('mm:ss')
-		}
+    filters: {
+        // Moment date filter
+        moment: function (date) {
+            return moment.unix(date).format('mm:ss')
+        }
     },
     created() {
         this.init();
