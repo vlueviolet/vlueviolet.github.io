@@ -10,13 +10,13 @@ price, news 데이터 fetch, 값 비교를 통한 updated 알림
 
 모달 팝업 테스트
 
-[](./images/1.png)
+![1.png](./images/1.png)
 
-[](./images/2.png)
+![](./images/2.png)
 
-[](./images/3.png)
+![](./images/3.png)
 
-[](./images/4.png)
+![](./images/4.png)
 
 ## 2. 로그인
 
@@ -28,11 +28,11 @@ gitlab : [http://bit.ly/2IUDMw0](http://bit.ly/2IUDMw0)
 
 공통 api 호출 함수를 활용한 get, post 처리
 
-[](./images/5.png)
+![](./images/5.png)
 
-[](./images/6.png)
+![](./images/6.png)
 
-[](./images/7.png)
+![](./images/7.png)
 
 ## 3. 타임라인
 
@@ -45,12 +45,12 @@ BE팀에서 제공된 api 활용을 통한 비동기 데이터 바인딩
     id, password 입력시 버튼 활성화
     제공되는 api 활용한 로그인, 로그아웃 처리
 
-[](./images/8.png)
+![](./images/8.png)
 
 - 대시보드
 리스트 fetch, [vue-awesome-swiper](https://www.npmjs.com/package/vue-awesome-swiper) 적용
 
-[](./images/9.png)
+![](./images/9.png)
 
 - 프로젝트
     - 리스트 fetch, 즐겨찾기 toggle
@@ -64,10 +64,10 @@ BE팀에서 제공된 api 활용을 통한 비동기 데이터 바인딩
     - 공통 사용되는 filter를 전역으로 뺌
     - 컴포넌트간 event bus 활용 (진행중)
 
-[](./images/10.png)
+![](./images/10.png)
 
-[](./images/11.png)
+![](./images/11.png)
 
-[](./images/12.png)
+![](./images/12.png)
 
-[](./images/13.png)
+![](./images/13.png)
