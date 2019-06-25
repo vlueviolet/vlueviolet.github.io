@@ -1,6 +1,9 @@
 # Array > for of - 순회하기
+
 <br>
+
 ## forEach
+
 ```javascript
 var data = [1, 2, undefined, NaN, null, ''];
 data.forEach(function (index, value) {
