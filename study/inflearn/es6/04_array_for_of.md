@@ -9,7 +9,9 @@ data.forEach(function (index, value) {
 
 // index와 값이 출력
 ```
+
 <br><br>
+
 ## for-in
 오브젝트를 순회하는 함수
 
