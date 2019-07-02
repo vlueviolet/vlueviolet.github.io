@@ -1,6 +1,9 @@
 # Array > for of - 순회하기
+
 <br>
+
 ## forEach
+
 ```javascript
 var data = [1, 2, undefined, NaN, null, ''];
 data.forEach(function (index, value) {
@@ -9,7 +12,9 @@ data.forEach(function (index, value) {
 
 // index와 값이 출력
 ```
+
 <br><br>
+
 ## for-in
 오브젝트를 순회하는 함수
 
