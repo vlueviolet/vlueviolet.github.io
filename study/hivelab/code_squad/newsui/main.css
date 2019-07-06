@@ -23,7 +23,7 @@ a { text-decoration: none}
 }
 
 .header > ul{
-	float:left;
+	display: inline-block;
 }
 
 .header > ul > li {
@@ -36,21 +36,33 @@ a { text-decoration: none}
 }
 
 .left, .right {
-	display: inline-block;
+	float: left;
+}
+.header > .btn a {
+	display: block;
+	width: 20px;
+	border: 1px solid #e6e6e6;
+	text-align: center;
 }
 
-.left {
-	margin-right: 10px;
+.left a{
+	border-right: 0;
 }
+
 
 .mainArea {
 	clear:both;
 	overflow: auto;
 }
 
+.title {
+	padding: 10px;
+}
+
 .newsList {
 	overflow: hidden;
-    clear: both;
+	clear: both;
+	padding: 0 10px;
 }
 
 .newsNavigation, .content , .newsList > ul{
@@ -136,7 +148,7 @@ a { text-decoration: none}
 	text-overflow: ellipsis;
     white-space: nowrap;
 	font-size: 14px;
-    margin: 2%;
+    margin-top: 5px;
 }
 
 .news-config {
