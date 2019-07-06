@@ -35,16 +35,16 @@ export default class newsSection {
         this.btnRight.addEventListener('click', () => this.moveSlide('right'));
     }
 
-    moveSlide(config) {
+    moveSlide(direction) {
         event.preventDefault();
-        if (config === 'right') {
+        if (direction === 'right') {
             this.preveIndex = this.currentIndex;
             this.currentIndex++;
             if (this.currentIndex > this.slide.length-1) {
                 this.currentIndex = 0;
             }
         }
-        if (config === 'left') {
+        if (direction === 'left') {
             this.preveIndex = this.currentIndex;
             this.currentIndex--;
             if (this.currentIndex < 0) {
