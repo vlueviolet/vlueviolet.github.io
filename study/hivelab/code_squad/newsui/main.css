@@ -80,7 +80,14 @@ a { text-decoration: none}
     cursor: pointer;
     margin-bottom: 1%;
 }
+.newsNavigation li.is_active a {
+	font-weight: bold;
+	color: #0091ff;
+}
 
+.newsNavigation a {
+	color: #000;
+}
 .newsNavigation a:hover {
 	text-decoration: underline;
 }
