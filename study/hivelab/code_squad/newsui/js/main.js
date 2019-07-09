@@ -6,5 +6,13 @@ import {fnNewsTitleTemplate} from '../templates/newsTitle.js'
 window.addEventListener("DOMContentLoaded", () => {
     const url = "/data/newslist.json";
     const news = new newsSection(url);
+    
+    // const obj = {
+    //     btnLeft: '.btn .left a',
+    //     btnRight: '.btn .right a',
+    //     slide: '.news_item',
+    //     navigationList: '.newsNavigation li'
+    // }
     news.init(fnNewsListTemplate, fnNewsTitleTemplate);
+    // news.setElements = obj;
 });

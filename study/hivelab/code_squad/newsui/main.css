@@ -3,7 +3,7 @@ div,header,ul,li,section,nav,footer,h1,h2,h3,h4 {margin:0;padding:0;}
 li { list-style: none; }
 a { text-decoration: none}
 
-.header,.mainArea > .newsNavigation, .mainArea > .content, .newsList > ul{
+.header,.newsNavigation, .mainArea > .content, .newsList > ul{
 	padding:10px;
 	border: 1px solid #cccaca;
 }
@@ -86,6 +86,7 @@ a { text-decoration: none}
 }
 
 .newsNavigation a {
+	display: block;
 	color: #000;
 }
 .newsNavigation a:hover {
