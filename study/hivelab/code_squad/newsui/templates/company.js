@@ -1,8 +1,8 @@
 let arrayIndex = 0;
 let style = '';
-const fnNewsTitleTemplate = ({company}) => {
+const fnCompanyTemplate = ({company}) => {
     arrayIndex++;
     return `<li class="${arrayIndex === 1 ? 'is_active' : ''}"><a href="#">${company}</a></li>`
 }
 
-export {fnNewsTitleTemplate}
+export {fnCompanyTemplate}
