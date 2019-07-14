@@ -529,3 +529,144 @@ kim.sum();
 javascript는 kim 객체에 sum메소드가 없기때문에
 __proto__를 통해 sum이 있는지 찾는다.
 만약 없다면 Person's prototype 객체의 __proto__를 찾는다....
+
+## 생성자를 통한 상속
+class가 등장하기 이전에 prototype을 이용한 상속을 설명한다.
+생성자를 통해 함수를 상속할때는 this에 주목해야한다.
+
+PersonPlus에서 Person 객체를 부모로 두는 상속을 한다면,
+call 메소드를 통해서 PersonPlus를 가리키는 this를 인자로 전달하므로 Person 객체의 constructor를 가져올 수 있다. 하지만 이는 진정한 상속이 아닌 Person객체를 호출한 것 뿐이다.
+
+그래서 현재는 kim.sum()을 실행하면 에러가 난다.
+
+```javascript
+function Person(name, first, second) {
+    this.name = name;
+    this.first = first;
+    this.second = second;
+}
+
+Person.prototype.sum = function () {
+    return this.first + this.second;
+}
+
+function PersonPlus(name, first, second, third) {
+    /**
+     * 상속자를 이용한 상속시에는 this에 주목해야 한다.
+     * super(name, first, second)와 같은 일을 한다.
+     * 이렇게 한다고 해서 상속이 되는것이 아니다. Person이라는 객체를 호출한 것 뿐이다.
+     * 그렇기 때문에 kim.sum()을 실행할 수 없다. 왜냐하면, sum은 Person의 prototype 객체가 갖고 있기 때문에..
+     */
+    Person.call(this, name, first, second);
+    this.third = third;
+}
+PersonPlus.prototype.avg = function () {
+    return (this.first + this.second + this.third)/3;
+}
+
+let kim = new PersonPlus('kim', 10, 20, 30);
+console.log(kim.sum()); // 30
+console.log(kim.avg()); // 15
+```
+
+그림으로 표현하면 이렇게 된다.
+Person과 Person's prototype 객체간의 연결,
+PersonPlus와 PersonPlus's prototype 객체간이 연결되고,
+new를 통해 생성된 kim 객체는 __proto__를 통해 PersonPlus's prototype 객체와 연결된다.
+![](./images/10.png)
+
+kim.avg()를 실행하면,
+kim 객체에는 avg() 프로퍼티가 없기때문에 __proto__로 연결된 PersonPlus's prototype 객체에서 avg()를 찾게된다.
+![](./images/11.png)
+
+kim.sum()를 실행하면,
+마찬가지로 kim 객체에 sum() 프로퍼티가 없어 PersonPlus's prototype 객체에서 찾게되는데 여기에도 없다.
+그럼, kim 객체는 sum()가 없다고 에러를 노출한다.
+![](./images/12.png)
+
+Person's prototype에는 sum()이 있기때문에 PersonPlus's prototype 객체의 __proto__가 아래 이미지와 같이 Person's prototype 객체를 카리키도록 한다면, sum()을 쓸 수 있을 것이다.
+(__proto__는 객체에 기본적으로 있다.)
+![](./images/13.png)
+그렇다면, sum 메소드를 찾아서 실행할 수 있게된다.
+![](./images/14.png)
+```javascript
+PersonPlus.prototype.__proto__ = Person.prototype;
+```
+
+```javascript
+function Person(name, first, second) {
+    this.name = name;
+    this.first = first;
+    this.second = second;
+}
+
+Person.prototype.sum = function () {
+    return this.first + this.second;
+}
+
+function PersonPlus(name, first, second, third) {
+    /**
+     * 상속자를 이용한 상속시에는 this에 주목해야 한다.
+     * super(name, first, second)와 같은 일을 한다.
+     * 이렇게 한다고 해서 상속이 되는것이 아니다. Person이라는 객체를 호출한 것 뿐이다.
+     * 그렇기 때문에 kim.sum()을 실행할 수 없다. 왜냐하면, sum은 Person의 prototype 객체가 갖고 있기 때문에..
+     */
+    Person.call(this, name, first, second);
+    this.third = third;
+}
+PersonPlus.prototype.__proto__ = Person.prototype;
+PersonPlus.prototype.avg = function () {
+    return (this.first + this.second + this.third)/3;
+}
+
+let kim = new PersonPlus('kim', 10, 20, 30);
+console.log(kim.sum()); // 30
+console.log(kim.avg()); // 20
+```
+
+하지만, __proto__가 표준이 아니기때문에 다른 방법을 써야한다.
+
+```javascript
+// PersonPlus.prototype.__proto__ = Person.prototype;
+// Person.prototype을 __proto__로 하는 새로운 객체 생성하여 PersonPlus.prototype에 전달함
+PersonPlus.prototype = Object.create(Person.prototype);
+```
+
+하지만, kim.constructor를 출력하면, PersonPlus객체가 아닌 Person 객체가 출력된다.
+원하지 않은 결과가 나타난다.
+```javascript
+function Person(name, first, second) {
+    this.name = name;
+    this.first = first;
+    this.second = second;
+}
+
+Person.prototype.sum = function () {
+    return this.first + this.second;
+}
+
+function PersonPlus(name, first, second, third) {
+    /**
+     * 상속자를 이용한 상속시에는 this에 주목해야 한다.
+     * super(name, first, second)와 같은 일을 한다.
+     * 이렇게 한다고 해서 상속이 되는것이 아니다. Person이라는 객체를 호출한 것 뿐이다.
+     * 그렇기 때문에 kim.sum()을 실행할 수 없다. 왜냐하면, sum은 Person의 prototype 객체가 갖고 있기 때문에..
+     */
+    Person.call(this, name, first, second);
+    this.third = third;
+}
+// PersonPlus.prototype.__proto__ = Person.prototype;
+PersonPlus.prototype = Object.create(Person.prototype);
+PersonPlus.prototype.avg = function () {
+    return (this.first + this.second + this.third)/3;
+}
+
+let kim = new PersonPlus('kim', 10, 20, 30);
+console.log(kim.sum()); // 30
+console.log(kim.avg()); // 20
+
+// constructor를 찍어보면 PersonPlus가 아닌 Person 객체로 변경된다.
+console.log(kim.constructor);   // [Function: Person]
+```
+
+#### constructor 속성의 의미와 용도

@@ -1,23 +1,29 @@
-const kim = {
-    name: 'kim',
-    first: 10,
-    second: 20,
-}
-const lee = {
-    name: 'lee',
-    first: 2,
-    second: 1
-}
-function sum(prefix) {
-    return prefix + (this.first + this.second);
+class Person {
+    constructor(name, first, second) {
+        this.name = name;
+        this.first = first;
+        this.second = second;
+    }
+    // 함수 생성
+    sum() {
+        return this.first + this.second;
+    }
 }
 
-// call
-console.log(sum.call(kim, 'kim : ')); // kim : 30
-console.log(sum.call(lee, 'lee : ')); // lee : 3 
+class PersonPlus extends Person {
+    constructor(name, first, second, third) {
+        super(name, first, second); // 부모 클래스의 constructor를 호출하여 속성 정의됨
+        this.third = third;
+    }
+    sum() {
+        // 부모 클래스의 함수 실행가능
+        return super.sum() + this.third;
+    }
+    avg() {
+        return (this.first + this.second)/2;
+    }
+}
 
-// bind
-const kimSum = sum.bind(kim, 'kim => ');
-// 새로운 취지로 바뀐 함수가 리턴된다. sum이 바뀌는 것은 아니다.
-console.log(sum.bind(kim, 'kim => ')());
-console.log(kimSum());
+let kim = new PersonPlus('kim', 10, 20, 30);
+console.log(kim.sum()); // 30
+console.log(kim.avg()); // 15
