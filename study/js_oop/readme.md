@@ -230,7 +230,7 @@ sub 객체와 super 객체가 있다고 가정해보자.
 sub 객체가 super 객체의 기능을 상속받으면서 기능을 추가하고 싶을때,
 sub 객체가 super 객체로부터 직접 기능을 상속받을 수 있다.
 
-[](./images/1.png)
+![](./images/1.png)
 
 전통적인 주류 객체지향언어에서는 클래스가 상속을 받는데,
 javascript에서는 객체가 직접 다른 객체의 상속을 받을 수 있고, 이 상속 관계를 얼마든지 바꿀 수 있다.
@@ -467,7 +467,7 @@ function Persion() {
 }
 ```
 
-[](./images/2.png)
+![](./images/2.png)
 
 Person 객체와 Person's prototype 객체이다.
 이 둘은 서로 연관이 있다. 
@@ -475,11 +475,11 @@ Person 객체는 내부적으로 prototype이라는 property가 생기고,
 그 property는 Person's prototype 객체를 가리킨다.
 
 그래서 Person.prototype은 Person's prototype 객체를 의미한다.
-[](./images/3.png)
+![](./images/3.png)
 
 Person's prototype 객체도 자신이 Person 객체 소속이라는 것을 알리기위해
 자신의 constructor 프로퍼티를 만들고 이는 Person 객체를 가리킨다.
-[](./images/4.png)
+![](./images/4.png)
 
 그래서 Person 객체와 Person's prototype 객체는 서로 참조하는 관계가 된다.
 
@@ -488,7 +488,7 @@ javascript는 Person's prototype에 sum이 있는지 찾고 없으면 생성한�
 ```javascript
 Person.prototype.sum = function () {}
 ```
-[](./images/5.png)
+![](./images/5.png)
 
 이렇게 객체를 찍어내는 constructor 생성자 함수를 만들게 된것이다.
 
@@ -505,10 +505,10 @@ Person의 prototype 객체에 접근할 수 있게 된다.
 ```javascript
 const kim = new Person('kim', 10, 20);
 ```
-[](./images/6.png)
+![](./images/6.png)
 
 lee라는 또다른 객체를 생성해도 같은 결과가 나온다.
-[](./images/7.png)
+![](./images/7.png)
 
 
 아래 코드를 실행하면,
@@ -518,13 +518,13 @@ console.log(kim.name)
 javascript는 kim 객체에 name 프로퍼티가 있는지 찾는다.
 name 프로퍼티가 있기때문에 출력된다.
 만약 없다면 kim의 __proto__에 name이 있는지 찾는다.
-[](./images/8.png)
+![](./images/8.png)
 
 아래 코드를 실행하면,
 ```javascript
 kim.sum(); 
 ```
-[](./images/9.png)
+![](./images/9.png)
 javascript는 kim 객체에 sum메소드가 없기때문에
 __proto__를 통해 sum이 있는지 찾는다.
 만약 없다면 Person's prototype 객체의 __proto__를 찾는다....
