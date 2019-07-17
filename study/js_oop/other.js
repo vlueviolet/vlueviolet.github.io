@@ -27,4 +27,4 @@ PersonPlus.prototype.avg = function () {
 let kim = new PersonPlus('kim', 10, 20, 30);
 console.log(kim.sum()); // 30
 console.log(kim.avg()); // 20
-console.log(kim.constructor);
+console.log(kim.constructor);   // [Function: Person]
