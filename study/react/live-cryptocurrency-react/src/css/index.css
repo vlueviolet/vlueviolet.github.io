@@ -1,0 +1,46 @@
+@charset "utf-8";
+/* HIVELAB (http://www.hivelab.co.kr) */
+
+.blind{visibility:hidden;position:absolute;left:0;top:0;width:1px;height:1px;line-height:0;font-size:0;}
+body{min-width:320px}
+/* header{z-index:10;position:fixed;left:0;top:0;width:100%;height:64px;border-bottom:2px solid #2a3b52;background:#2e4564} */
+h1{margin:0;padding:24px 0 0;color:#fff;font-size:18px;text-transform:uppercase;text-align:center}
+h2{margin:0;padding:6px 0 15px;color:#333;font-size:16px;font-weight:bold;text-align:left;text-transform:uppercase}
+h2.h_type{margin-bottom:0}
+h2 span{font-weight:normal;font-size:15px}
+h2 span span{display:inline-block;position:relative;top:2px;width:16px;height:16px;margin:0 4px 0 8px;background:url(../assets/ico_update.png) 0 0 no-repeat;background-size:100% 100%;font-weight:normal;font-size:14px}
+ul{overflow:hidden;list-style-type:none;padding:0;text-align:left;font-size:12px}
+li{display:block;min-height:90px;margin:0}
+dl{margin:0;text-align:left}
+dt{color:#0870b0;font-weight:700}
+dd{margin:0}
+p{color:#999}
+a{color:#333;text-decoration:none}
+th a{color:#369}
+ul a{display:flex;color:#42b983}
+.bx{padding:80px 0 46px}
+.bx2{width:60px;height:60px;margin-right:10px}
+table.type09{width:100%;margin-bottom:20px;table-layout:fixed;border-collapse:collapse;border-top:1px solid #ccc;text-align:center;font-size:12px;line-height:1.5}
+table.type09 img{width:60px;height:60px;vertical-align:middle}
+table.type09 caption{position:absolute;left:0;top:0;width:1px;height:1px;font-size:0;line-height:0}
+table.type09 thead th{padding:10px;font-weight:700;vertical-align:top;color:#369;border-bottom:3px solid #036}
+table.type09 tbody th{width:150px;padding:10px;font-weight:700;vertical-align:top;border-bottom:1px solid #ccc;background:#f3f6f7}
+table.type09 td{width:350px;vertical-align:top;border-bottom:1px solid #ccc}
+td div{position:relative;height:100%;padding:10px 0}
+.h_area{position:relative;}
+.h_area button{position:absolute;left:210px;top:4px;height:22px;margin:0;padding:0 8px;border:1px solid #1d2943;border-radius:2px;background:#1d2943;color:#fff;font-size:12px;line-height:22px;cursor:pointer}
+.h_area button[disabled=disabled]{border:1px solid #bbb;background:#ccc;color:#fff}
+.active div:after{clear:both;content:'';display:block;position:absolute;left:0;top:0;width:100%;height:100%;background:#42b983;-webkit-animation:fadeinout .8s linear forwards;animation:fadeinout .8s linear forwards}
+.btn_type{position:fixed;left:0;bottom:0;width:100%;margin:0;padding:20px 0 19px;border:0;border-top:2px solid #1b212f;background:#1d2943;color:#fff;font-size:14px;cursor:pointer}
+.countdown{position:fixed;left:0;top:1px;width:64px;height:64px;margin:0;background:none;color:#fff;font-size:18px;text-align:center;line-height:64px}
+.btn_reload{display:block;position:absolute;right:0;top:1px;width:64px;height:64px;border:0;background:url(../assets/btn_reload.png) 50% 50% no-repeat;background-size:50% 50%;cursor:pointer}
+.Toastify__toast{min-height:66px}
+._loading_overlay_overlay{position:fixed !important}
+@-webkit-keyframes fadeinout {
+	0%,100% { opacity: 0; }
+	50% { opacity: 1; }
+}
+@keyframes fadeinout {
+	0%,100% { opacity: 0; }
+	50% { opacity: 1; }
+}
