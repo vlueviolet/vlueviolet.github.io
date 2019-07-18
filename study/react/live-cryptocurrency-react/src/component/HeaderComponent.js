@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 
@@ -7,10 +9,11 @@ class HeaderComponent extends Component {
         super(props);
 
         const _self = this
-        const baseTime = 10
+        const baseTime = 60
 
         _self.state = {
-            countdown: baseTime
+            countdown: baseTime,
+            setTime: (baseTime * 1000),
         }
     }
 
@@ -30,7 +33,7 @@ class HeaderComponent extends Component {
         let cTime = _self.countdown
     
         this.timer = setTimeout(() => {
-            console.log(_self.countdown);
+            // console.log(_self.countdown);
             if (_self.countdown !== 0) {
                 // 카운트가 0이 되기 전까지는 -1초 적용
                 this.setState({
@@ -38,10 +41,10 @@ class HeaderComponent extends Component {
                 })
             } else {
                 // 카운트가 0이되면 인터벌 초기화 후 시간 재설정 후 recurrsion
-                // this.msg('Update checked')
-                // this.setState({
-                //     countdown: _self.setTime / 1000
-                // })
+                this.msg('Update checked')
+                this.setState({
+                    countdown: _self.setTime / 1000
+                })
     
                 // this.bindCurrency()
     
@@ -63,19 +66,12 @@ class HeaderComponent extends Component {
     
 
     // 토스트 팝업
-    // msg = (dsc) => {
-    //     toast.info(dsc)
-    // }
+    msg = (dsc) => {
+        toast.info(dsc)
+    }
     
     render() {
         const _self = this;
-        const Header = ({ children, children2 }) => (
-            <header css={headerStyle}>
-                <h1>Live Cryptocurrency</h1>
-                {children}
-                {children2}
-            </header>
-        )
 
         const headerStyle = css({
             zIndex: 10,
@@ -88,8 +84,16 @@ class HeaderComponent extends Component {
             background: '#2e4564'
         })
 
+        const Header = ({ children, children2 }) => (
+            <header css={headerStyle}>
+                <h1>Live Cryptocurrency</h1>
+                {children}
+                {children2}
+            </header>
+        )
+
         const HeaderCounter = () => (
-            <p className="countdown">{_self.countdown}</p>
+            <p className="countdown">{_self.state.countdown}</p>
         );
 
         const HeaderResetButton = () => (
