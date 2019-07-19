@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Test from '../views/test.pug';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 
@@ -100,12 +101,13 @@ class HeaderComponent extends Component {
             <button type="button" onClick={this.refresh} className="btn_reload"><span className="blind">Refresh</span></button>
         );
 
-        return(
-            <Header>
-                <HeaderCounter />
-                <HeaderResetButton />
-            </Header>
-        )
+        // return(
+        //     <Header>
+        //         <HeaderCounter />
+        //         <HeaderResetButton />
+        //     </Header>
+        // )
+        return Test.call({}, {});
     }
 }
 

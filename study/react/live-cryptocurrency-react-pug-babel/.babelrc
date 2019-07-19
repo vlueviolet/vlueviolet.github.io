@@ -1,0 +1,7 @@
+{
+    "presets": ["@emotion/babel-preset-css-prop"],
+    "plugins": [
+        "transform-react-pug",
+        "transform-react-jsx"
+    ]
+}
