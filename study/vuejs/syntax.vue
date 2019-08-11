@@ -73,7 +73,8 @@ export default {
     다른 식으로 말하면 부모는 mounted훅을 실행하기 전에 자식의 mounted훅이 끝나기를 기다린다. 
     */
     mounted() {
-    	this.$nextTick(function () {
+	this.$nextTick(() => {
+		// 뷰 라이프사이클에 의해 다음 코드 실행 시점에 데이터가 반영된다.
 		// 모든 화면이 렌더링된 후 실행합니다.
 	});
         this.$refs.email.focus();
