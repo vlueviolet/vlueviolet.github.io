@@ -19,6 +19,10 @@
 <script>
 import Components from './Components/Copoments.vue'
 import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+
+import { createNamespacedHelpers } from 'vuex'
+const timelineHelper = createNamespacedHelpers('timelineModule')
+
 export default {
     props: ['data'],
     components: { Components, Components2 },
@@ -52,6 +56,13 @@ export default {
     updated() {
 
     },
+    /* computed 속성 대신 메소드와 같은 함수를 정의할 수도 있습니다.
+       최종 결과에 대해 두 가지 접근 방식은 서로 동일합니다.
+       차이점은 computed 속성은 종속 대상을 따라 저장(캐싱)된다는 것 입니다. 
+       computed 속성은 해당 속성이 종속된 대상이 변경될 때만 함수를 실행합니다.
+       즉 data속성의 변수가 변경되지 않는 한, computed 속성인 함수를 여러 번 요청해도 계산을 다시 하지 않고
+       계산되어 있던 결과를 즉시 반환합니다.
+    */
     computed: {
         ...mapState({
             mapState: 'mapState'
