@@ -62,7 +62,7 @@ export default {
     created 훅에서는 이제 data와 events가 활성화되어 접근할 수 있다.
     여전히 템플릿과 가상돔은 마운트 및 렌더링되지 않은 상태이다.
     컴포넌트 초기에 세팅되어야할 데이터 페치 사용
-*/
+    */
       this.init();
   },
   /* 컴포넌트, 템플릿, 렌더링된 돔에 접근할 수 있는 상태 (인스턴스 라이프사이클에 속함)
@@ -101,7 +101,7 @@ export default {
       mapState: 'mapState',
       customVariable: 'storeStateVariable',
     }),
-    ...mapState([
+    ...timelineHelper.mapState([
       'mapState',
       'customVariable'
     ]),
@@ -110,7 +110,7 @@ export default {
       mapGetters: 'mapGetters',
       customGatters: 'storeGatters'
     }),
-    ...mapGetters([
+    ...timelineHelper.mapGetters([
       'mapGetters',
       'customGatters'
     ]),
@@ -159,13 +159,27 @@ export default {
   },
   // Vue 인스턴스에 추가할 메소드
   methods: {
-    // 무조건 methods에 선언
-    ...mapMutations([   // 동기화 데이터
+    /**
+     * 무조건 methods에 선언
+     * 동기화 데이터
+     */
+    // 
+    ...mapMutations([
       'LOGOUT',
       'DECREASE'
     ]),
-    // 무조건 methods에 선언
-    ...mapActions([     // 비동기 데이터
+    ...timelineHelper.mapMutations([
+      'LOGOUT',
+      'DECREASE'
+    ]),
+    /**
+     * 무조건 methods에 선언
+     * 비동기 데이터
+     */
+    ...mapActions([
+      'LOGIN'
+    ]),
+    ...timelineHelper.mapActions([
       'LOGIN'
     ]),
     onClick() {
