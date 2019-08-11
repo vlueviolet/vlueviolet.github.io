@@ -97,10 +97,22 @@ export default {
   */
   computed: {
     ...mapState({
-      mapState: 'mapState'
+      // 정의하고 싶은 이름: store 변수 이름
+      mapState: 'mapState',
+      customVariable: 'storeStateVariable',
+    }),
+    ...mapState([
+      'mapState',
+      'customVariable'
+    ]),
+    // computed에 선언 권장
+    ...mapGetters({
+      mapGetters: 'mapGetters',
+      customGatters: 'storeGatters'
     }),
     ...mapGetters([
-    'isAuth'
+      'mapGetters',
+      'customGatters'
     ]),
     isButtonActive() {
       return !this.email || !this.password
@@ -147,10 +159,12 @@ export default {
   },
   // Vue 인스턴스에 추가할 메소드
   methods: {
+    // 무조건 methods에 선언
     ...mapMutations([   // 동기화 데이터
       'LOGOUT',
       'DECREASE'
     ]),
+    // 무조건 methods에 선언
     ...mapActions([     // 비동기 데이터
       'LOGIN'
     ]),
