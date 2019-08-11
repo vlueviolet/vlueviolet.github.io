@@ -75,15 +75,43 @@ export default {
         },
         invalidInput() {
            return !this.inputTitle.trim()
+        },
+        /*
+           computed 속성은 기본적으로 getter 함수만 가지고 있지만, 필요한 경우 setter 함수를 만들어 쓸 수 있습니다.
+           이제 vm.fullName = 'John Doe'를 실행하면 설정자가 호출되고 vm.firstName과 vm.lastName이 그에 따라 업데이트 됩니다.
+        */
+        fullName: {
+            // getter
+            get: function () {
+              return this.firstName + ' ' + this.lastName
+            },
+            // setter
+            set: function (newValue) {
+              var names = newValue.split(' ')
+              this.firstName = names[0]
+              this.lastName = names[names.length - 1]
+            }
         }
     },
+    /*
+    데이터 변경에 반응하는 보다 일반적인 방법을 제공합니다.
+    이는 데이터 변경에 대한 응답으로 비동기식 또는 시간이 많이 소요되는 조작을 수행하려는 경우에 가장 유용합니다.
+    */
     watch: {
         input(v) {
            this.valid = v.trim().length > 0
         },
         variable(newVal, oldVal) {
             console.log(newVal, oldVal)
-        }
+        },
+        '$store.state.visible' () {
+			if (this.$store.state.visible) {
+				clearInterval(this.intervalTimer);
+			} else {
+				this.setIntervalFunc();
+			}
+		}
+
     },
     // Vue 인스턴스에 추가할 메소드
     methods: {
