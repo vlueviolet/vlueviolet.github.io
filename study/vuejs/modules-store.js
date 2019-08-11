@@ -1,9 +1,6 @@
 import api from '@/api/timeline.js'
 import router from '@/routes';
 
-
-const SUCCESS = 'SUCCESS';
-
 const state = {
     projectInfo: {
         delYn: 'n',
