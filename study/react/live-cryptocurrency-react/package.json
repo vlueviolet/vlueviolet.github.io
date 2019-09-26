@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.14",
     "axios": "^0.18.0",
-    "emotion": "^10.0.14",
+    "babel-plugin-emotion": "^10.0.14",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
     "react": "^16.7.0",
@@ -30,11 +30,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "babel-plugin-transform-react-pug": "^7.0.1",
-    "eslint": "^6.0.1",
-    "eslint-plugin-react-pug": "^0.7.1",
-    "pug-as-jsx-loader": "^1.0.69"
-  }
+  ]
 }
