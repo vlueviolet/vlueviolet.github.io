@@ -80,7 +80,10 @@ state = {
 
 ### 함수형 setState
 
+이전 상태값을 현재에 반영하려고 할때는 preveState를 사용해야함
+
 ```javascript
+// class형
 // prevState 이전 상태값
 // setState가 method안에 들어갈 때는 아래와 같이 함수 형태로 쓰자
 this.setState(prevState => {
@@ -90,6 +93,15 @@ this.setState(prevState => {
     second: Math.ceil(Math.random() _ 9),
     value: ''
   };
+});
+```
+
+```javascript
+// 함수형
+setTries(prevTries => [...prevTries, { try: value, result: '홈런' }]);
+// 또는
+setTries(prevTries => {
+  return [...prevTries, { try: value, result: '홈런' }];
 });
 ```
 
@@ -192,4 +204,315 @@ setResult(prevResult => {
 });
 setFirst(Math.ceil(Math.random() * 9));
 setSecond(Math.ceil(Math.random() * 9));
+```
+
+### React에서 input 관련
+
+react에서는 input 요소를 사용할때, 무조건 아래 2개 중 하나를 써야한다.
+
+- value + onChange
+  value를 쓸거면, onChange도 항상 같이 써주자.
+  ```javascript
+  <input value={this.state.value} onChange={this.onChange} />
+  ```
+- defaultValue
+  value, onChange를 안쓴다면, defaultValue로 기본 값을 지정해주자.
+  ```javascript
+  <input defaultValue={this.state.value} />
+  ```
+
+# React 프로젝트 설치
+
+## 웹팩?
+
+여러 js를 하나의 번들로 만들어줌
+node.js를 알아야함, javascript 실행기이다.
+
+### 초기 설치
+
+```bash
+npm install react react-dom
+npm install -D webpack webpack-cli
+```
+
+### -D란?
+
+실제 서비스에서는 웹팩이 필요없다.<br>
+개발할때만 필요하기때문에 개발용으로만 웹팩을 쓰겠다는 의미
+
+### package.json
+
+`npm init`을 실행하면 생기는 문서로 실서비스, 개발에 필요한 각종 라이브러리들의 목록을 보여줌
+
+- 실제 서비스에서 적용되는 것들
+
+```json
+"devDependencies": {
+  ...
+}
+```
+
+- 개발할때만 적용되는 것들
+
+```json
+"devDependencies": {
+  ...
+}
+```
+
+### webpack.config.js
+
+```javascript
+// 입력단의 파일을 출력단의 파일로 압축해달라~
+module.exports = {
+  ...
+  entry: {  // 입력
+
+  },
+  output: { // 출력
+
+  }
+}
+```
+
+### client.jsx
+
+react, react-dom을 불러옴
+
+```javscript
+const React = require('react');
+const ReactDom = require('react-dom');
+```
+
+### 웹팩 실행
+
+```bash
+webpack
+```
+
+만약, `command not found` 뜨면
+
+1. `package.json`에 script 영역에 webpack을 명령어로 실행하도록 등록
+
+```json
+"scripts": {
+    "dev": "webpack"
+},
+```
+
+그리고 아래 명령어 실행
+
+```bash
+npm run dev
+```
+
+2. `npx webpack`으로 실행
+
+## babel 설치
+
+jsx 문법을 브라우저가 이해하기 위해서는 바벨을 통해 javascript 문법으로 변환이 필요하다
+
+```bash
+npm install -D @babel/core
+npm install -D @babel/preset-env
+npm install -D @babel/preset-react
+npm install -D babel-loader
+```
+
+- @babel/core
+  바벨의 기본
+- @babel/preset-env
+  사용자의 환경에 맞는 브라우저에 맞게 최신 문법을 옛날 문법으로 바꿔줌
+- @babel/preset-react
+  jsx를 javascript로 바꿔줌
+- babel-loader
+  babel과 webpack을 연결해줌
+
+### webpack.config.js
+
+브라우저 타겟 정보 설정 참고 : https://github.com/browserslist/browserslist
+
+```javascript
+const path = require('path'); // 경로 조작, node 설치시 깔림
+
+module.exports = {
+  name: 'word-relay-setting', // 웹팩 설정의 이름, 안써도 됨
+  mode: 'development', // 실서비스: production
+  devtool: 'eval', // 빠르게 하겠다?, 실서비스 hidden-source-map
+  resolve: {
+    // 확장자를 적어주면 entry단에 확장자 기입 안해도 됨
+    extensions: ['.js', '.jsx']
+  },
+  entry: {
+    // 입력
+    app: ['./client']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?/, // 규칙을 적용할 파일들, js, jsx파일들에 rule을 적용하겠다
+        loader: 'babel-loader', // 적용할 룰 이름
+        options: {
+          // babel의 옵션
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                targets: {
+                  // 원하는 브라우저를 타겟으로 하는 경우, 지원하고자 하는 브라우저를 지정하면 속도도 향상된다.
+                  browsers: ['> 5% in KR', 'last 2 chrome versions']
+                },
+                debug: true
+              }
+            ],
+            '@babel/preset-react'
+          ],
+          plugins: ['@babel/plugin-proposal-class-properties'] // jsx에서 constructor 말고 바로 state 문법을 쓰려면 추가해야함
+        }
+      }
+    ]
+  },
+  plugins: [new webpack.LoaderOptionsPlugin({ debug: true })],
+  output: {
+    // 출력
+    path: path.join(__dirname, 'dist'), //__dirname: 현재폴더, 현재 폴더안에 dist폴더를 합쳐줘라
+    filename: 'app.js'
+  }
+};
+```
+
+## 자동 빌드하는 방법
+
+아래 2개의 모듈을 설치한다.<br>
+자세한 셋팅 정보는 아래 링크 참고<br>
+https://github.com/gaearon/react-hot-loader/
+
+```bash
+npm install -D react-hot-loader
+npm install -D webpack-dev-server
+```
+
+그리고, package.json의 scripts 옵션에 `webpack-dev-server --hot`로 수정한다.
+webpack-dev-server가 webpack.config.js를 읽어서 빌드하고 항상 뒤쪽 서버에 유지를 시켜준다.
+
+```javascript
+// package.json 파일 수정
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "dev": "webpack-dev-server --hot"
+},
+```
+
+```javascript
+// webpack.config.js  파일 수정
+// module > rules > options > plugins
+plugins: [
+  '@babel/plugin-proposal-class-properties', // jsx에서 constructor 말고 바로 state 문법을 쓰려면 추가해야함
+  'react-hot-loader/babel'
+],
+```
+
+```javascript
+// .jsx 파일 수정
+const { hot } = require('react-hot-loader/root');
+const WordRelay = require('./WordRelay');
+
+const Hot = hot(WordRelay);
+
+ReactDom.render(<Hot />, document.querySelector('#root'));
+```
+
+```html
+<!-- 파일 경로 변경 dist 폴더 삭제 -->
+<script src="app.js"></script>
+```
+
+## require와 import
+
+### require
+
+node의 module 시스템으로, 내가 만들든 남이 만들었든 가져올 수 있음
+import와 호환됨
+
+### import
+
+export와 import
+
+```javascript
+export const hello = 'hello';
+
+import { hello };
+```
+
+default는 한 파일에서 1번만 사용할 수 있다.
+
+```javascript
+export default Hello; // module.exports = Hello; 와 호환이 된다.
+
+import Hello;
+```
+
+### 모듈 문법 비교
+
+```javascript
+// ES2015 모듈 문법
+import React, { Component } from 'react';
+class Hello extends Component {
+  ...
+}
+export const hello = 'hello'; // import { hello };
+export const bye = 'bye';     // impor { hello, bye };
+export default Hello;         // import Hello;
+
+// 노드 모듈 문법 : commonJS
+// 노드에서는 아래 문법을 제공한다. import를 쓰면 에러가 난다. (webpack.config.js에서 import 쓰면 에러난다.)
+// babel이 import --> require로 바꿔준다.
+const React = require('react');
+module.exports = { hello: 'a' };
+exports.hello = 'a';
+```
+
+### map() 반복문
+
+리액트가 key를 보고 같은 컴포넌트인지 판단하기 때문에,<br>
+react에서는 key를 반드시 작성해줘야 한다.<br>
+현재 array에 같은 값이 발생할 수 있기 때문에 데이터값보단, index를 key를 주면,<br>
+key의 역할이 성능 최적화인데, 문제가 된다. index를 key로 주는걸 안티패턴으로 불린다.<br>
+key를 고유하게 만드는 노력이 필요하다.
+<br><br>
+**요소가 추가만 되는 배열인 경우, index를 key로 사용해도 되지만,<br>reat에서 key를 기준으로 엘리먼트를 추가하거나, 수정 or 삭제를 판단하기 때문에 배열의 순서가 바뀌면 문제가 된다.**
+
+```javascript
+// arrya안에 동일 값이 있을 수 있기 떄문에, key를 고유값으로 하려는 노력이 필요하다.
+array.map((v, index) => {
+  return <li key={v.fruit + v.taste}>{v.fruit}</li>;
+});
+// 중괄호가 없으면 return의 의미
+array.map((v, index) => <li key={v.fruit + v.taste}>{v.fruit}</li>);
+```
+
+# Props
+
+렌더링이 자주 일어나는 문제가 있음
+
+```javascript
+// parent
+<Try value={v} index={i} />;
+
+// child
+render(
+  <div>
+    {this.props.value} {this.props.index}
+  </div>
+);
+```
+
+# array 사용
+
+react에서 배열을 추가할때 push를 사용하면 안된다.
+push 이전의 배열과 비교를 하지 못해 다음과 같은 방식으로 추가해야 한다.
+
+```javascript
+const array = [];
+array = [...array, value];
 ```
