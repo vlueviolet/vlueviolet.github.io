@@ -107,7 +107,7 @@ setTries(prevTries => {
 
 ### ref
 
-vue의 \$refs와 같이 DOM에서 element를 선택할 때 사용
+vue의 `$refs`와 같이 DOM에서 element를 선택할 때 사용
 
 ```javascript
 <input
@@ -121,6 +121,49 @@ vue의 \$refs와 같이 DOM에서 element를 선택할 때 사용
 
 // 다른 메소드에서
 this.input.focus();
+```
+
+```javascript
+// class 방식
+class NumberBaseball extends Component {
+
+  inputRef = createRef();
+
+  onInputRef = (c) => { this.inputRef = c; };
+
+  render() {
+    const { result, value, tries } = this.state;
+    return (
+      <>
+        <input type="text" maxLength={4}
+          value={value}
+          ref={this.onInputRef}
+          onChange={this.onChangeInput}
+        />
+      </>
+    );
+}
+```
+
+```javascript
+// hooks 방식
+const { useState, useRef } = React;
+
+const inputRef = useRef(null);
+
+inputRef.current.focus();
+
+return (
+  <>
+    <input
+      type="text"
+      id="txt-word"
+      ref={inputRef}
+      value={value}
+      onChange={onChangeInput}
+    />
+  </>
+);
 ```
 
 ### setState를 사용하면 render()가 실행된다.
@@ -493,7 +536,53 @@ array.map((v, index) => <li key={v.fruit + v.taste}>{v.fruit}</li>);
 
 # Props
 
-렌더링이 자주 일어나는 문제가 있음
+- 부모로 부터 전달받는 값으로, 자식이 props를 변경할 수 없다.<br>props를 변경할 수 있는건 부모 뿐이다.
+- 하지만, props를 자식이 바꿔야하는 경우가 있다. 그럴땐 state에 넣어준다.
+
+```javascript
+// class
+import React, { PureComponent } from 'react';
+class Try extends PureComponent {
+  state = {
+    result: this.props.result,
+    try: this.props.try
+  };
+  render() {
+    const { tryInfo } = this.props;
+    return (
+      <li>
+        <div>{tryInfo.try}</div>
+        <div>{tryInfo.result}</div>
+      </li>
+    );
+  }
+}
+
+export default Try;
+
+
+// hooks
+import React, { memo, useState } from 'react';
+
+const Try = memo(({ tryInfo }) => {
+  const [result, setResult] = useState(tryInfo.result);
+  const onClick = () => {
+    setResult(1);
+  };
+  return (
+    <li>
+      <div>{tryInfo.try}</div>
+      <div onClick={onClick}>{result}</div>
+    </li>
+  );
+});
+
+export default Try;
+```
+
+- constructor를 쓰면 이 안에서 미세한 함수를 쓸 수 있어 유용하다.
+
+- 렌더링이 자주 일어나는 문제가 있을 수 있다.
 
 ```javascript
 // parent
@@ -516,3 +605,213 @@ push 이전의 배열과 비교를 하지 못해 다음과 같은 방식으로 �
 const array = [];
 array = [...array, value];
 ```
+
+# 렌더링 + 성능 최적화 방법
+
+## shouldComponentUpdate
+
+리액트는 props, state가 바뀌면 렌더링이 발생한다.<br>
+잦은 렌더링은 성능에 영향을 주기 때문에, 불필요한 렌더링을 하지 않도록 해줘야 한다.<br>
+setState만 호출만 해도 렌더링이 발생한다.<br>
+
+```javascript
+import React, { Component } from 'react';
+
+class TestRender extends Component {
+  state = {
+    count: 0
+  };
+
+  onClick = () => {
+    this.setState({}); // 아무런 값을 변경해주지 않는다. 그러면 렌더링이 발생할까? yes.
+  };
+
+  render() {
+    console.log('렌더링', this.state);
+    return (
+      <>
+        <button type="button" onClick={this.onClick}>
+          클릭
+        </button>
+      </>
+    );
+  }
+}
+
+export default TestRender;
+```
+
+그렇기 때문에, 어떤 상황에서 렌더링을 해줘야하는지 설정해야 한다.
+이럴 때 사용하는 것이 shouldComponentUpdate이다. 리액트에서 지원한다.
+
+```javascript
+import React, { Component } from 'react';
+
+class TestRender extends Component {
+  state = {
+    count: 0
+  };
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    // 현재의 count와 미래의 count를 비교한다.
+    if (this.state.count !== nextState.count) {
+      return true; // 렌더링 한다.
+    } else {
+      return false; // 렌더링 하지 않는다.
+    }
+  }
+
+  onClick = () => {
+    this.setState({}); // 아무런 값을 변경해주지 않는다. 그러면 렌더링이 발생할까? yes.
+  };
+
+  render() {
+    console.log('렌더링', this.state);
+    return (
+      <>
+        <button type="button" onClick={this.onClick}>
+          클릭
+        </button>
+      </>
+    );
+  }
+}
+
+export default TestRender;
+```
+
+최적화를 많이 못하는데, 최적화하는 연습을 많이하자.
+devtool을 보면서 하자.
+
+## PureComponent (class에서 사용)
+
+shouldComponentUpdate를 알아서 구현한 컴포넌트로 class에서 사용한다.
+
+```javascript
+import React, { PureComponent } from 'react';
+
+class TestRender extends PureComponent {
+  state = {
+    count: 0
+  };
+
+  onClick = () => {
+    this.setState({});
+  };
+
+  render() {
+    console.log('렌더링', this.state); // 렌더링이 계속 발생하지 않는다.
+    return (
+      <>
+        <button type="button" onClick={this.onClick}>
+          클릭
+        </button>
+      </>
+    );
+  }
+}
+
+export default TestRender;
+```
+
+하지만, state가 단순한 데이터라면 잘 되지만, 객체나 참조가 있는 경우에는 어려워한다.
+아래와 같이 array state가 바뀐느데 PureComponent는 인식하지 못한다.
+
+```javascript
+class TestRender extends PureComponent {
+  state = {
+    count: 0,
+    array: []
+  };
+
+  onClick = () => {
+    const newArray = this.state.array;
+    newArray.push(1);
+    this.setState({
+      array: newArray
+    });
+  }
+  ...
+}
+```
+
+그래서 배열, 객체는 기존 array를 유지하도록 확장 연산자를 사용하는 것이 좋다.
+그리고 왠만하면, 복잡한 객체구조의 state를 쓰지말자. 배열안에 객체안에... 이런거..
+컴포넌트를 잘게 쪼개면 PureComponent를 쓰기 쉽다.
+
+```javascript
+class TestRender extends PureComponent {
+  state = {
+    count: 0,
+    array: []
+  };
+
+  onClick = () => {
+    this.setState({
+      array: [...this.state.array, 1]
+    });
+  }
+  ...
+}
+```
+
+## react memoization (hooks에서 사용)
+
+```javascript
+import React, { memo } from 'react';
+
+const Try = memo(({ tryInfo }) => {
+  return (
+    <li>
+      <div>{tryInfo.try}</div>
+      <div>{tryInfo.result}</div>
+    </li>
+  );
+});
+
+export default Try;
+```
+
+## render()에는 setState 쓰지 말자.
+
+state, props가 변하면 render가 발생하는데, 아래와 같이 하게되면 `render()` <--> `setState()`가 계속 반복하면서 무한루프가 생긴다.
+
+```javascript
+render() {
+  this.setState({
+    ...
+  });
+  return();
+}
+```
+
+# createRef
+
+ref를 class, hooks의 방식이 헷갈려서 이렇게 통일 가능
+아래와 같이 createRef를 사용하면 current로 접근 가능하다.
+
+```javascript
+import React, { Component, createRef } from 'react';
+
+inputRef = createRef();
+
+onSomeMethods = () => {
+  this.inputRef.current.focus();
+}
+
+render() {
+  return (
+    <>
+      <input type="text" maxLength={4}
+        value={value}
+        ref={this.inputRef}
+        onChange={this.onChangeInput}
+      />
+    </>
+  )
+};
+```
+
+# 반응속도 체크
+
+## React 조건문

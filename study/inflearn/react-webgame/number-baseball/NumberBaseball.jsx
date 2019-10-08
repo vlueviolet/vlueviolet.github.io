@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Try from './Try-hooks';
+import React, { Component, createRef } from 'react';
+import Try from './Try';
 
 // 숫자 4개를 랜덤하게 겹치지 않게 뽑는 함수
 function getNumbers() {
@@ -35,6 +35,7 @@ class NumberBaseball extends Component {
         answer: getNumbers(),
         tries: []
       });
+      this.inputRef.current.focus();
     } else {
       const answerArray = value.split('').map(v => parseInt(v));
       let strike = 0;
@@ -49,6 +50,7 @@ class NumberBaseball extends Component {
           answer: getNumbers(),
           tries: []
         });
+        this.inputRef.current.focus();
       } else {
         for (let i = 0 ; i < 4 ; i++) {
           if (answerArray[i] === answer[i]) {
@@ -62,7 +64,8 @@ class NumberBaseball extends Component {
             tries: [...prevState.tries, {try: value, result: `${strike} 스트라이크, ${ball} 볼`}],
             value: ''
           }
-        })
+        });
+        this.inputRef.current.focus();
       }
     }
   };
@@ -75,7 +78,7 @@ class NumberBaseball extends Component {
     });
   };
 
-  array = ['a', 'b', 'c'];
+  inputRef = createRef();
 
   render() {
     const { result, value, tries } = this.state;
@@ -84,7 +87,9 @@ class NumberBaseball extends Component {
         <h1>{result}</h1>
         <form onSubmit={this.onSubmitForm}>
           <input type="text" maxLength={4}
-            value={value} onChange={this.onChangeInput}
+            value={value}
+            ref={this.inputRef}
+            onChange={this.onChangeInput}
           />
         </form>
         <div>시도 : {tries.length}</div>
