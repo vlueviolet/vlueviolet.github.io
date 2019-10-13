@@ -757,6 +757,10 @@ class TestRender extends PureComponent {
 
 ## react memoization (hooks에서 사용)
 
+- hooks에서 부모컴포넌트가 렌더링 될때, 자식 컴포넌트도 렌더링 된다. 자식 컴포넌트의 변화가 없는데도 리렌더링되는 불필요한 상황을 해결하기 위해 React.memo()를 사용할 수 있다.
+- 컴퍼넌트가 React.memo()로 래핑 될 때, React는 컴퍼넌트를 렌더링하고 결과를 메모이징(Memoizing)한다. 그리고 다음 렌더링이 일어날 때 props가 같다면, React는 메모이징(Memoizing)된 내용을 재사용한다.
+- 관련 링크 : https://ui.toast.com/weekly-pick/ko_20190731/
+
 ```javascript
 import React, { memo } from 'react';
 
@@ -812,6 +816,281 @@ render() {
 };
 ```
 
-# 반응속도 체크
+# [강좌] 반응속도 체크
 
 ## React 조건문
+
+render()의 return 안에서 for, if를 사용하지 못한다.
+쓸 수 있긴하지만, 지저분해진다.
+
+false, undefined, null은 jsx에서 태그 없음을 의미한다.
+
+```javascript
+// 삼항연산자
+render() {
+  return (
+    <>
+    {this.state.result.length === 0 ? null
+      : <div>평균시간 {this.state.result.reduce((a, c) => a + c) / this.state.result.length}ms</div>
+    }
+    </>
+  );
+};
+// 또는 보호연산자
+render() {
+  return (
+    <>
+    {
+      this.state.result.length !== 0
+      && <div>평균시간 {this.state.result.reduce((a, c) => a + c) / this.state.result.length}ms</div>
+    }
+    </>
+  );
+};
+
+//또는 가독성을 위해 함수로 따로 뺌
+renderAverage = () => {
+  return this.state.result.length === 0 ? null
+  : <div>평균시간 {this.state.result.reduce((a, c) => a + c) / this.state.result.length}ms</div>
+};
+
+render() {
+  const { state, message } = this.state;
+  return (
+    <>
+      <div id="screen"
+        className={state}
+        onClick={this.onClickScreen}
+      >
+        {state.message}
+      </div>
+      {this.renderAverage()}
+    </>
+  );
+}
+
+```
+
+## useRef
+
+함수형에서는 this의 속성을 useRef가 대신한다.
+useRef로 선언하되, 사용할때는 `.current`를 붙여서 사용해야 한다.
+
+```javascript
+import React, { useState, useRef } from 'react';
+const Component = () => {
+  const timeout = useRef(null);
+
+  const sumFunction = () => {
+    timeout.current = new Date();
+  };
+};
+
+자식 컴포넌트에서 부모 컴포넌트의 dom ref를 받을 수 있는 방법은 ? `forwardRef`
+```
+
+## useState VS useRef
+
+state는 변경되면 render가 발생하지만, ref는 발생하지 않는다.
+불필요한 렌더링은 성능향상을 위해 막아야 한다.
+값이 바뀌어도 렌더링(화면 변화)이 되지 않게 할때 ref에 넣어서 사용하면 된다.
+
+주로 타이머나 interval은 ref에 넣어서 사용한다.
+
+---
+
+# Class - React Lifecycle
+
+- 반드시 라이프사이클에서 무언가를 해야하는것은 아니다. 일반 함수에서 실행해도 된다. 단 정리가 필요한 경우에는 componentWillUnmount에서 정리하도록 하자.
+- componentWillUnmount는 어떤 상황에서도 항상 필수로 쓰자.
+
+## componentDidMount()
+
+- 컴포넌트가 첫 렌더링된 후 실행
+- 리렌더링이 실행될 때는 실행되지 않음
+- 비동기 요청 처리
+- 조건문으로 state 분기 처리
+
+## componentWillUnmount()
+
+- 컴포넌트가 제거되기 직전에 실행
+- componentDidMount에서 실행한것들을 제거할 때
+- 부모에 의해 내 컴포넌트를 없앨 때
+- componentDidMount와 짝꿍
+- 비동기 요청 정리
+
+## componentDidUpdate()
+
+- 리렌더링 후에 실행됨
+- 조건문으로 state 분기 처리
+
+## 실행순서
+
+1. 클래스의 경우
+
+- 기본 : constructor -> render -> ref가 있다면 실행 -> componentDidMount
+- setState/props 바뀔때 : shouldComponentUpdate (return true인 경우) -> render -> componentDidpdate
+- 부모가 나를 없앴을 떄 : componentWillUnmount -> 소멸
+
+## Ref. 클로저문제
+
+비동기함수 바깥의 변수를 참고하면 클로저가 발생한다.
+
+```javascript
+const { imgCoord } = this.state;
+this.interval = setInterval(() => {
+  console.log(imgCoord); // undefined
+  if (imgCoord === rspCoords.rock) {
+    this.setState({
+      imgCoord: rspCoords.sissor
+    });
+  } else if (imgCoord === rspCoords.sissor) {
+    console.log(this.state.imgCoord, rspCoords.sissor);
+    this.setState({
+      imgCoord: rspCoords.paper
+    });
+  } else {
+    this.setState({
+      imgCoord: rspCoords.rock
+    });
+  }
+}, this.second);
+```
+
+```javascript
+this.interval = setInterval(() => {
+  const { imgCoord } = this.state; // 이렇게 안에 넣어주어야 한다.
+  if (imgCoord === rspCoords.rock) {
+    this.setState({
+      imgCoord: rspCoords.sissor
+    });
+  } else if (imgCoord === rspCoords.sissor) {
+    console.log(this.state.imgCoord, rspCoords.sissor);
+    this.setState({
+      imgCoord: rspCoords.paper
+    });
+  } else {
+    this.setState({
+      imgCoord: rspCoords.rock
+    });
+  }
+}, this.second);
+```
+
+# React에서 이벤트 처리하기
+
+참고 링크 : https://ko.reactjs.org/docs/handling-events.html
+
+render영역 안에 보면, 메서트 안에 함수를 호출하는 구문이 있다. 여기서 화살표 함수를 사용하지 않으려면,
+
+```javascript
+// 리팩토링 전
+onClickBtn = choice => {
+  console.log('???', choice);
+};
+class RSP extends Component {
+  render() {
+    return (
+      <button id="rock" className="btn" onClick={() => this.onClickBtn('rock')}>
+        rock
+      </button>
+    );
+  }
+}
+// 리팩토링 후
+// 아래럼 순서가 바뀌면 안된다.
+// 이렇게 쓴느것을 고차함수라고 한다.
+onClickBtn = choice => () => {
+  console.log('???', choice);
+};
+// e 매개변수를 추가한다면,
+onClickBtn = choice => e => {
+  e.preventDefault();
+};
+class RSP extends Component {
+  render() {
+    return (
+      <button id="rock" className="btn" onClick={this.onClickBtn('rock')}>
+        rock
+      </button>
+    );
+  }
+}
+```
+
+# hooks의 라이프사이클
+
+hooks에는 라이프사이클이 없지만, 흉내를 낼 수 있다.
+
+## useEffect
+
+- 화면이 완전히 바뀌고 난 후 실행
+- componentDidMount, componentDidUpdate, componentWillUnmount의 역할 (1:1 대응은 아님)
+- 첫번째 인수 : 함수
+- 두번쨰 인수
+  - 배열, 클로저 문제를 해결해주는 역할을 한다.
+  - 바뀌는 state, 즉 이 배열에 넣는 값들이 바뀔때 useEffect가 실행된다.
+  - 빈 배열로 두면, 어떤 state가 바뀌더라도 신경쓰지 않겠다는 의미, 처음에 1번만 실행되고 useEffect 실행 안됨
+  - componentDidUpdate의 역할도 함
+- 함수형 컴포넌트는 render시에 전체 코드가 재실행되기때문에 useEffect()도 마찬가지로 다시 실행한다.<br>그래서 [] 배열에 들어간 state의 변화가 있을 때 실행, 종료 부분을 반복적으로 실행한다.
+
+```javascript
+// 기본 틀
+useEffect(() => {
+  // componentDidMount, componentDidUpdate의 역할 (1:1 대응은 아님)
+  console.log('실행부분');
+  return () => {
+    // componentWillUnmount 역할
+    console.log('종료 부분');
+  };
+}, []);
+```
+
+- useEffect는 여러 개를 사용할 수 있다. state마다 다른 effect를 사용하고 싶다면~
+
+```javascript
+useEffect(() => {
+  interval.current = setInterval(changeHandler, second.current);
+  return () => {
+    clearInterval(interval.current);
+  }
+}, [imgCoord]);
+useEffect(() => {
+  console.log(score);
+  return () => {
+    ...
+  }
+}, [score]);
+```
+
+## useLayoutEffect
+
+- 화면이 바뀌기 전에 발생
+- resize 이벤트같이 레이아웃의 변화 감지를 위해 사용한다.
+
+## hooks와 class의 라이프사이클 비교
+
+- class에서는 라이프사이클에서 모든 state의 처리가 가능하다. state를 if문을 이용해 분기하여 대응한다.
+
+```javascript
+componentDidMount() {
+  this.setState({
+    imgCoord: 3,
+    score: 2,
+    resul: 1
+  });
+}
+
+```
+
+- hooks에서는 각 state를 개별적 또는 여러개로 대응이 가능하다.
+
+```javascript
+// 개별 대응
+useEffect(() => {}, [imgCoord]);
+useEffect(() => {}, [result]);
+useEffect(() => {}, [score]);
+// 동시 대응이 필요한 경우
+useEffect(() => {}, [imgCoord, score]);
+useEffect(() => {}, [imgCoord, score, result]);
+```
