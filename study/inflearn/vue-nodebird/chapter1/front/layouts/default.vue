@@ -1,24 +1,45 @@
 <template>
-  <div>
+  <v-app>
     <nav>
-      <nuxt-link to="/">Home</nuxt-link>
-      <nuxt-link to="/profile">Profile</nuxt-link>
-      <nuxt-link to="/signup">Signup</nuxt-link>
+      <v-toolbar dark color="green">
+        <h1>
+          <nuxt-link to="/">NodeBird</nuxt-link>
+        </h1>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-text-field
+            label="검색" hide-details
+            prepend-icon="mdi-magnify"
+            :style="{ display: 'flex', alignItems: 'center' }"
+          />
+          <v-btn text nuxt to="/profile">프로필</v-btn>
+          <v-btn text nuxt to="/signup">회원가입</v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
     </nav>
-    <nuxt />
-</div>
+    <v-row>
+      <v-col cols="12" md="4">
+        <login-form />
+      </v-col>
+      <v-col cols="12" md="8">
+        <nuxt />
+      </v-col>
+    </v-row>
+  </v-app>
 </template>
 
 <script>
+import LoginForm from '~/components/LoginForm'
 export default {
-  head() {
-    return {
-      title: 'NodeBird'
-    }
-  }
+  components: {LoginForm}
 }
 </script>
 
-<style>
-
+<style scoped>
+h1 a {
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+}
 </style>
+
