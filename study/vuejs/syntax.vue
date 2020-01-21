@@ -26,6 +26,14 @@ const timelineHelper = createNamespacedHelpers('timelineModule')
 export default {
   props: ['data'],
   components: { Components, Components2 },
+  /*
+  자체적인 라우터를 사용할 수 있다. to, from 경로 확인 
+  */
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.from = from;
+    });
+  },
   // 데이터 객체
   data() {
     return {
@@ -135,7 +143,10 @@ export default {
         this.firstName = names[0]
         this.lastName = names[names.length - 1]
       }
-    }
+    },    
+    computedValue() {
+      return Object.assign({}, this.value);
+    },
   },
   /*
   데이터 변경에 반응하는 보다 일반적인 방법을 제공합니다.
@@ -155,7 +166,19 @@ export default {
       } else {
         this.setIntervalFunc();
       }
-    }
+    },    
+    /*
+    this.value.start, this.value.end 같은 depth가 있는 변수 this.value는 watch가 어렵다.
+    이는 깊은 관찰이 필요하여, deep: true 설정이 필요하고,
+    handler의 파라메터가 new, old 값을 가져오지 않기 때문에 computed 훅에서 computedValue을 이용하여
+    객체를 복사하게 만든다. 이렇게 하면 복사한 값이 newVal, 이전 객체가 oldVal이 되어 watch가 가능하게 된다.
+    */
+    computedValue: {
+      deep: true,
+      handler: function(n, o) {
+        const array = [n, o];
+      }
+    },
   },
   // Vue 인스턴스에 추가할 메소드
   methods: {
