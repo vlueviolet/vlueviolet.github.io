@@ -48,3 +48,4 @@ Range 객체는 문서에서 선택된 영역의 데이터를 추출하거나 �
 - [Web API](https://developer.mozilla.org/en-US/docs/Web/API)
 - [Window.getSelection](https://developer.mozilla.org/ko/docs/Web/API/Window/getSelection)
 - [Selection 과 Range 의 이해](https://ohgyun.com/547)
+- [Range](http://ezcode.kr/study/view/224)
