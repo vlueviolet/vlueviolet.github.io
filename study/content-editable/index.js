@@ -1,23 +1,23 @@
 const list = document.getElementById('list');
 const editor = document.getElementById('editor');
-document.addEventListener('selectionchange', () => this.editorEvent());
+document.addEventListener('selectionstart', () => this.editorEvent());
 let mentionOffset;
 
 editorEvent = e => {
-  var selection = window.getSelection();
-  var range = selection.getRangeAt(0);
+  // var selection = window.getSelection();
+  // var range = selection.getRangeAt(0);
 
-  const r = document.getSelection().getRangeAt(0);
+  const r = document.getSelection().getRangeAt(0); // range 인스턴스
+  console.log(r);
   const node = r.startContainer; //
   const offset = r.startOffset;
   let rect, r2;
-  console.log(node);
 
   if (offset > 0) {
+    console.log(r);
     r2 = document.createRange();
     r2.setStart(node, offset - 1);
     r2.setEnd(node, offset);
-    console.log('r2', r2);
     rect = r2.getBoundingClientRect();
 
     mentionOffset = {
