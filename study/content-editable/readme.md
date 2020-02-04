@@ -68,3 +68,4 @@ Range 객체는 문서에서 선택된 영역의 데이터를 추출하거나 �
 - [요소의 커서 포커스 위치와 변경
   ](http://frontend.diffthink.kr/2017/10/blog-post_12.html?m=0)
 - [selection - 설명 잘 되어있음](http://mohwa.github.io/blog/javascript/2015/09/15/Selection/)
+- [설명](https://gdtbgl93.tistory.com/175)
