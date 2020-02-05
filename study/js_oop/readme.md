@@ -670,3 +670,5 @@ console.log(kim.constructor);   // [Function: Person]
 ```
 
 #### constructor 속성의 의미와 용도
+https://www.opentutorials.org/module/4047/24630
+강의 4 들을 차례
