@@ -271,4 +271,61 @@ module.exports = {
 };
 ```
 
-## es
+## eslint 사용
+
+작업자 간의 코딩 스타일을 맞추기 위해 사용한다.
+
+협업할 때 좋다.
+
+```bash
+npm install -D eslint eslint-plugin-vue
+touch .eslintrc
+```
+
+#### eslintrc
+
+eslint 설정 파일
+
+```json
+{
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module" // vue는 script 타입이 아닌 import하는 module이기 때문에
+  },
+  "env": {
+    "browser": true, // 브라우저 환경에서 쓸지
+    "node": true // node 환경에서도 쓸지
+  },
+  "extends": ["plugin:vue/recommended"], // vue에서 권장하는 버전
+  "plugins": [],
+  "rules": {
+    // 쓰면서 끄고 싶은것들 적으면 됨
+    "vue/max-attributes-per-line": "off", // attribue들을 줄바꿈 되는것 끄기
+    "vue/singleline-html-element-content-newline": "off"
+  }
+}
+```
+
+#### .eslintignore
+
+eslint파일의 예외 처리
+
+`package.json`같은 파일은 검사안해도 되니까..
+
+```json
+package-lock.json
+package.json
+```
+
+#### package.json
+
+```json
+"scripts": {
+  "dev": "nuxt",
+  "lint": "eslint **/*", // npm run lint시, 모든 파일을 eslint로 검사해라
+},
+```
+
+## Vuex Module
+
+[Vuex Store 모듈모드](https://ko.nuxtjs.org/guide/vuex-store#%EB%AA%A8%EB%93%88-%EB%AA%A8%EB%93%9C)
