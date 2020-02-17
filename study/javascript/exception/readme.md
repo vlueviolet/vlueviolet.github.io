@@ -1,4 +1,10 @@
 # 자바스크립트 예외처리
+- 강사 : 코드종
+- 링크
+    - [자바스크립트 예외처리 1/4 - 예외란 무엇인가? throw?](https://www.youtube.com/watch?v=EBmIHrLTVdg)
+    - [자바스크립트 예외처리 2/4 - try catch, Error 객체](https://www.youtube.com/watch?v=wf6AlMj7TFA)
+    - [자바스크립트 예외처리 3/4 - promise의 catch함수](https://www.youtube.com/watch?v=RRc_iVHdDKk)
+    - [자바스크립트 예외처리 4/4 - async/await의 예외](https://www.youtube.com/watch?v=kngOWhzPHzg&t=616s)
 
 ## try, catch를 이용한 예외처리
 
