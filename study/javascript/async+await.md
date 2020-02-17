@@ -27,9 +27,9 @@ console.log(myAsync());
 
 <img width="296" alt="" src="https://user-images.githubusercontent.com/26196090/74655729-2ee49080-51d0-11ea-9e58-71b31d88fa3c.png">
 
-## async의 리턴값
+## async의 처리
 
-그렇다면, async 함수는 then을 사용할 수 있다.
+promise를 리턴한다면, async 함수는 `then`을 사용할 수 있다.
 
 ```javascript
 async function myAsync() {
@@ -41,10 +41,14 @@ myAsync().then(data => console.log(data));
 
 <img width="114" alt="스크린샷 2020-02-17 오후 9 58 43" src="https://user-images.githubusercontent.com/26196090/74655999-b16d5000-51d0-11ea-945e-da0bc906d367.png">
 
-## await은 어떻게 쓸까?
+## await는 언제 사용하지?
 
-아래 구문을 실행하면, 동기적인 'async'를 먼저 출력하고 3초후에 promise를 출력하게 된다.
-만약, promise가 실행되고 나서 이후 동기코드들을 실행하고 싶다면 어떻게 해야할까?
+async는 주로 promise와 혼합하여 사용하는 경우가 많다.  
+특히, async-await로 짝을 이뤄 사용하게 되는데, await는 async 함수 내에서만 사용할 수 있다.  
+
+그렇다면, await는 무엇이고, 언제 사용하면 될까?  
+
+아래 구문을 실행하면, 'async'를 먼저 출력하고 3초후에 promise 결과를 출력하게 된다.  
 
 ```javascript
 function delayTime(sec) {
@@ -65,8 +69,12 @@ myAsync().then(data => console.log(data));
 
 <img width="218" alt="" src="https://user-images.githubusercontent.com/26196090/74657041-c0550200-51d2-11ea-83e1-128bc6c96984.png">
 
-`await`는 promise가 resolve되어 결과값이 넘어올때까지 기다린다.
-즉, **await이 완료될때까지 다음 줄이 실행되지 않는다.**
+
+만약, promise가 실행되고 나서 이후 동기코드들을 실행하고 싶다면 어떻게 해야할까?  
+이때 사용하는 것이 바로 `await`이다.
+
+> `await`는 promise가 resolve되어 결과값이 넘어올때까지 기다린다.  
+> 즉, **await이 완료될때까지 다음 줄이 실행되지 않는다.**
 
 ```javascript
 function delayTime(sec) {
@@ -85,6 +93,7 @@ async function myAsync() {
 
 myAsync().then(data => console.log(data));
 ```
+<img width="289" alt="" src="https://user-images.githubusercontent.com/26196090/74657838-65240f00-51d4-11ea-8ccd-cfa96a7c0735.png">
 
 아래와 같이 await를 변수로 받아도 같은 결과를 보여준다.
 
