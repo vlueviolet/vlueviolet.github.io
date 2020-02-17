@@ -117,3 +117,26 @@ myAsync().then(data => console.log(data));
 ```
 
 <img width="289" alt="" src="https://user-images.githubusercontent.com/26196090/74657838-65240f00-51d4-11ea-8ccd-cfa96a7c0735.png">
+
+## 일반함수를 await에서 사용할 수 있다.
+```javascript
+function normalFunc() {
+  return 'normal';
+}
+
+async function myAsync() {
+  const normal = await normalFunc();
+  console.log(normal);
+  await normalFunc();
+  return 'async';
+}
+
+myAsync().then(data => console.log(data));
+```
+<img width="149" alt="" src="https://user-images.githubusercontent.com/26196090/74658670-1a0afb80-51d6-11ea-9cff-dc5cb9ed4ab8.png">
+
+
+## 정리
+promise와 async, await는 서로 잘 조합해서 사용한다.  
+가장 큰 목적은 코드를 짜기 쉽게, 로직을 표현할때 promise가 나은 경우가 있고,  
+async, await가 나은 경우가 있어 이를 잘 조합하여 사용하는 것이 좋다.
