@@ -222,7 +222,7 @@ console.log(result);
 <img width="257" alt="" src="https://user-images.githubusercontent.com/26196090/74640298-a4d9ff00-51b2-11ea-9be6-cf319420df24.png">
 
 async의 결과는 promise의 인스턴스가 리턴된다.  
-이것은 promise를 생성한 것과 동일한 결과값을 보여준다.  
+이것은 promise를 생성한 것과 동일한 결과값을 보여준다.
 
 ```javascript
 async function myAsyncFun() {
@@ -241,7 +241,6 @@ console.log(result2);
 ```
 
 <img width="272" alt="" src="https://user-images.githubusercontent.com/26196090/74640624-35184400-51b3-11ea-816d-731ef9341181.png">
-
 
 즉, async는 promise의 resolve에 해당한다고 보면 된다.
 
@@ -266,7 +265,7 @@ console.log(result2);
 <img width="306" alt="" src="https://user-images.githubusercontent.com/26196090/74640894-aeb03200-51b3-11ea-857c-7367cee8beb3.png">
 
 여기서 중요한 것은 promise는 promise를 생성하는 과정에서 reject를 발생시켰다.  
-하지만 async함수에서는 동기적으로 실행하는 함수에서 예외를 발생하는 방법과 동일하게, throw를 이용해 reject를 발생시켰다.  
+하지만 async함수에서는 동기적으로 실행하는 함수에서 예외를 발생하는 방법과 동일하게, throw를 이용해 reject를 발생시켰다.
 
 그렇다면, 현재는 Uncaught인 throw를 잡는 방법은 무엇일까?  
 promise와 동일하다.  
@@ -288,7 +287,8 @@ const result2 = myPromiseFunc().catch(e => console.error(e));
 <img width="161" alt="" src="https://user-images.githubusercontent.com/26196090/74641470-b4f2de00-51b4-11ea-9593-c93da6b3660c.png">
 
 ### await
-async에서는 await함수를 쓸 수 있다. await은 async 함수 내부에서만 사용할 수 있다.  
+
+async에서는 await함수를 쓸 수 있다. await은 async 함수 내부에서만 사용할 수 있다.
 
 await는 무엇을 하는 녀석인가?  
 promise를 기다릴 수 있는 녀석이다.  
@@ -320,7 +320,6 @@ const result = myAsyncFun();
 
 <img width="475" alt="스크린샷 2020-02-17 오후 6 52 57" src="https://user-images.githubusercontent.com/26196090/74642685-cccb6180-51b6-11ea-9250-d763e9868335.png">
 
-
 async의 await을 사용해보자.
 
 ```javascript
@@ -342,4 +341,125 @@ async function myAsyncFun() {
 const result = myAsyncFun();
 ```
 
+async 안에서 await이 완료될 때까지 다음이 실행되지 않는 것을 볼 수 있다.
+
 <img src="https://user-images.githubusercontent.com/26196090/74643656-6cd5ba80-51b8-11ea-9469-5e7dcbb4f4fa.gif">
+
+이 상황을 reject 하는 상황으로 바꿔보자.
+
+```javascript
+function wait(sec) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('wait function');
+      reject('wait error!!');
+    }, sec * 1000);
+  });
+}
+
+async function myAsyncFun() {
+  console.log(new Date());
+  await wait(3);
+  console.log(new Date());
+}
+
+const result = myAsyncFun();
+```
+
+Uncaught 결과값이 나온다. 이 결과는 promise에서 reject된 결과를 제대로 잡지 못했다는 얘기다.
+
+<img src="https://user-images.githubusercontent.com/26196090/74645551-84fb0900-51bb-11ea-8bc7-d0c8df5eccb4.gif" alt="">
+
+myAsyncFun함수에서는 promise를 await를 이용해 기다리도록 했다.  
+fullfilled되면 자연스럽게 그 다음줄이 실행되어, resolve된게 await의 값으로 쓰이지만,  
+만약에 reject된다면? 그러면 throw가 된다.  
+reject할때 들어있는 값이 throw하게 된다.  
+throw했으니까 이를 잡는 방법은 try, catch가 된다.
+
+```javascript
+function wait(sec) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject('wait error!!');
+    }, sec * 1000);
+  });
+}
+
+async function myAsyncFun() {
+  console.log(new Date());
+  try {
+    await wait(3);
+  } catch (e) {
+    console.error(e);
+  }
+  console.log(new Date());
+}
+
+const result = myAsyncFun();
+```
+
+<img width="360" alt="" src="https://user-images.githubusercontent.com/26196090/74645888-1d918900-51bc-11ea-8db1-74e8120fff57.png">
+
+try, catch를 하지않았다면, 두번째 날짜를 출력하는 구문이 실행되지 않았을 것이다.
+
+### await.catch()의 사용
+만약, catch를 쓰면 어떨까?
+catch로 사용하면 try, catch문을 사용했을때와 동일한 결과를 보여준다.
+```javascript
+function wait(sec) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject('wait error!!');
+    }, sec * 1000);
+  });
+}
+
+async function myAsyncFun() {
+  console.log(new Date());
+  await wait(3).catch(e => {
+    console.error(e);
+  });
+  console.log(new Date());
+}
+
+const result = myAsyncFun();
+
+```
+
+<img width="336" alt="" src="https://user-images.githubusercontent.com/26196090/74646760-cb516780-51bd-11ea-9e9c-00555cdf9121.png">
+
+
+
+하지만, 이를 리턴하는 객체 정보에는 차이가 있다.  
+result 변수에 담아 출력해보면 undefined가 찍힌다.
+
+```javascript
+function wait(sec) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject('wait error!!');
+    }, sec * 1000);
+  });
+}
+
+async function myAsyncFun() {
+  console.log(new Date());
+  const result = await wait(3).catch(e => {
+    console.error(e);
+  });
+  console.log('result: ', result);
+  console.log(new Date());
+}
+
+const result = myAsyncFun();
+```
+
+<img width="356" alt="" src="https://user-images.githubusercontent.com/26196090/74646476-4a926b80-51bd-11ea-8fea-428e161b196b.png">
+
+wait()에서 resolve였다면, myAsyncFun()의 result에 값을 잘 받아와 찍히는데,  
+reject를 하면 undefined가 찍힌다.
+
+이 얘기는 await가 기다리는 promise는 wait()의 promise가 아니라,  
+catch를 통해서 promise한 값을 await하고 있는 것이다.
+
+<img src="https://user-images.githubusercontent.com/26196090/74647256-b1fceb00-51be-11ea-8f6a-b87b123483c4.jpg" width="422">
