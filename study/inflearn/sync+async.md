@@ -3,6 +3,8 @@
 - URL : [inflearn](https://www.inflearn.com/course/sync-async-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4)
 - 강사 : 앨런(Allen)
 
+  
+
 ## 쓰레드 개념
 
 <image src="https://user-images.githubusercontent.com/26196090/74625048-1f445800-518e-11ea-8bd8-78087a5b8999.png" height="200">
