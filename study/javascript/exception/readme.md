@@ -459,6 +459,13 @@ const result = myAsyncFun();
 wait()에서 resolve였다면, myAsyncFun()의 result에 값을 잘 받아와 찍히는데,  
 reject를 하면 undefined가 찍힌다.
 
+```javascript
+resolve('wait resolved!!');
+```
+
+<img width="346" alt="스크린샷 2020-02-17 오후 7 53 53" src="https://user-images.githubusercontent.com/26196090/74647581-3ea7a900-51bf-11ea-8170-987416a6d091.png">
+
+
 이 얘기는 await가 기다리는 promise는 wait()의 promise가 아니라,  
 catch를 통해서 promise한 값을 await하고 있는 것이다.
 
