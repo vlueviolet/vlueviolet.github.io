@@ -519,5 +519,5 @@ try {
 
 ## 정리
 
-- async 내에서의 promise 처리는 try, catch로 한다.
-- async로 리턴된 값은 promise이기 때문에, async 이후에 발생한 에러는 catch로 대응한다.
+- async 내 await에 대한 promise 처리는 `try`, `catch`로 한다.
+- async 내에서 발생한 에러 대응은, 리턴된 값이 promise이기 때문에, `catch`로 대응한다.
