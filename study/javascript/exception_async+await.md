@@ -10,7 +10,7 @@
 
 일반적인 동기적인 코드의 경우, `try`, `catch`를 이용해 에러상황을 처리할 수 있다.    
 
-~~~javascript
+```javascript {.line-numbers}
 function f2() {
   console.log('f2 start');
   throw new Error('에러'); // 해당하는 콜스택 정보가 담김
@@ -31,7 +31,7 @@ function f1() {
 console.log('will : f1');
 f1();
 console.log('did : f1');
-~~~
+```
 
 결과 화면같이, error를 catch하는 것을 볼 수 있다.
 
