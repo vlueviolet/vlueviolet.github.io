@@ -476,3 +476,8 @@ resolve라면 정상적으로 잘 출력된다. 하지만, catch에서는 어떤
 리턴을 해줘야 catch의 resolve값이 된다.
 
 <img src="https://user-images.githubusercontent.com/26196090/74647256-b1fceb00-51be-11ea-8f6a-b87b123483c4.jpg" width="422">
+
+## 정리
+
+- async 내에서의 promise 처리는 try, catch로 한다.
+- async로 리턴된 값은 promise이기 때문에, async 이후에 발생한 에러는 catch로 대응한다.
