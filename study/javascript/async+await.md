@@ -119,6 +119,9 @@ myAsync().then(data => console.log(data));
 <img width="289" alt="" src="https://user-images.githubusercontent.com/26196090/74657838-65240f00-51d4-11ea-8ccd-cfa96a7c0735.png">
 
 ## 일반함수를 await에서 사용할 수 있다.
+일반함수는 비동기가 아니기때문에, delay되는 현상은 특별히 발생하지 않으나,  
+함수에 await를 붙인다고 해서 에러가 발생하지는 않는다.
+
 ```javascript
 function normalFunc() {
   return 'normal';
