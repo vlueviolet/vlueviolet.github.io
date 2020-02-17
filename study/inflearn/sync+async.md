@@ -3,7 +3,6 @@
 - URL : [inflearn](https://www.inflearn.com/course/sync-async-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4)
 - 강사 : 앨런(Allen)
 
-  
 
 ## 쓰레드 개념
 
@@ -41,14 +40,14 @@ task-2를 시작할 수 있다.
 * 즉, 메인에서 분산처리 시킨 작업을 **다른 한개의 쓰레드** 에서 처리
 * 순서가 중요한 작업을 처리할 때 사용
 
-<image src="https://user-images.githubusercontent.com/26196090/74625269-1a33d880-518f-11ea-8d52-446d80c7ec35.png" height="100">
+<image src="https://user-images.githubusercontent.com/26196090/74625269-1a33d880-518f-11ea-8d52-446d80c7ec35.png" height="200">
 
 ### 동시
 * **여러 개의 쓰레드** 에서 task를 수행하는 것  
 * 즉, 메인에서 분산처리 시킨 작업을 **다른 여러개의 쓰레드** 에서 처리
 * 각자 독립적이지만, 유사한 여러개의 작업을 처리할 때 사용
 
-<image src="https://user-images.githubusercontent.com/26196090/74625272-1c963280-518f-11ea-9437-22fcde09567d.png" height="100">
+<image src="https://user-images.githubusercontent.com/26196090/74625272-1c963280-518f-11ea-9437-22fcde09567d.png" height="200">
 
 ### 비동기와 동시란 말이 같은 말인가? 
 - 작업 결과를 기다리는 여부에 따르는 개념이 동기, 비동기
