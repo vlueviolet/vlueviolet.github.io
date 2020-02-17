@@ -477,6 +477,46 @@ resolve라면 정상적으로 잘 출력된다. 하지만, catch에서는 어떤
 
 <img src="https://user-images.githubusercontent.com/26196090/74647256-b1fceb00-51be-11ea-8f6a-b87b123483c4.jpg" width="422">
 
+### async 함수 내의 에러 대응
+async 함수 안에서 문법 등 오류가 발생했을때는 어떻게 해야할까?  
+아래 예제에서 async 구문에 consssole.log로 구문 오류가 발생했다.
+async 오류여서 try, catch로 하면, Uncaught 에러가 발생한다.
+왜냐하면, async는 promise를 리턴하기때문에 try, catch가 아닌 catch로 에러를 잡아야 한다.
+
+```javascript
+function wait(sec) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject('wait error!!');
+    }, sec * 1000);
+  });
+}
+
+async function myAsyncFun() {
+  consssole.log(new Date());
+  try {
+    await wait(3);
+  } catch (e) {
+    console.error(e);
+    throw new Error('error 발생');
+  }
+  console.log(new Date());
+}
+
+// async는 promise를 리턴하기 때문에 catch를 이용해 에러 대응을 해야한다.
+const result = myAsyncFun().catch(e => console.error(e));
+
+// try, catch로 하면, Uncaught가 됨
+try {
+  myAsyncFun();
+} catch (e) {
+  console.error(e);
+}
+```
+
+<img width="517" alt="" src="https://user-images.githubusercontent.com/26196090/74652978-8bdd4800-51ca-11ea-91f2-d9b77234ed11.png">
+
+
 ## 정리
 
 - async 내에서의 promise 처리는 try, catch로 한다.
