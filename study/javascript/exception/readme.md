@@ -242,7 +242,7 @@ console.log(result2);
 
 <img width="272" alt="" src="https://user-images.githubusercontent.com/26196090/74640624-35184400-51b3-11ea-816d-731ef9341181.png">
 
-즉, async는 promise의 resolve에 해당한다고 보면 된다.
+즉, async는 promise의 resolve에 해당한다고 보면 된다.  
 
 async에서 reject를 발생하고 싶다면, 일반 함수에서 error을 발생한 것과 같은 throw를 걸어주면 promise에서 reject와 같은 동일한 결과를 얻을 수 있다.
 
@@ -294,7 +294,7 @@ await는 무엇을 하는 녀석인가?
 promise를 기다릴 수 있는 녀석이다.  
 즉, promise가 완전히 fullfilled 되거나 또는 rejected 될때까지 기다린다는 의미이다.
 
-아래 구문을 보자.
+아래 구문을 보자.  
 wait promise 함수를 호출하는 과정을 async가 어떻게 처리하는지 알아보자.
 
 ```javascript
@@ -403,8 +403,10 @@ const result = myAsyncFun();
 try, catch를 하지않았다면, 두번째 날짜를 출력하는 구문이 실행되지 않았을 것이다.
 
 ### await.catch()의 사용
-만약, catch를 쓰면 어떨까?
+
+만약, catch를 쓰면 어떨까?  
 catch로 사용하면 try, catch문을 사용했을때와 동일한 결과를 보여준다.
+
 ```javascript
 function wait(sec) {
   return new Promise((resolve, reject) => {
@@ -423,12 +425,9 @@ async function myAsyncFun() {
 }
 
 const result = myAsyncFun();
-
 ```
 
 <img width="336" alt="" src="https://user-images.githubusercontent.com/26196090/74646760-cb516780-51bd-11ea-9e9c-00555cdf9121.png">
-
-
 
 하지만, 이를 리턴하는 객체 정보에는 차이가 있다.  
 result 변수에 담아 출력해보면 undefined가 찍힌다.
@@ -465,8 +464,9 @@ resolve('wait resolved!!');
 
 <img width="346" alt="스크린샷 2020-02-17 오후 7 53 53" src="https://user-images.githubusercontent.com/26196090/74647581-3ea7a900-51bf-11ea-8170-987416a6d091.png">
 
-
 이 얘기는 await가 기다리는 promise는 wait()의 promise가 아니라,  
-catch를 통해서 promise한 값을 await하고 있는 것이다.
+catch를 통해서 리턴된 promise 값을 await하고 있는 것이다.  
+resolve라면 정상적으로 잘 출력된다. 하지만, catch에서는 어떤 값도 리턴하지 않기때문에 undefined가 찍히게 된다.  
+리턴을 해줘야 catch의 resolve값이 된다.
 
 <img src="https://user-images.githubusercontent.com/26196090/74647256-b1fceb00-51be-11ea-8f6a-b87b123483c4.jpg" width="422">
