@@ -73,11 +73,11 @@ computed: {
 ## computed의 비동기적 사용의 대체 : asyncComputed
 
 이 모든 것을 가능하게 하는 플러그인이 있습니다.  
-바로 `asyncComputed` 입니다. (참 고마운 개발자죠.)  
+바로 `asyncComputed` 입니다. (참 고마운 개발자죠!)  
 
-이름 그대로 async + computed의 조합으로 비동기 방식을 사용할 수 있게 해줍니다.
+이름 그대로 async + computed의 조합으로 computed에서 비동기 방식을 사용할 수 있게 해줍니다. (얏호!)
 
-> 설치 및 사용방법과 왜 asyncComputed를 써야하는지에 대해 아래 링크에서 볼 수 있습니다.  
+> 설치 및 사용방법과 왜 asyncComputed를 써야하는지에 대해 아래 링크에서 볼 수 있습니다~~!  
 > URL : [https://github.com/foxbenjaminfox/vue-async-computed](https://github.com/foxbenjaminfox/vue-async-computed)
 
 asyncComputed를 설치하면, computed와 같은 속성으로 선언하여 사용할 수 있습니다.
