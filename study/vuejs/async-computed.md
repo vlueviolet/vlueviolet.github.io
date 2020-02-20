@@ -2,9 +2,10 @@
 # AsyncComputed
 
 > vuejs의 `computed` 속성은 "해당 속성이 종속된 대상이 변경될 때만 함수를 실행"된다고 합니다.  
-> computed 속성에서 선언한 data, prop 등 관련된(종속된) 값의 update가 발생했을때 로직을 처리하고, 화면을 갱신해주죠.
+> computed 속성에서 선언한 data, prop 등 관련된(종속된) 값의 update가 발생했을때  
+> 로직을 처리하고, 화면을 갱신해주죠.
 
-## computed에서 비동기 방식을 사용할 수 있을까?
+## computed에서 비동기 방식을 사용할 수 있을까요?
 
 대답은 아쉽지만, `No` 입니다.
 
@@ -13,7 +14,7 @@ Vuejs 프로젝트를 하면서, `computed` 속성을 많이 사용하지만,
 
 비동기 방식으로 사용했을 때 어떻게 출력되는지 예시를 통해 알아보겠습니다.  
 
-### computed에서의 비동기 방식
+### computed에서의 비동기 방식 예제
 
 `fetchData` 함수에서 3초 뒤에 resolve되는 promise를 정의했습니다.  
 
@@ -53,7 +54,7 @@ methods: {
 #### 결과화면
 <img src="https://user-images.githubusercontent.com/26196090/74915127-04304d00-5407-11ea-9dec-7e328aa52c3e.png" alt="">
 
-### computed에서의 비동기 방식 : then
+### computed에서의 비동기 방식 예제 : then
 
 또 반환된 promise 인스턴스로 then을 하면, 아래와 같은 경고가 발생합니다.
 
