@@ -13,6 +13,8 @@ Vuejs 프로젝트를 하면서, `computed` 속성을 많이 사용하지만,
 
 비동기 방식으로 사용했을 때 어떻게 출력되는지 예시를 통해 알아보겠습니다.  
 
+### computed에서의 비동기 방식
+
 `fetchData` 함수에서 3초 뒤에 resolve되는 promise를 정의했습니다.  
 만약, 성공했다면 resolve에 response 값을 받아 작업을 이어가게 됩니다.
 
@@ -49,6 +51,7 @@ methods: {
 #### 결과화면
 <img src="https://user-images.githubusercontent.com/26196090/74915127-04304d00-5407-11ea-9dec-7e328aa52c3e.png" alt="">
 
+### computed에서의 비동기 방식 : then
 
 또 반환된 promise 인스턴스로 then을 하면, 아래와 같은 경고가 발생합니다.
 
