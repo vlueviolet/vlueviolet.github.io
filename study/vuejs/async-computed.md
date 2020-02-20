@@ -16,10 +16,11 @@ Vuejs 프로젝트를 하면서, `computed` 속성을 많이 사용하지만,
 ### computed에서의 비동기 방식
 
 `fetchData` 함수에서 3초 뒤에 resolve되는 promise를 정의했습니다.  
-만약, 성공했다면 resolve에 response 값을 받아 작업을 이어가게 됩니다.
 
-예제에서는 response 값을 'resolve'라는 string으로 대신했습니다.
-이를 computed에서 getData 출력하면,  
+만약, 성공했다면 작업에서는 resolve에 response 값을 받아 작업을 이어가게 됩니다.  
+예제에서는 response 값을 'resolve'라는 string으로 대신했습니다.  
+
+이를 computed에서 getData로 출력하면,  
 기대했던 'resolve!!' string 대신 promise 인스턴스를 반환합니다.
 
 ```html
@@ -42,6 +43,7 @@ methods: {
   }
  }
 ```
+
 #### 결과화면
 ```console
 [object Promise]
@@ -106,6 +108,9 @@ methods: {
 ```console
 resolve!!
 ```
+
+## 전체 예시코드
+- [computed vs asyncComputed](https://codesandbox.io/s/computed-vs-asynccomputed-t3orr?fontsize=14&hidenavigation=1&theme=dark)
 
 ## Ref
 - https://alligator.io/vuejs/async-computed-properties/
