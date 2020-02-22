@@ -1,0 +1,54 @@
+/* Font */
+@font-face {
+	font-family:'NanumGothic';
+	font-weight:400;
+	font-style:normal;
+	src:url('../css/font/NanumGothic.woff') format('woff'),
+		url('../css/font/NanumGothic.ttf') format('truetype');
+}
+@font-face {
+	font-family:'NanumGothic';
+	font-weight:700;
+	font-weight:normal;
+	src:url('../css/font/NanumGothic.woff') format('woff'),
+		url('../css/font/NanumGothic.ttf') format('truetype');
+}
+
+/* reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button{margin:0;padding:0;webkit-text-size-adjust:none}
+html{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+*,*:before,*:after{box-sizing:inherit}
+dl,ul,ol,menu,li{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}
+input,select,textarea{vertical-align:middle}
+fieldset,img,button{border:0 none;vertical-align:top}
+button{overflow:visible;margin:0;padding:0;border:0 none;background:none;cursor:pointer}
+button::-moz-focus-inner{padding:0;border:0}
+address,caption,cite,code,dfn,em,var{font-style:normal;font-weight:normal}
+table{border:0;border-collapse:collapse;vertical-align:top}
+html{width:100%;height:100%}
+body{min-height:100%;background:#fff;color:#808184}
+body,th,td,input,select,textarea,button{font-family:'NanumGothic','Apple SD Gothic Neo','나눔고딕',NanumGothic,ng,'돋움',dotum,Helvetica,sans-serif;font-size:16px;line-height:1.27;color:#808184}
+a{color:#767676;text-decoration:none;cursor:pointer}
+a:focus,a:active,a:hover,a:focus{color:#767676;text-decoration:underline}
+::-webkit-input-placeholder{color:#999}
+:-moz-placeholder{color:#999}
+::-moz-placeholder{color:#999}
+:-ms-input-placeholder{color:#999}
+input[type='checkbox']{width:13px;height:13px;vertical-align:top;-webkit-appearance:checkbox}
+#wrap{min-width:960px}
+
+.h_tit{font-weight:normal;font-size:36px;color:#808184;text-align:center}
+
+.project_wrap{display:block;width:1020px;margin:30px auto 0;-webkit-box-shadow:0 2px 13px 1px rgba(0,0,0,.25);-moz-box-shadow:0 2px 13px 1px rgba(0,0,0,.25);box-shadow:0 2px 13px 1px rgba(0,0,0,.25)}
+.project_wrap:after{display:block;clear:both;content:''}
+.project_img{float:left;position:relative;width:60%;font-size: 0}
+.project_img:before{display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(239,239,239,.82);content:''}
+.project_img:hover:before{display:block}
+.project_wrap img{width:50%}
+.project_wrap img:only-child{width:100%}
+.project_info{float:right;width:40%;padding:20px;text-align:left}
+.project_info p{margin-top:8px}
+.project_info .tit{padding-bottom:20px;font-size:20px;color:#202224}
+.project_info .site{display:inline-block;margin-top:8px;;font-size:16px;color:#202224;text-decoration:underline}

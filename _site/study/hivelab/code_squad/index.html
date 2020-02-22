@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ES6 교육</title>
+</head>
+<body>
+    <div></div>
+<script>
+const data = {
+    hour : new Date().getHours(),
+    name : "HIVELAB"
+}
+const template = `<span>hello! ${data.name},  지금은 ${data.hour}시</span>`;
+console.log(template); //<span>hello! codesquad</span>
+document.querySelector('div').innerHTML = template;
+
+// 비구조화 객체를 파라메터로 보내기
+let obj = {
+    name: 'dajung',
+    address: 'somewhere',
+    age: undefined
+}
+function getString({name:myName, age = 14}) {
+    const resultStr = `내이름은 ${myName}이야, 내 나이는 ${age}이야`;
+    return resultStr;
+}
+function start(obj) {
+    // debugger;
+    const result = getString(obj);
+    console.log(result);
+}
+start(obj);
+</script>
+</body>
+</html>

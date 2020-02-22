@@ -1,0 +1,21 @@
+html,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#editor {
+  width: 500px;
+  height: 300px;
+  border: 1px solid #999;
+}
+#list {
+  display: none;
+  position: absolute;
+  border: 1px solid #ccc;
+}
+li {
+  padding: 0 5px;
+  border: 1px solid #ccc;
+}

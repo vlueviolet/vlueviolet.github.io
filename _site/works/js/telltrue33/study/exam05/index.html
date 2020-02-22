@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>exam1</title>
+<style>
+body{font-size:14px;line-height:1.5}
+h1,h2,h3,h4,h5,h6{font-size:14px}
+ul,li{list-style:none}
+.active{padding:10px;background:blue}
+</style>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+    <!-- header [s] -->
+    <div id="header">@</div>
+    <!-- header [e] -->
+    <hr />
+    <!-- container [s] -->
+    <div id="container">
+        <div><button class="btn" type="button">button</button></div>
+    </div>
+    <!-- container [e] -->
+    <hr />
+    <!-- footer [s] -->
+    <div id="footer">@</div>
+    <!-- footer [e] -->
+<!-- [ Javascript Area ] -->
+<!-- Libs -->
+<script src="../js/libs/jquery-1.12.4.min.js"></script>
+<!-- Apps -->
+<script>
+(function (win, $) {
+    var objFunc = {
+        init : function () {
+            this.setElements();
+            this.bindEvents();
+        },
+        setElements : function () {
+            this.btn = $('.btn');
+        },
+        bindEvents : function () {
+            this.btn.on('click', $.proxy(this.viewFunc, this));
+        },
+        viewFunc : function (e) {
+            $(e.currentTarget).parent().addClass('active');
+        }
+    };
+    $(function () {
+        objFunc.init();
+    });
+})(window, window.jQuery);
+</script>
+</div>
+</body>
+</html>

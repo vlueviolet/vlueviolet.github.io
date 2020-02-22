@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>exam - outside</title>
+<style>
+/* temporary css */
+*{margin:0;padding:0}
+body{font-size:14px;font-family:"나눔고딕",NanumGothic,"굴림",Gulim,Sans-serif;line-height:1.5}
+h1,h2,h3,h4,h5,h6{font-size:14px}
+ul,li{list-style:none}
+button{font-size:14px;font-family:"나눔고딕",NanumGothic,"굴림",Gulim,Sans-serif;line-height:1.5;cursor:pointer}
+button::-moz-focus-inner{padding:0;border:0}
+.btn_wrap{zoom:1}
+.btn_wrap:after{display:block;clear:both;content:''}
+.btn_left{float:left}
+.btn_right{float:right}
+.btn_pos{padding:10px}
+.btn_pos button{margin:0;padding:0;width:100px;height:100px;border:1px solid #ccc;}
+.layer_area{display:none;position:fixed;left:0;top:0;right:0;bottom:0;z-index:10;width:100%;height:100%}
+.layer_area .layer_dimmed{position:absolute;left:0;top:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.3;filter:alpha(opacity=30)}
+.layer_pos{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-170px 0 0 -170px;padding:20px;background:#fff}
+.layer_close{position:absolute;right:20px;top:20px}
+
+.customer_form{position:fixed;right:10px;top:10px;width:280px;padding:10px;font-size:12px}
+.customer_form .customer_form_dimmed{position:absolute;left:0;top:0;width:100%;height:100%;background:#000;opacity:0.2;filter:alpha(opacity=20)}
+.customer_form select,.customer_form input,.customer_form textarea,.customer_form button{font-size:12px;line-height:1.5;vertical-align:top}
+.customer_form ul{position:relative}
+.customer_form ul li{margin-top:7px;zoom:1}
+.customer_form ul li:first-child{margin-top:0}
+.customer_form ul li:after{display:block;clear:both;content:''}
+.customer_form ul li select,.customer_form ul li input,.customer_form ul li textarea{border:0 none;background:#eee}
+.customer_form ul li select{height:18px}
+.customer_form ul li .tit{float:left;width:80px}
+.customer_form ul li .cont{float:left;width:200px}
+.customer_form ul li .cont input[type="text"]{width:50%;height:18px}
+.customer_form ul li .code_form{display:block}
+.customer_form ul li .code_form span{display:block}
+.customer_form ul li .code_form textarea{width:100%;max-width:100%}
+.customer_form .btn_ok{position:relative;margin-top:10px;padding-top:10px;border-top:1px solid #eee}
+
+.customer_code{margin:10px;padding:10px;border:1px solid #ccc;background:#eee;font-size:12px}
+/* //temporary css */
+</style>
+</head>
+<body>
+<!-- wrapper [s] -->
+<div id="wrapper">
+    <!-- header [s] -->
+    <div id="header">@</div>
+    <!-- header [e] -->
+    <hr />
+    <!-- container [s] -->
+    <div id="container">
+        <div class="btn_wrap">
+            <div class="btn_left">
+                <div class="btn_pos js-layer-btn"><button>레이어 띄우기</button></div>
+                <div class="btn_pos js-layer-btn"><button>레이어 띄우기</button></div>
+                <div class="btn_pos js-layer-btn"><button>레이어 띄우기</button></div>
+                <div class="btn_pos js-layer-btn"><button>레이어 띄우기</button></div>
+            </div>
+        </div>
+        <div class="customer_wrap">
+            <div class="customer_form">
+                <span class="customer_form_dimmed"></span>
+                <ul>
+                    <li>
+                        <span class="tit"><label for="type">type : </label></span>
+                        <span class="cont">
+                            <select id="type" data-type="string">
+                                <option>default</option>
+                                <option>fade</option>
+                                <option>slide</option>
+                            </select>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="tit"><label for="speed">speed : </label></span>
+                        <span class="cont">
+                            <input type="text" id="speed" data-type="number">&nbsp;<span class="">(1000 = 1초)</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="tit"><label for="bgColor">bgColor : </label></span>
+                        <span class="cont">
+                            <input type="text" id="bgColor" data-type="string">
+                        </span>
+                    </li>
+                    <li>
+                        <span class="tit"><label for="bgOpacity">bgOpacity : </label></span>
+                        <span class="cont">
+                            <input type="text" id="bgOpacity" data-type="number">&nbsp;<span class="">0 ~ 1</span>
+                        </span>
+                    </li>
+                </ul>
+                <p class="btn_ok"><button type="button">OK</button></p>
+            </div>
+            <div class="customer_code"><pre></pre></div>
+        </div>
+        <div class="layer_area js-layer_area js-layer-wrap">
+            <span class="layer_dimmed">&nbsp;</span>
+            <div class="layer_pos js-layer">
+                <div class="your_tag">
+                    <ul>
+                        <li>내용1<a href="#">링크</a></li>
+                        <li>내용2</li>
+                        <li>내용3</li>
+                        <li>내용4</li>
+                        <li>내용5</li>
+                    </ul>
+                    <p class="btn_is"><a href="#">뜬금없는 링크</a></p>
+                </div>
+                <div class="your_tag" style="display:none">
+                    <ul>
+                        <li>내용2-1</li>
+                        <li>내용2-2</li>
+                        <li>내용2-3</li>
+                        <li>내용2-4</li>
+                    </ul>
+                </div>
+                <p class="layer_close"><button type="button" class="js-layer-close">닫기</button></p>
+            </div>
+        </div>
+    </div>
+    <!-- container [e] -->
+    <hr />
+    <!-- footer [s] -->
+    <div id="footer">@</div>
+    <!-- footer [e] -->
+<!-- [ Javascript Area ] -->
+<!-- Libs -->
+<script src="../js/libs/jquery-1.12.4.min.js"></script>
+<script src="../js/libs/jquery.animate-enhanced.custom.js"></script>
+<script src="js/jquery.ba-outside-events.min.js"></script>
+<!-- Apps -->
+<script src="../js/apps/common.js"></script>
+<script>
+(function (win, $) {
+    'use strict';
+    win.stProject = win.stProject || {};
+    var hasOwnProperty = Object.prototype.hasOwnProperty,
+        PAGE = win.stProject.page;
+    win.stProject.commonLayer = function (args) {
+        var defParams = {
+            type : 'default', // default, fade, slide
+            btnElements : '.js-layer-btn button',
+            layerWrapElement : '.js-layer-wrap',
+            layerDimmedElement : '.layer_dimmed',
+            layerElement : '.js-layer',
+            closeElements : '.js-layer-close',
+            bgOpacity : 0.3,
+            bgColor : '#000',
+            customEvents : '.commonLayer',
+            speed : 150,
+            viewBefore : null,
+            viewAfter : null,
+            closeBefore : null,
+            closeAfter : null
+        };
+        this.opts = $.extend({}, defParams, (args || {}));
+        if (!(this.btnObj = $(this.opts.btnElements)).length) return;
+        this.init();
+    };
+    win.stProject.commonLayer.prototype = {
+        init : function () {
+            this.setElements();
+            this.initLayout();
+            this.bindEvents();
+        },
+        domChangeFunc : function () {
+            this.nextFocusFunc();
+        },
+        setElements : function () {
+            this.layerWrap = $(this.opts.layerWrapElement);
+            this.layerDimmed = this.layerWrap.find(this.opts.layerDimmedElement);
+            this.layerObj = this.layerWrap.find(this.opts.layerElement);
+            this.closeBtn = this.layerWrap.find(this.opts.closeElements);
+        },
+        initLayout : function () {
+            var focusOutTagClass = 'js-focusout',
+                focusOutTag = '<span class="' + focusOutTagClass + '" tabindex="0" style="overflow:hidden;position:absolute;left:0;top:0;z-index:-1;width:1px;height:1px;font-size:0;line-height:0"></span>';
+            if (!this.layerObj.prev().hasClass(focusOutTagClass)) {
+                this.layerObj.before(focusOutTag);
+            }
+            if (!this.layerObj.next().hasClass(focusOutTagClass)) {
+                this.layerObj.after(focusOutTag);
+            }
+            this.prevFocus = this.layerObj.prev();
+            this.nextFocus = this.layerObj.next();
+            this.layerObj.attr('tabIndex', 0);
+            this.layerDimmed.css({
+                background : this.opts.bgColor,
+                opacity : this.opts.bgOpacity
+            });
+        },
+        bindEvents : function () {
+            this.btnObj.on('click' + this.opts.customEvents, $.proxy(this.layerView, this));
+            this.closeBtn.on('click' + this.opts.customEvents, $.proxy(this.layerClose, this));
+            this.prevFocus.on('focusin' + this.opts.customEvents, $.proxy(this.prevFocusFunc, this));
+            this.nextFocus.on('focusin' + this.opts.customEvents, $.proxy(this.nextFocusFunc, this));
+            this.layerObj.on('keydown' + this.opts.customEvents, $.proxy(this.escapeFunc, this));
+        },
+        layerClose : function () {
+           this.layerObj.triggerHandler('clickoutside');
+        },
+        outSideEvents : function () {
+            this.layerObj.on('clickoutside touchendoutside', $.proxy(this.layerClickOutside, this));
+        },
+        escapeFunc : function (e) {
+            var keyCode = e.which || e.keyCode;
+            if (keyCode !== 27) return;
+            this.layerClose();
+        },
+        layerView : function (e) {
+            this.btnTarget = $(e.currentTarget);
+            this.outCallback('viewBefore');
+            if (this.opts.type === 'default') {
+                this.layerWrap.stop(true, true).show();
+                this.showAfterBugFunc();
+            } else if (this.opts.type === 'fade') {
+                this.layerWrap.stop(true, true).fadeIn(this.opts.speed, $.proxy(this.layerViewAfter, this));
+            } else if (this.opts.type === 'slide') {
+                this.layerWrap.stop(true, true).slideDown(this.opts.speed, $.proxy(this.layerViewAfter, this));
+            }
+            this.layerObj.focus();
+        },
+        showAfterBugFunc : function () {
+            win.clearTimeout(this.showAfterTimeout);
+            this.showAfterTimeout = win.setTimeout($.proxy(this.layerViewAfter, this), 30);
+        },
+        layerViewAfter : function () {
+            this.outSideEvents();
+            PAGE.scrollLock(true);
+            this.outCallback('viewAfter');
+        },
+        layerClickOutside : function () {
+            this.outCallback('closeBefore');
+            win.clearTimeout(this.closeBeforeTimeout);
+            this.closeBeforeTimeout = win.setTimeout($.proxy(this.hideBeforeBugFunc, this), 30);
+            this.layerObj.off('clickoutside touchendoutside');
+        },
+        hideBeforeBugFunc : function () {
+            if (this.opts.type === 'default') {
+                this.layerWrap.stop(true, true).hide();
+                this.hideAfterBugFunc();
+            } else if (this.opts.type === 'fade') {
+                this.layerWrap.stop(true, true).fadeOut(this.opts.speed, $.proxy(this.layerCloseAfter, this));
+            } else if (this.opts.type === 'slide') {
+                this.layerWrap.stop(true, true).slideUp(this.opts.speed, $.proxy(this.layerCloseAfter, this));
+            }
+            this.btnTarget.focus();
+        },
+        hideAfterBugFunc : function () {
+            win.clearTimeout(this.closeAfterTimeout);
+            this.closeAfterTimeout = win.setTimeout($.proxy(this.layerCloseAfter, this), 30);
+        },
+        layerCloseAfter : function (e) {
+            this.layerClose();
+            PAGE.scrollLock(false);
+            this.outCallback('closeAfter');
+        },
+        prevFocusFunc : function () {
+            this.closeBtn.focus();
+        },
+        nextFocusFunc : function () {
+            this.layerObj.focus();
+        },
+        outCallback : function (type) {
+            var callbackObject = this.opts[type];
+            if (callbackObject !== null) {
+                callbackObject();
+            }
+        },
+        unBindEvents : function () {
+            this.btnObj.off('click' + this.opts.customEvents);
+            this.closeBtn.off('click' + this.opts.customEvents);
+            this.prevFocus.off('focusin' + this.opts.customEvents);
+            this.nextFocus.off('focusin' + this.opts.customEvents);
+            this.layerObj.off('keydown' + this.opts.customEvents);
+            this.layerObj.off('clickoutside touchendoutside');
+        },
+        reInit : function () {
+            this.unBindEvents();
+            this.setElements();
+            this.initLayout();
+            this.bindEvents();
+        }
+    };
+
+    win.stProject.yoursObject = function () {
+        this.init();
+    };
+    win.stProject.yoursObject.prototype = {
+        init : function () {
+            this.setElements();
+            this.setLayer();
+            this.optsViewSync();
+            this.customerCodeViewFunc();
+            this.bindEvents();
+        },
+        setElements : function () {
+            this.btnis = $('.btn_ok button');
+            this.customForm = $('.customer_form');
+            this.customFormList = this.customForm.find('ul');
+            this.customFormLabel = this.customForm.find('label');
+            this.customCodePre = $('.customer_code pre');
+        },
+        bindEvents : function () {
+            this.btnis.on('click', $.proxy(this.btnOkFunc, this));
+            // this.customFormList.on('keyup', 'input[type=text]', $.proxy(this.keyDownFunc, this));
+            // this.customFormList.on('change', 'input[type=checkbox], input[type=radio], select', $.proxy(this.keyChangeFunc, this));
+        },
+        btnOkFunc : function (e) {
+            e.preventDefault();
+            this.customerCodeEnterFunc();
+            this.customerCodeViewFunc();
+        },
+        keyDownFunc : function (e) {
+            var keyCode = e.keyCode || e.which,
+                target = $(e.target);
+            win.clearTimeout(this.keyDownTime);
+            this.keyDownTime = win.setTimeout($.proxy(function () {
+                this.keyChangeFunc();
+            }, this), 350);
+        },
+        keyChangeFunc : function () {
+            this.btnis.triggerHandler('click');
+        },
+        setLayer : function () {
+            this.posLayer = new win.stProject.commonLayer();
+            this.basicLayerOpts = this.posLayer.opts;
+        },
+        optsViewSync : function () {
+            for (var i = 0, max = this.customFormLabel.length; i < max; i++) {
+                var formId = this.customFormLabel.eq(i).attr('for'),
+                    target = $('#' + formId);
+                if (this.basicLayerOpts.hasOwnProperty(formId)) {
+                    target.val(this.basicLayerOpts[formId]);
+                }
+            }
+        },
+        customerCodeEnterFunc : function () {
+            var targetCode = {},
+                codeLength = false;
+            for (var i = 0, max = this.customFormLabel.length; i < max; i++) {
+                var formId = this.customFormLabel.eq(i).attr('for'),
+                    target = $('#' + formId),
+                    targetType = target.data('type'),
+                    targetVal = target.val();
+                if (this.basicLayerOpts[formId] !== targetVal) {
+                    if (!targetVal) {
+                        target.val(this.basicLayerOpts[formId]);
+                    }
+                    if (targetType === 'number') {
+                        targetVal = Number(targetVal);
+                    }
+                    targetCode[formId] = targetVal;
+                }
+            }
+            this.posLayer.opts = $.extend({}, this.basicLayerOpts, targetCode);
+            this.posLayer.reInit();
+        },
+        customerCodeViewFunc : function () {
+            var codeLine = [];
+            codeLine.push('var myLayer = new window.stProject.commonLayer(');
+            for (var i = 0, max = this.customFormLabel.length; i < max; i++) {
+                var formId = this.customFormLabel.eq(i).attr('for'),
+                    target = $('#' + formId),
+                    targetType = target.data('type'),
+                    targetVal = target.val();
+                if (this.basicLayerOpts[formId] != targetVal) {
+                    if (codeLine.length === 1) {
+                        codeLine.push('{\n');
+                    } else if (codeLine.length >= 3) {
+                        codeLine.push(',\n');
+                    }
+                    if (targetType === 'number') {
+                        codeLine.push('&nbsp;&nbsp;&nbsp;' + formId + ' : ' + targetVal);
+                    } else {
+                        codeLine.push('&nbsp;&nbsp;&nbsp;' + formId + ' : "' + targetVal + '"');
+                    }
+                }
+            }
+            if (codeLine.length >= 2) {
+                codeLine.push('\n}');
+            }
+            codeLine.push(');');
+            this.customCodePre.get(0).innerHTML = codeLine.join('');
+        }
+    };
+    $(function () {
+        win.examYours = new win.stProject.yoursObject();
+    });
+})(window, window.jQuery);
+</script>
+</div>
+</body>
+</html>
