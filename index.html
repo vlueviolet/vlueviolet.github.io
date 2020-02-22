@@ -1,70 +1,88 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
-<link rel="stylesheet" href="assets/css/common.css">
-<title>index</title>
-</head>
-<body>
-<!-- wrapper [s] -->
-<div id="wrap">
-<!-- header [s] -->
-<div id="header">
-	<h1>Index</h1>
-</div>
-<!-- header [e] -->
+---
+layout: default
+pagination: 
+  enabled: true
+---
+<div class="home">
 
-<!-- container [s] -->
-<div id="container">
-	<ul class="list">
-		<li class="depth">
-			<a href="works/study/gulp/"><span>작업환경 셋팅</span></a>
-			<ul class="list2">
-			<li class="depth2"><a href="works/gulp"><span>iis_setting</span></a></li>
-			</ul>
-		</li>
-		<li class="depth">
-			<a href="works/study/gulp/"><span>Gulp</span></a>
-			<ul class="list2">
-			<li class="depth2"><a href="works/iis_setting"><span>Gulp 기초</span></a></li>
-			</ul>
-		</li>
-		<li class="depth">
-			<a href="works/study/js/"><span>JS</span></a>
-			<ul class="list2">
-			<li class="depth2"><a target="_blank" href="/study/"><span>Hivelab jQuery Study</span></a></li>
-			<li class="depth2"><a href="works/js/prototype.md"><span>Prototype?</span></a></li>
-			<li class="depth2"><a target="_blank" href="https://github.com/vlueviolet/vlueviolet.github.io/tree/master/works/plugin"><span>Plugin</span></a></li>
-			<li class="depth2"><a target="_blank" href="works/js/double_outside/"><span>Double_outside</span></a></li>
-			<li class="depth2"><a href="works/js/uio"><span>UIO</span></a></li>
-			<li class="depth2"><a target="_blank" href="works/js/video"><span>Video/Audio Conrol</span></a></li>
-			<li class="depth2"><a target="_blank" href="works/js/image"><span>Image Conrol</span></a></li>
-			</ul>
-		</li>
-		<li class="depth">
-			<a href="https://github.com/vlueviolet/vlueviolet.github.io/tree/master/works/vuejs"><span>Vuejs</span></a>
-			<ul class="list2">
-			<li class="depth2"><a href="/https://github.com/vlueviolet/vlueviolet.github.io/tree/master/works/vuejs"><span>Vuex - Getters,  Mutations</span></a></li>
-			</ul>
-		</li>
-		<li class="depth">
-			<a href="project/"><span>Project</span></a>
-			<ul class="list2">
-			<li class="depth2"><a href="project/"><span>Project</span></a></li>
-			</ul>
-		</li>
-	</ul>
+<div class="site-header-container {% if site.cover %}has-cover{% endif %}" {% if site.cover %}style="background-image: url({{ site.cover | prepend: site.baseurl }});"{% endif %}>
+  <div class="scrim {% if site.cover %}has-cover{% endif %}">
+    <header class="site-header">
+      <h1 class="title">{{ site.title }}</h1>
+      {% if site.subtitle %}<p class="subtitle">{{ site.subtitle }}</p>{% endif %}
+    </header>
+  </div>
 </div>
-<!-- container [e] -->
 
+<div class="wrapper">
+<ul class="post-list">
+  {% for post in paginator.posts %}
+  <li>
+    <h2>
+      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>{{ post.content | strip_html | truncatewords: 50 }}</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">{{ post.date | date: "%B %-d, %Y" }}</div>
+      <div class="post-categories">
+      {% if post.categories.size > 0 %}in {% for cat in post.categories %}
+        {% if site.jekyll-archives %}
+        <a href="{{ site.baseurl }}/category/{{ cat }}">{{ cat | capitalize }}</a>{% if forloop.last == false %}, {% endif %}
+        {% else %}
+        <a href="{{ site.baseurl }}/posts/#{{ cat }}">{{ cat | capitalize }}</a>{% if forloop.last == false %}, {% endif %}
+        {% endif %}
+      {% endfor %}{% endif %}
+      </div>
+    </section>
+  </li>
+  {% if forloop.last == false %}
+  <hr>
+  {% endif %}
+  {% endfor %}
+</ul>
 
-<!-- footer [s] -->
-<div id="footer"></div>
-<!-- footer [e] -->
+<nav class="pagination" role="navigation">
+	<p>
+    {% if paginator.previous_page %}
+			{% if paginator.page == 2 %}
+			<a class="newer-posts" href="{{ site.baseurl }}{{ paginator.previous_page_path }}">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square fa-stack-2x"></i>
+          <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+			{% else %}
+			<a class="newer-posts" href="{{ site.baseurl }}{{ paginator.next_page_path }}">
+				<span class="fa-stack fa-lg">
+					<i class="fa fa-square fa-stack-2x"></i>
+					<i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
+				</span>
+			</a>
+			{% endif %}
+		{% else %}
+		<span class="fa-stack fa-lg">
+      <i class="fa fa-square fa-stack-2x"></i>
+      <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
+    </span>
+		{% endif %}
+		<span class="page-number">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+		{% if paginator.next_page %}
+		<a class="newer-posts" href="{{ site.baseurl }}{{ paginator.next_page_path }}">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-square fa-stack-2x"></i>
+        <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+		{% else %}
+		<span class="fa-stack fa-lg">
+      <i class="fa fa-square fa-stack-2x"></i>
+      <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
+    </span>
+		{% endif %}
+	</p>
+</nav>
+
 </div>
-<a href="works/#" class="btn_top">Top</a>
-<script type="text/javascript" src="assets/js/libs/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="assets/js/apps/ui.js"></script>
-</body>
-</html>
+</div>
