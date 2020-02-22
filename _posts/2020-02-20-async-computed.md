@@ -1,10 +1,10 @@
 ---
 layout: post
-title: 'Welcome to Jekyll!'
+title: 'AsyncComputed'
 date: 2020-02-20 17:52 GMT+99
-author: Ben Centra
-categories: Jekyll
-tags: jekyll welcome
+author: vuejs
+categories: vuejs
+tags: vuejs
 cover: '/assets/instacode.png'
 ---
 
