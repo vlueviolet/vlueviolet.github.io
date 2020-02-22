@@ -2,7 +2,7 @@
 layout: post
 title: 'AsyncComputed'
 date: 2020-02-20 17:52 GMT+99
-author: vuejs
+author: vlueviolet
 categories: vuejs
 tags: vuejs
 cover: '/assets/instacode.png'

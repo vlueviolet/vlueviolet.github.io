@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 22 Feb 2020 20:07:54 +0900</pubDate>
-    <lastBuildDate>Sat, 22 Feb 2020 20:07:54 +0900</lastBuildDate>
+    <pubDate>Sat, 22 Feb 2020 20:34:36 +0900</pubDate>
+    <lastBuildDate>Sat, 22 Feb 2020 20:34:36 +0900</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
@@ -21,6 +21,44 @@
         
         
         <category>vuejs</category>
+        
+      </item>
+    
+      <item>
+        <title>Async, Await</title>
+        <description>&lt;h1 id=&quot;async-await&quot;&gt;async, await?&lt;/h1&gt; &lt;ul&gt; &lt;li&gt;강사 : 코드종&lt;/li&gt; &lt;li&gt;URL : &lt;a href=&quot;https://www.youtube.com/watch?v=JzXjB6L99N4&quot;&gt;자바스크립트 async / await? 나도 써보자, 기본 개념부터~&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; &lt;h2 id=&quot;개념&quot;&gt;개념&lt;/h2&gt; &lt;p&gt;promise처럼 비동기 방식이지만, 조금 다른 사용법으로 promise를 다룬다.&lt;/p&gt; &lt;h2...</description>
+        <pubDate>Mon, 17 Feb 2020 10:42:00 +0900</pubDate>
+        <link>http://localhost:4000/javascript/2020/02/17/async-await.html</link>
+        <guid isPermaLink="true">http://localhost:4000/javascript/2020/02/17/async-await.html</guid>
+        
+        <category>javascript</category>
+        
+        <category>async</category>
+        
+        <category>await</category>
+        
+        
+        <category>javascript</category>
+        
+      </item>
+    
+      <item>
+        <title>자바스크립트 예외처리</title>
+        <description>&lt;h1 id=&quot;자바스크립트-예외처리&quot;&gt;자바스크립트 예외처리&lt;/h1&gt; &lt;ul&gt; &lt;li&gt;강사 : 코드종&lt;/li&gt; &lt;li&gt;링크 &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=EBmIHrLTVdg&quot;&gt;자바스크립트 예외처리 1/4 - 예외란 무엇인가? throw?&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=wf6AlMj7TFA&quot;&gt;자바스크립트 예외처리 2/4 - try catch, Error 객체&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=RRc_iVHdDKk&quot;&gt;자바스크립트 예외처리 3/4...</description>
+        <pubDate>Mon, 17 Feb 2020 10:42:00 +0900</pubDate>
+        <link>http://localhost:4000/javascript/2020/02/17/jascript-exception.html</link>
+        <guid isPermaLink="true">http://localhost:4000/javascript/2020/02/17/jascript-exception.html</guid>
+        
+        <category>javascript</category>
+        
+        <category>js</category>
+        
+        <category>try</category>
+        
+        <category>catch</category>
+        
+        
+        <category>javascript</category>
         
       </item>
     
@@ -41,22 +79,6 @@
       </item>
     
       <item>
-        <title>Dummy Post 6</title>
-        <description>&lt;p&gt;This is just a dummy post. Lorem ipsum and all the rest.&lt;/p&gt; &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna...</description>
-        <pubDate>Sun, 19 Apr 2015 17:43:59 +0900</pubDate>
-        <link>http://localhost:4000/dummy/2015/04/19/dummy6.html</link>
-        <guid isPermaLink="true">http://localhost:4000/dummy/2015/04/19/dummy6.html</guid>
-        
-        <category>lorem</category>
-        
-        <category>ipsum</category>
-        
-        
-        <category>Dummy</category>
-        
-      </item>
-    
-      <item>
         <title>Welcome to Jekyll!</title>
         <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different...</description>
         <pubDate>Sun, 19 Apr 2015 04:25:52 +0900</pubDate>
@@ -69,86 +91,6 @@
         
         
         <category>Jekyll</category>
-        
-      </item>
-    
-      <item>
-        <title>Dummy Post 6</title>
-        <description>&lt;p&gt;This is just a dummy post. Lorem ipsum and all the rest.&lt;/p&gt; &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna...</description>
-        <pubDate>Sun, 19 Apr 2015 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/dummy/2015/04/19/dummy6.html</link>
-        <guid isPermaLink="true">http://localhost:4000/dummy/2015/04/19/dummy6.html</guid>
-        
-        <category>lorem</category>
-        
-        <category>ipsum</category>
-        
-        
-        <category>Dummy</category>
-        
-      </item>
-    
-      <item>
-        <title>Dummy Post 5</title>
-        <description>&lt;p&gt;This is just a dummy post. Lorem ipsum and all the rest.&lt;/p&gt; &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna...</description>
-        <pubDate>Sun, 19 Apr 2015 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/dummy/2015/04/19/dummy5.html</link>
-        <guid isPermaLink="true">http://localhost:4000/dummy/2015/04/19/dummy5.html</guid>
-        
-        <category>lorem</category>
-        
-        
-        <category>Dummy</category>
-        
-      </item>
-    
-      <item>
-        <title>Dummy Post 4</title>
-        <description>&lt;p&gt;This is just a dummy post. Lorem ipsum and all the rest.&lt;/p&gt; &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna...</description>
-        <pubDate>Sun, 19 Apr 2015 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/dummy/2015/04/19/dummy4.html</link>
-        <guid isPermaLink="true">http://localhost:4000/dummy/2015/04/19/dummy4.html</guid>
-        
-        <category>ipsum</category>
-        
-        
-        <category>Dummy</category>
-        
-      </item>
-    
-      <item>
-        <title>Dummy Post 3</title>
-        <description>&lt;p&gt;This is just a dummy post. Lorem ipsum and all the rest.&lt;/p&gt; &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna...</description>
-        <pubDate>Sun, 19 Apr 2015 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/dummy/2015/04/19/dummy3.html</link>
-        <guid isPermaLink="true">http://localhost:4000/dummy/2015/04/19/dummy3.html</guid>
-        
-        
-        <category>Dummy</category>
-        
-      </item>
-    
-      <item>
-        <title>Dummy Post 2</title>
-        <description>&lt;p&gt;This is just a dummy post. Lorem ipsum and all the rest.&lt;/p&gt; &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna...</description>
-        <pubDate>Sun, 19 Apr 2015 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/dummy/2015/04/19/dummy2.html</link>
-        <guid isPermaLink="true">http://localhost:4000/dummy/2015/04/19/dummy2.html</guid>
-        
-        
-        <category>Dummy</category>
-        
-      </item>
-    
-      <item>
-        <title>Dummy Post</title>
-        <description>&lt;p&gt;This is just a dummy post. Lorem ipsum and all the rest.&lt;/p&gt; &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna...</description>
-        <pubDate>Sun, 19 Apr 2015 04:25:52 +0900</pubDate>
-        <link>http://localhost:4000/dummy/2015/04/19/dummy.html</link>
-        <guid isPermaLink="true">http://localhost:4000/dummy/2015/04/19/dummy.html</guid>
-        
-        
-        <category>Dummy</category>
         
       </item>
     
