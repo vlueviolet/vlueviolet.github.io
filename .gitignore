@@ -1,4 +1,5 @@
 # Jekyll 이 생성한 폴더 제외
+_site
 .sass-cache
 .jekyll-metadata
 # Bundler 가 생성한 폴더 제외
