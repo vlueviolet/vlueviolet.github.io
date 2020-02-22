@@ -189,51 +189,50 @@
 
 <p>일반적인 동기적인 코드의 경우, <code class="highlighter-rouge">try</code>, <code class="highlighter-rouge">catch</code>를 이용해 에러상황을 처리할 수 있다.</p>
 
-<p>```javascript {.line-numbers}
-function f2() {
-  console.log(‘f2 start’);
-  throw new Error(‘에러’); // 해당하는 콜스택 정보가 담김
-  console.log(‘f2 end’);
-}</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">f2</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">f2 start</span><span class="dl">'</span><span class="p">);</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">에러</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 해당하는 콜스택 정보가 담김</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">f2 end</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
 
-<p>function f1() {
-  console.log(‘f1 start’);
-  try {
-    f2();
-  } catch (e) {
-    // try에서 발생한 에러를 처리함
-    console.error(e);
-  }
-  console.log(‘f1 end’);
-}</p>
+<span class="kd">function</span> <span class="nx">f1</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">f1 start</span><span class="dl">'</span><span class="p">);</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="nx">f2</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// try에서 발생한 에러를 처리함</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">f1 end</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
 
-<p>console.log(‘will : f1’);
-f1();
-console.log(‘did : f1’);</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-결과 화면같이, error를 catch하는 것을 볼 수 있다.
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">will : f1</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">f1</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">did : f1</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
 
-&lt;img width="430" alt="" src="https://user-images.githubusercontent.com/26196090/74635781-0fd30800-51aa-11ea-80ae-241818649909.png"&gt;
+<p>결과 화면같이, error를 catch하는 것을 볼 수 있다.</p>
 
-## promise의 예외처리
+<p><img width="430" alt="" src="https://user-images.githubusercontent.com/26196090/74635781-0fd30800-51aa-11ea-80ae-241818649909.png" /></p>
 
-비동기적인 코드는 try, catch에서 에러를 잡을 수 없다.
-아래 코드와 같이 try 구문에서 에러를 처리하면, `Uncaught`를 확인할 수 있다.
+<h2 id="promise의-예외처리">promise의 예외처리</h2>
 
-```javascript
-function wait(sec) {
-  return new Promise((resolve, reject) =&gt; {
-    setTimeout(() =&gt; {
-      reject('error!');
-    }, sec * 1000);
-  });
-}
+<p>비동기적인 코드는 try, catch에서 에러를 잡을 수 없다.
+아래 코드와 같이 try 구문에서 에러를 처리하면, <code class="highlighter-rouge">Uncaught</code>를 확인할 수 있다.</p>
 
-try {
-  wait(3);
-} catch (e) {
-  console.error(e);
-}
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">wait</span><span class="p">(</span><span class="nx">sec</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">reject</span><span class="p">(</span><span class="dl">'</span><span class="s1">error!</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">},</span> <span class="nx">sec</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nx">wait</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p><img width="250" alt="" src="https://user-images.githubusercontent.com/26196090/74635972-6b04fa80-51aa-11ea-8311-8bab5cca7162.png" /></p>

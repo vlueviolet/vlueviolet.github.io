@@ -21,7 +21,7 @@ cover: '/assets/instacode.png'
 
 일반적인 동기적인 코드의 경우, `try`, `catch`를 이용해 에러상황을 처리할 수 있다.
 
-```javascript {.line-numbers}
+```javascript
 function f2() {
   console.log('f2 start');
   throw new Error('에러'); // 해당하는 콜스택 정보가 담김
