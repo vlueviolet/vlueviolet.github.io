@@ -101,3 +101,20 @@ window.tooltips = window.tooltips || []
 window.tooltips.push(['#someId', { content: "This is the text of the tooltip!" }])
 window.tooltips.push(['#someOtherId', { content: "{% include tooltips/example.html %}", placement: "right" }])
 </script>
+
+
+## Add Codepen
+
+```html
+<!--
+ * codepen 주소가 https://codepen.io/vlueviolet/pen/KKpNLoa 라면,
+ * data-slug-hash="KKpNLoa" 로 넣으면 됨
+-->
+<p data-height="268" data-theme-id="0" data-slug-hash="cCyba" data-default-tab="result" class='codepen'></p>
+
+<!-- import embed js file like cdn -->
+<script async src="//codepen.io/assets/embed/ei.js"></script>
+```
+
+<p data-height="268" data-theme-id="0" data-slug-hash="cCyba" data-default-tab="result" class='codepen'></p>
+<script async src="//codepen.io/assets/embed/ei.js"></script>
