@@ -59,6 +59,6 @@ var processor = {
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
   processor.doLoad();
 });
