@@ -1,0 +1,125 @@
+body {
+				font-family: verdana, sans-serif;
+				padding-top: 60px;
+        padding-bottom: 40px;
+        
+        background: #E1E1DA url("http://sciencelifeny.com/bootstrap/assets/img/textures/lightgreybg.jpg");
+			}
+			#output {
+				width: 640px;
+				height: 360px;
+			}
+			#buffer {
+				display: none;
+			}
+			
+			
+			#instructions {
+				padding: 20px 0  30px 0; 
+				float: left;
+				
+			}
+			#canvas_output {
+
+				z-index: 10;
+				display: block;
+				width: 550px;									
+			}
+			
+			.under {
+				z-index: -1;
+				
+			}
+			
+			.over{
+				
+				z-index: 11;
+			}
+			.push {
+				position: absolute;
+				top: 30%;
+				left: 20%;
+				
+			}
+			
+			.push_2 {
+				position: absolute;
+				top: 45%;
+				left: 20%;
+				color: rgb(255, 255, 255);
+				
+			}
+			
+			.text {
+				
+				display: block;
+			}
+			
+			h1 {
+				
+				padding: 2% 0 2% 1%;
+			}
+			
+			.newbackground {
+				background: url("../image/3dpattern.png") repeat;
+				overflow: hidden;
+			}
+			
+			.button_bar {
+				
+				padding:20px;
+				width:100%;
+			}
+			
+			.carousel p{
+				color: white;
+				font-size: 1em;
+				
+			}
+			
+			.carousel img:first-child {
+				padding-right: 10px;
+				
+			}
+			
+			.carousel img { 
+				padding-bottom: 90px ;
+			}
+			
+			.carousel_placeholder {
+				
+/* 				height: 40%; */
+				padding-bottom:30%;
+
+				
+			}
+			
+			.carousel .item {
+				height:550px;
+			}
+			.one_img {
+				
+/* 				width: 45%; */
+				padding: 0 0 0% 30%;
+			}
+			
+			.first_img_row {
+				
+				float:left;
+				padding-left: 10%;
+			}
+			
+			.width40{
+				width: 40%;	
+				
+			}
+			
+			.prettyprint {
+				
+				padding: 5px 100px 90px 100px;
+			}
+			
+			.placehold_it{
+				padding-bottom:30%;
+			}
+
