@@ -47,7 +47,7 @@ var processor = {
       var b = frame.data[i * 4 + 2];
       if(g > 100 && r < 100) frame.data[i * 4 + 3] = 0;
     }
-    for (let i = 3, len = imageData.length; i < len; i = i + 4) {
+    for (var i = 3, len = imageData.length; i < len; i = i + 4) {
       imageData[i] = alphaData[i - 1];
     }
 
