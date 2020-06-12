@@ -16,9 +16,8 @@ let processor = {
     this.ctx2 = this.c2.getContext('2d');
     
     this.video.addEventListener('play', () => {
-      this.width = 600;
-      console.log(this.width);
-      this.height = 337.5;
+      this.width = 150;
+      this.height = 300;
       this.timerCallback();
     });
   },
