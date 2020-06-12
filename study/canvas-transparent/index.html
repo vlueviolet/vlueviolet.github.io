@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
   <title>Canvas 크로마키</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <section>
-    <h1>Video</h1>
-    <video id="video" src="video/CHROMA_KEY.mp4" width="600" height="337" controls muted></video>
+    <h1>원본</h1>
+    <video id="video" src="video/0428_BESPOKE_video_MO_720_1480.mp4" height="300" playsinline autoplay muted></video>
   </section>
   <section>
     <div>
-      <h1>transparent</h1>
-      <canvas id="c2" width="600" height="337"></canvas>
+      <h1>투명도 적용</h1>
+      <canvas id="c2"></canvas>
     </div>
     <div>
       <h1>chroma key</h1>
-      <canvas id="c1" width="600" height="337"></canvas>
+      <canvas id="c1"></canvas>
     </div>
   </section>
 
