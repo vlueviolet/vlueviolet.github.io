@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas 크로마키</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <section>
+    <h1>Video</h1>
+    <video id="video" src="video/CHROMA_KEY.mp4" width="600" height="337" controls muted></video>
+  </section>
+  <section>
+    <div>
+      <h1>transparent</h1>
+      <canvas id="c2" width="600" height="337"></canvas>
+    </div>
+    <div>
+      <h1>chroma key</h1>
+      <canvas id="c1" width="600" height="337"></canvas>
+    </div>
+  </section>
+
+  <script src="./index.js"></script>
+</body>
+</html>
