@@ -16,15 +16,6 @@ var processor = {
     this.transparent = document.querySelector('#transparent');
     this.transparentContext = this.transparent.getContext('2d');
 
-    // var outputCanvas = document.getElementById('output'),
-    //     output = outputCanvas.getContext('2d'),
-    //     bufferCanvas = document.getElementById('buffer'),
-    //     buffer = bufferCanvas.getContext('2d'),
-    //     video = document.getElementById('video'),
-    //     width = outputCanvas.width,
-    //     height = outputCanvas.height,
-    //     interval;
-
     this.video.addEventListener('play', function() {
       self.width = 150;
       self.height = 300;
