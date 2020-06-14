@@ -316,20 +316,17 @@ draw();
 
 ---
 
-## setTransform
+## setTransform(a, b, c, d, e, f)
 변환을 초기화 한다.  
 `resetTransform()`를 사용해도 된다.  
 
 canvas로 변환을 다루다보면, 복잡한 표현을 하게되는데,  
-단위 행렬을 이용해서 변환을 다룬다.
+단위행렬을 이용해서 변환을 다룬다.
+
+단위행렬을 사용하면 더 많은 표현을 할 수 있다.  
+(이런것들)[https://studiomeal-717af.firebaseapp.com/]
 
 즉, `단위행렬 * n차 행렬 = n차 행렬`의 결과가 나오도록 하는게 단위행렬이다.
-
-$$\left[\begin{array}{rrr} 
-1&0&0\\
-0&1&0\\
-0&0&1
-\end{array}\right]$$
 
 `setTransform()`를 하지않으면, 이런 결과가 나온다.  
 회전하는 사각형 외에 왼쪽 상단에 작은 사각형을 그리려고 한다.  
@@ -382,8 +379,12 @@ draw();
 ![Jun-14-2020 16-54-13](https://user-images.githubusercontent.com/26196090/84588132-b204b300-ae5f-11ea-9949-368900057cab.gif)
 
 이때, `setTransform`, `resetTransform`를 사용하면 초기화 된다.
+또는 `restore()` 이후에 `fillRect()`를 하면된다.
 
 ```javascript
 context.setTransform(1, 0, 0, 1, 0, 0);
 context.resetTransform();
 ```
+
+`setTransform(1,0,0,1,0,0)`, `resetTransform`이든 변환을 사용할때는  
+반드시, `변환 초기화 → 변환`하는 습관을 들이자.
