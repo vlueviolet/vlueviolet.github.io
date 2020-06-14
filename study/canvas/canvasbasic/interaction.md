@@ -32,22 +32,29 @@ canvas.addEventListener('click', clickHandler);
 
 ## 랜덤 박스를 배치하고, 클릭 제어하기
 ```javascript
-const  canvas = document.querySelector('.canvas');
+const canvas = document.querySelector('.canvas');
 const context = canvas.getContext('2d');
-const boxes = [];
-const mousePos = { x: 0, y: 0 };
-let selectedBox;  // 클릭된 box
 
-context.font='bold 30px sans-serif';
+const boxes = [];                 // 생성되는 box들의 정보를 담는 배열
+const mousePos = { x: 0, y: 0 };  // 마우스 클릭시 x, y 정보
+let selectedBox;                  // 클릭된 box의 정보ㄴ
 
+context.font='bold 30px sans-serif';  // set text font
+
+// box를 그리는 클래스ㄴ
 class Box {
   constructor(index, x, y, speed) {
+    // 파라메터 재정의
     this.index = index;
     this.x = x;
     this.y = y;
     this.speed = speed;
+
+    // box 사이즈
     this.width = 100;
     this.height = 100;
+
+    // draw함수 실행
     this.draw();
   };
 
@@ -59,7 +66,9 @@ class Box {
   };
 }
 
+// 각 box를 이동시키는 함수
 const render = () => {
+  // 이전 ract 지우기
   context.clearRect(0, 0, canvas.width, canvas.height);
   
   let box;
@@ -71,18 +80,20 @@ const render = () => {
     }
     box.draw();
   }
+  // 1/60 프레임마다 render함수 재실행
   requestAnimationFrame(render);
 };
 
 let tempX, tempY, tempSpeed;
-
+// x, y, speed를 random하게 생성
 for(let i=0, max=10 ; i<max ; i++) {
   tempX = Math.random() * canvas.width * 0.8; // canvas 너비의 80% 이내까지 찍히도록
   tempY = Math.random() * canvas.height * 0.8;
-  tempSpeed = Math.random() * 4 + 1;  // 최소 1
+  tempSpeed = Math.random() * 4 + 1;  // 1~5ㄴ
   boxes.push(new Box(i, tempX, tempY, tempSpeed));
 }
 
+// 클릭시, 마우스 좌표에 해당하는 box 찾기
 const clickHandler = (e) => {
   mousePos.x = e.layerX;
   mousePos.y = e.layerY;
@@ -98,9 +109,10 @@ const clickHandler = (e) => {
       selectedBox = box;
     }
   }
+  // selectedBox 값이 있을때만 실행하도록
   if(selectedBox) {
     console.log(selectedBox.index);
-    selectedBox = null;
+    selectedBox = null; // 값 초기화
   }
 };
 
