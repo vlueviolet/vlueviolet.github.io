@@ -121,3 +121,7 @@ render();
 ```
 
 ![Jun-14-2020 22-11-33](https://user-images.githubusercontent.com/26196090/84594259-0c1b6d80-ae8c-11ea-8965-c8c506a905cf.gif)
+
+
+## 클릭했을때, 해당 box의 panel 노출하기
+
