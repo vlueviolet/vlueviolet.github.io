@@ -9,25 +9,72 @@
   <meta name="format-detection" content="telephone=no">
   <title>Canvas alpha</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
-  <link rel="stylesheet" href="./style.css">
+  <style>
+    body {
+      background: #fff000;
+    }
+
+    .bland-test__video {
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+      border: 2px solid #0000ff;
+    }
+
+    .bland-test__video video {
+      width: 100%;
+      height: 100%;
+    }
+
+    .bland-test__container {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      z-index: 999999;
+      box-sizing: border-box;
+    }
+
+    .bland-test__container:before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: inherit;
+      border: 2px solid red;
+      content: '';
+    }
+
+    .bland-test__container canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: auto;
+    }
+
+    .bland-test__container .gra {
+      top: auto;
+      bottom: 0;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>canvas test</h1>
-  <section>
-    <h2>video 태그</h2>
-    <video id="video" src="video/0428_BESPOKE_video_MO_720_1480.mp4" width="150" height="300" playsinline autoplay muted loop></video>
-  </section>
-  <section>
-    <h2>canvas 투명도 적용<br>(g &gt; 100 && r &lt; 100 제거)</h2>
-      <canvas id="transparent" width="150" height="300"></canvas>
-  </section>
-  <section>
-    <h2>canvas 일반</h2>
-    <canvas id="normal" width="150" height="300"></canvas>
-  </section>
+  <div class="bland-test__video">
+    <video id="testVideo" autoplay playsinline muted oncontextmenu="return false;" loop>
+      <!-- <source src="https://images.samsung.com/is/content/samsung/p5/sec/home/2020/p6/kv/0428/0428_BESPOKE_video_PC_1920_810.mp4" type="video/mp4"> -->
+      <source src="./video/0428_BESPOKE_video_PC_1920_810.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="bland-test__container">
+    <canvas id="testCanvas"></canvas>
+    <canvas id="testCanvasGra" class="gra"></canvas>
+  </div>
 
-  <script src="./index.js"></script>
+  <script src="./index2.js"></script>
 </body>
 
 </html>
