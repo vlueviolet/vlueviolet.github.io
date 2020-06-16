@@ -42,7 +42,9 @@ context.fillRect(150, 150, 200, 200);
 <img width="308" alt="스크린샷 2020-06-14 오후 3 05 05" src="https://user-images.githubusercontent.com/26196090/84586013-77474e80-ae50-11ea-8ff7-5fd9229d2d34.png">
 
 
-## requestAnimationFrame vs setInterval
+## requestAnimationFrame
+
+[바로가기](https://github.com/vlueviolet/vlueviolet.github.io/tree/master/study/javascript/requestAnimationFrame)
 
 ## beginPath, closePath
 
