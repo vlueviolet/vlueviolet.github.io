@@ -131,7 +131,7 @@ context.getImageData(x, y, width, height);
 
 래스터 정보는 캔버스의 출력물에 대한 사본을 뜬 것이며 이후 화면과는 상관없이 독립적으로 조작할 수 있다. **개별 색상 요소의 값을 바꾸거나 교환할 수 있고 주변 픽셀값까지 고려하여 조작하기도 한다.** 다 조정한 후 다음 메서드로 다시 캔버스에 써 넣는다.
 
-> http://www.soen.kr/html5/html3/3-2-2.htm
+> 출처: http://www.soen.kr/html5/html3/3-2-2.htm
 
 ### putImageData()
 이미지를 주입하는 함수.  
