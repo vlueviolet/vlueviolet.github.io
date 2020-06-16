@@ -1,6 +1,6 @@
 # requestAnimationFrame 사용법
 - 강사 : 유준모 개발자 (스튜디오밀)
-- (youtube)[https://www.youtube.com/watch?v=9XnqDSabFjM&t=3s]
+- [youtube](https://www.youtube.com/watch?v=9XnqDSabFjM&t=3s)
 
 window 전역 함수.
 브라우저가 매번 화면을 그리는데, 변화된 화면을 그릴 준비가 되었을때  
