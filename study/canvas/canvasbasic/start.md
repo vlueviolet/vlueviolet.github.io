@@ -52,3 +52,68 @@ context.fillRect(150, 150, 200, 200);
 의도하지 않은 모양이 나올 수 있다.  
 
 closPath는 생략할 수 있지만, beginPath를 반드시 작성하자.
+
+## 함수 설명
+### drawImage()
+이미지 그리는 함수  
+
+`canvas`로 canvas, image, video 요소를 그릴 수 있는데,  
+`requestAnimationFrame`함수와 결합하여 frame 단위로 그릴 수 있다.
+
+```javascript
+context.drawImage(obj, sx, sy, swidth, sheight, dx, dy, dWidth, dHeight);
+```
+#### 파라메터 설명
+* (필수입력)
+- obj(*) : canvas로 그리려는 대상 (canvas, img, video)
+- sx(*) : 출력할 대상의 x 좌표
+- sy(*) : 출력할 대상의 y 좌표
+- sWidth : 이미지 width / 원본(source) 잘라낼 영역(clipping rectangle)
+- sHeight :  이미지 Height / 원본(source) 잘라낼 영역(clipping rectangle)
+- dx : 만약 잘라내었다면, 대상 이미지의 X좌표
+- dy : 만약 잘라내었다면, 대상 이미지의 Y좌표
+- dWidth : 만약 잘라내었다면, 대상 이미지의 width
+- dHeight : 만약 잘라내었다면, 대상 이미지의 Height
+
+#### 활용
+비디오가 재생가능한 준비(canplaythrough[^1])가 되면, 이미지를 그리도록 하는 코드
+
+```javascript
+const canvas = document.querySelector('.canvas');
+const ctx = canvas.getContext('2d');
+
+ctx.textAlign = 'center';
+ctx.fillText('비디오 로딩 중..', 300, 200);
+
+videoElem.addEventListener('canplaythrough', render);
+
+// video 요소를 가져와서 1/60 frame 단위로 그리는 함수로 사용
+function render() {
+  ctx.drawImage(videoElem, 0, 0, 600, 400);
+  requestAnimationFrame(render);
+}
+```
+
+### getImageData()
+
+```javascript
+context.getImageData(x, y, width, height);
+```
+
+## 참고사항
+### canplaythrough
+canplay 이벤트와 동일하지만, 차이점은 전체 미디어가 중단없이 재생할 수 있을 때 호출된다.  
+canplay 이벤트가 전체 재생을 보장하지는 못하였다면, canplaythrough 는 중단없이 전체 재생을 보장하는 목적이다.  
+
+현재 로드 속도를 유지한다고 가정하고, 중단이 되지 않는다고 판단하면 호출된다.  
+
+**하지만 이것 또한 가정이기때문에, canplay 이벤트보다는 전체 재생을 보장하겠지만, 확신할 수는 없다.**  
+
+그리고 다른 면에서 조금 더 생각해보면, canplaythrough 이벤트는 canplay 이벤트가 일어난 후에 호출된다.  
+
+```
+결과적으로 순서는 loadedmetadata -> loadeddata -> canplay -> canplaythrough 를 의미할 수 있다.
+```
+
+
+출처: https://mygumi.tistory.com/356 [마이구미의 HelloWorld]
