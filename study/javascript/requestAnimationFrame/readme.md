@@ -1,5 +1,6 @@
 # requestAnimationFrame 사용법
-> 강사 : 유준모 개발자 (스튜디오밀)<br>[youtube](https://www.youtube.com/watch?v=9XnqDSabFjM&t=3s)
+> * 강사 : 유준모 개발자 (스튜디오밀)
+> * [youtube](https://www.youtube.com/watch?v=9XnqDSabFjM&t=3s)
 
 --- 
 
