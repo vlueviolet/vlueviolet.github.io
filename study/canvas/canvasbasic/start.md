@@ -112,6 +112,7 @@ context.getImageData(x, y, width, height);
 
 ## 참고사항
 ### canplaythrough
+\[^1] ??
 canplay 이벤트와 동일하지만, 차이점은 전체 미디어가 중단없이 재생할 수 있을 때 호출된다.  
 canplay 이벤트가 전체 재생을 보장하지는 못하였다면, canplaythrough 는 중단없이 전체 재생을 보장하는 목적이다.  
 
