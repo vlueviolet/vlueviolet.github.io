@@ -85,8 +85,7 @@ context.drawImage(obj, sx, sy, swidth, sheight, dx, dy, dWidth, dHeight);
 - dHeight : 만약 잘라내었다면, 대상 이미지의 Height
 
 #### 활용
-비디오가 재생가능한 준비(canplaythrough)가 되면,([^1])  
-이미지를 그리도록 하는 코드
+비디오가 재생가능한 준비(canplaythrough)가 되면, 이미지를 그리도록 하는 코드
 
 ```javascript
 const canvas = document.querySelector('.canvas');
@@ -112,7 +111,6 @@ context.getImageData(x, y, width, height);
 
 ## 참고사항
 ### canplaythrough
-[^1]: 주석에 작성할 내용
 canplay 이벤트와 동일하지만, 차이점은 전체 미디어가 중단없이 재생할 수 있을 때 호출된다.  
 canplay 이벤트가 전체 재생을 보장하지는 못하였다면, canplaythrough 는 중단없이 전체 재생을 보장하는 목적이다.  
 
