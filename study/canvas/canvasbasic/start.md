@@ -85,7 +85,8 @@ context.drawImage(obj, sx, sy, swidth, sheight, dx, dy, dWidth, dHeight);
 - dHeight : 만약 잘라내었다면, 대상 이미지의 Height
 
 #### 활용
-비디오가 재생가능한 준비(canplaythrough [^1])가 되면, 이미지를 그리도록 하는 코드
+비디오가 재생가능한 준비(canplaythrough)가 되면, [^1]  
+이미지를 그리도록 하는 코드
 
 ```javascript
 const canvas = document.querySelector('.canvas');
