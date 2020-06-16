@@ -53,6 +53,15 @@ context.fillRect(150, 150, 200, 200);
 
 closPath는 생략할 수 있지만, beginPath를 반드시 작성하자.
 
+## alpha 적용
+alpha를 적용하는 방법은 2가지가 있다.  
+
+- context.fillStyle='rgba(0, 0, 0, .5)';
+- context.globalAlpha = 0.5;
+
+`globalAlpha`은 전체 context에 적용되기 때문에, 다른 alpha로 하려면 다시 초기화 해줘야 한다. 성능에도 영향을 줄 수 있다.  
+`fillStyle`은 해당 style에서만 적용된다.
+
 ## 함수 설명
 ### drawImage()
 이미지 그리는 함수  

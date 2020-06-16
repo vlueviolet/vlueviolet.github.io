@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <title>Canvas alpha</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <h1>canvas test</h1>
+  <section>
+    <h2>video 태그</h2>
+    <video id="video" src="video/0428_BESPOKE_video_MO_720_1480.mp4" width="150" height="300" playsinline autoplay muted loop></video>
+  </section>
+  <section>
+    <h2>canvas 투명도 적용<br>(g &gt; 100 && r &lt; 100 제거)</h2>
+      <canvas id="transparent" width="150" height="300"></canvas>
+  </section>
+  <section>
+    <h2>canvas 일반</h2>
+    <canvas id="normal" width="150" height="300"></canvas>
+  </section>
+
+  <script src="./index.js"></script>
+</body>
+
+</html>
