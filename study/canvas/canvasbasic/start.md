@@ -63,6 +63,8 @@ alpha를 적용하는 방법은 2가지가 있다.
 `globalAlpha`은 전체 context에 적용되기 때문에, 다른 alpha로 하려면 다시 초기화 해줘야 한다. 성능에도 영향을 줄 수 있다.  
 `fillStyle`은 해당 style에서만 적용된다.
 
+<br><br>
+
 ## 함수 설명
 ### drawImage()
 이미지 그리는 함수  
@@ -105,6 +107,8 @@ function render() {
 }
 ```
 
+<br><br>
+
 ### getImageData()
 이미지를 추출하는 함수.  
 
@@ -133,6 +137,8 @@ context.getImageData(x, y, width, height);
 
 > 출처: http://www.soen.kr/html5/html3/3-2-2.htm
 
+<br><br>
+
 ### putImageData()
 이미지를 주입하는 함수.  
 `getImageData`과 세트이다.  
@@ -155,6 +161,9 @@ putImageData(imgData, x, y, [dx, dy, dw, dh])
 캔버스의 이미지를 조작하는 절차는 간단하다.  
 `getImageData`로 사본을 뜨고 이 사본을 쪼물딱거려 원하는대로 바꾼 후 다시 `putImageData`로 밀어 넣는 것이다.  
 픽셀 데이터를 직접 조작하므로 어떠한 변형도 가능하다.
+> 출처: http://www.soen.kr/html5/html3/3-2-2.htm
+
+<br><br>
 
 ## 참고사항
 ### canplaythrough
