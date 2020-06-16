@@ -73,7 +73,7 @@ alpha를 적용하는 방법은 2가지가 있다.
 context.drawImage(obj, sx, sy, swidth, sheight, dx, dy, dWidth, dHeight);
 ```
 #### 파라메터 설명
-* (필수입력)
+`*` (필수입력)
 - obj(*) : canvas로 그리려는 대상 (canvas, img, video)
 - sx(*) : 출력할 대상의 x 좌표
 - sy(*) : 출력할 대상의 y 좌표
@@ -85,7 +85,7 @@ context.drawImage(obj, sx, sy, swidth, sheight, dx, dy, dWidth, dHeight);
 - dHeight : 만약 잘라내었다면, 대상 이미지의 Height
 
 #### 활용
-비디오가 재생가능한 준비(canplaythrough[^1])가 되면, 이미지를 그리도록 하는 코드
+비디오가 재생가능한 준비(canplaythrough [^1])가 되면, 이미지를 그리도록 하는 코드
 
 ```javascript
 const canvas = document.querySelector('.canvas');
