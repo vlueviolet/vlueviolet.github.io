@@ -29,7 +29,7 @@
   <h1>HTML5 Video with alpha transparency</h1>
   <div>
     <video id="video" style="display:none" autoplay="">
-      <source src="./video/rose.mp4" type="video/mp4; codecs=&quot;avc1.42E01E&quot;">
+      <source src="./video/compressed.mp4" type="video/mp4; codecs=&quot;avc1.42E01E&quot;">
       <!-- <source src="./video/rose.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;"> -->
     </video>
     <canvas width="480" height="488" id="buffer"></canvas>
@@ -61,7 +61,7 @@
           alphaData = buffer.getImageData(0, height, width, height).data;
 
         for (var i = 3, len = imageData.length; i < len; i = i + 4) {
-          imageData[i] = 1;
+          imageData[i] = alphaData[i - 1];
         }
 
         output.putImageData(image, 0, 0, 0, 0, width, height);

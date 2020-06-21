@@ -7,17 +7,20 @@
   <title>HTML5 Video with alpha transparency</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
+      background:orange;
       font-family: arial, sans-serif;
     }
 
-    #output {
-      width: 640px;
-      height: 325px;
+    div {
+      display: flex;
     }
 
-    #buffer {
-      display: none;
+    section {
+      display: inline-block;
     }
+
 
     p {
       background: white;
@@ -27,20 +30,30 @@
 
 <body>
   <h1>HTML5 Video with alpha transparency</h1>
-  <div>
-    <video id="video" style="display:none" autoplay="">
-      <source src="compressed.mp4" type="video/mp4; codecs=&quot;avc1.42E01E&quot;">
-      <source src="compressed.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;">
-    </video>
-    <canvas width="480" height="488" id="buffer"></canvas>
-    <canvas width="480" height="244" id="output"></canvas>
-  </div>
+
   <p>
     <a href="https://jakearchibald.com/scratch/alphavid/#" id="randomBg">Random background colour</a> - <a
       href="https://jakearchibald.com/scratch/alphavid/#" id="stop">Stop</a> - <a
       href="https://jakearchibald.com/scratch/alphavid/#" id="start">Start</a> - <a
       href="https://jakearchibald.com/scratch/alphavid/#" id="toggleProcessing">Toggle Processing</a>
   </p>
+  <div>
+    <section>
+      <h1>video</h1>
+      <video id="video">
+        <source src="compressed.mp4" type="video/mp4; codecs=&quot;avc1.42E01E&quot;">
+        <source src="compressed.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;">
+      </video>
+    </section>
+    <section>
+      <h1>ori</h1>
+      <canvas width="480" height="488" id="buffer"></canvas>
+    </section>
+    <section>
+      <h1>alpha</h1>
+      <canvas width="480" height="488" id="output"></canvas>
+    </section>
+  </div>
   <script>
     (function () {
       var outputCanvas = document.getElementById('output'),
@@ -48,9 +61,11 @@
         bufferCanvas = document.getElementById('buffer'),
         buffer = bufferCanvas.getContext('2d'),
         video = document.getElementById('video'),
-        width = outputCanvas.width,
-        height = outputCanvas.height,
+        width = 480,
+        height = 488,
         interval;
+
+      var isStarted = false;
 
       function processFrame() {
         buffer.drawImage(video, 0, 0);
@@ -58,12 +73,18 @@
         // this can be done without alphaData, except in Firefox which doesn't like it when image is bigger than the canvas
         var image = buffer.getImageData(0, 0, width, height),
           imageData = image.data,
-          alphaData = buffer.getImageData(0, height, width, height).data;
-          
-          for (var i = 3, len = imageData.length; i < len; i = i + 4) {
+          alphaData = buffer.getImageData(0, 244, width, height).data;
+
+        for (var i = 3, len = imageData.length; i < len; i = i + 4) {
           imageData[i] = alphaData[i - 1];
           // imageData[i] = 123;
         }
+
+        // console.log(imageData, alphaData);
+
+
+        // output.globalCompositeOperation = 'xor';
+
 
         output.putImageData(image, 0, 0, 0, 0, width, height);
       }
@@ -71,6 +92,25 @@
       function randomColourVal() {
         return Math.floor(Math.random() * 256);
       }
+
+      function setOpts() {
+        width = video.videoWidth;
+        height = video.videoHeight;
+        console.log(width);
+
+        outputCanvas.width = width;
+        outputCanvas.height = Math.ceil(height / width * width);
+        bufferCanvas.width = width;
+        bufferCanvas.height = Math.ceil(height / width * width);
+      }
+
+      video.addEventListener('canplaythrough', function () {
+        if (isStarted) return;
+        // setOpts();
+        video.play();
+        // animate();
+        isStarted = true;
+      });
 
       video.addEventListener('play', function () {
         clearInterval(interval);
