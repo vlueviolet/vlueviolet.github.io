@@ -6,17 +6,25 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>HTML5 Video with alpha transparency</title>
   <style>
+    html {
+      height: 100%;
+    }
+
     body {
+      height: 100%;
+      background-color: black;
       font-family: arial, sans-serif;
     }
 
-    #output {
-      width: 640px;
-      height: 325px;
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100px;
     }
 
     #buffer {
-      display: none;
+      /* display: none */
     }
 
     p {
@@ -25,22 +33,15 @@
   </style>
 </head>
 
-<body>
-  <h1>HTML5 Video with alpha transparency</h1>
-  <div>
-    <video id="video" style="display:none" autoplay="">
-      <source src="./video/compressed.mp4" type="video/mp4; codecs=&quot;avc1.42E01E&quot;">
-      <!-- <source src="./video/rose.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;"> -->
+<body
+  style="background: url(https://images.samsung.com/is/image/samsung/p5/sec/home/2020/p6/kv/20200618/200622_dishwasher_PC_bg_1.jpg?$ORIGIN_JPG$) no-repeat;background-size: cover">
+  <div id="case1">
+    <video id="video">
+      <source src="./video/kolor.mp4" type="video/mp4; codecs=&quot;avc1.42E01E&quot;">
     </video>
-    <canvas width="480" height="488" id="buffer"></canvas>
-    <canvas width="480" height="244" id="output"></canvas>
+    <canvas id="buffer"></canvas>
+    <canvas id="output"></canvas>
   </div>
-  <p>
-    <a href="https://jakearchibald.com/scratch/alphavid/#" id="randomBg">Random background colour</a> - <a
-      href="https://jakearchibald.com/scratch/alphavid/#" id="stop">Stop</a> - <a
-      href="https://jakearchibald.com/scratch/alphavid/#" id="start">Start</a> - <a
-      href="https://jakearchibald.com/scratch/alphavid/#" id="toggleProcessing">Toggle Processing</a>
-  </p>
   <script>
     (function () {
       var outputCanvas = document.getElementById('output'),
@@ -48,9 +49,9 @@
         bufferCanvas = document.getElementById('buffer'),
         buffer = bufferCanvas.getContext('2d'),
         video = document.getElementById('video'),
-        width = outputCanvas.width,
-        height = outputCanvas.height,
         interval;
+      var vWidth, vHeight;
+      var isStarted = false;
 
       function processFrame() {
         buffer.drawImage(video, 0, 0);
@@ -58,18 +59,33 @@
         // this can be done without alphaData, except in Firefox which doesn't like it when image is bigger than the canvas
         var image = buffer.getImageData(0, 0, width, height),
           imageData = image.data,
-          alphaData = buffer.getImageData(0, height, width, height).data;
+          alphaData = buffer.getImageData(0, height/2, width, height).data;
 
         for (var i = 3, len = imageData.length; i < len; i = i + 4) {
-          imageData[i] = alphaData[i - 1];
+          // imageData[i] = alphaData[i - 1];
+          imageData[i] = Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]);
         }
-
+        // output.globalCompositeOperation = 'destination-over';
         output.putImageData(image, 0, 0, 0, 0, width, height);
       }
 
       function randomColourVal() {
         return Math.floor(Math.random() * 256);
       }
+
+      video.addEventListener('canplaythrough', function() {
+        if (isStarted) return;
+        isStarted = true;
+        vWidth = video.videoWidth;
+        vHeight = video.videoHeight;
+        bufferCanvas.width = vWidth;
+        bufferCanvas.height = vHeight;
+        outputCanvas.width = vWidth;
+        outputCanvas.height = vHeight;
+        width = outputCanvas.width;
+        height = outputCanvas.height;
+        video.play();
+      });
 
       video.addEventListener('play', function () {
         clearInterval(interval);
@@ -80,56 +96,8 @@
       video.addEventListener('ended', function () {
         video.play();
       }, false);
-
-      document.getElementById('randomBg').addEventListener('click', function (event) {
-        document.body.style.backgroundColor = 'rgb(' + randomColourVal() + ',' + randomColourVal() + ',' +
-          randomColourVal() + ')';
-        event.preventDefault();
-      }, false);
-
-      document.getElementById('start').addEventListener('click', function (event) {
-        video.play();
-        event.preventDefault();
-      }, false);
-
-      document.getElementById('stop').addEventListener('click', function (event) {
-        video.pause();
-        clearInterval(interval);
-        event.preventDefault();
-      }, false);
-
-      document.getElementById('toggleProcessing').addEventListener('click', function (event) {
-        var toShow = video,
-          toHide = outputCanvas;
-
-        if (video.style.display == 'block') {
-          toShow = outputCanvas;
-          toHide = video;
-        }
-
-        toShow.style.display = 'block';
-        toHide.style.display = 'none';
-
-        event.preventDefault();
-      }, false);
-
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost +
-        "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
     })();
   </script>
-  <script src="./js/ga.js" type="text/javascript"></script>
-  <script>
-    (function () {
-      try {
-        var pageTracker = _gat._getTracker("UA-13180254-1");
-        pageTracker._trackPageview();
-      } catch (err) {}
-    })();
-  </script>
-
-  <div id="viewPortSize" class="bottom_right"
-    style="display: none; background-color: rgb(0, 0, 0); color: rgb(192, 192, 192); font-size: 12px;"></div>
 </body>
 
 </html>
