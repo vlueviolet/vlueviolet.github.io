@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)https://jakearchibald.com/scratch/alphavid/ -->
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>HTML5 Video with alpha transparency</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      /* background-color: orange; */
+      font-family: arial, sans-serif;
+    }
+
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300px;
+    }
+
+
+    section {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    p {
+      background: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>video</h1>
+    <section class="canvas-area">
+      <video id="video">
+        <source src="ink2.mp4" type="video/mp4; codecs=&quot;avc1.42E01E&quot;">
+        <!-- <source src="compressed.ogv" type="video/ogg; codecs=&quot;theora, vorbis&quot;"> -->
+      </video>
+      <canvas id="buffer"></canvas>
+      <canvas id="output"></canvas>
+    </section>
+  </div>
+  <script>
+    (function () {
+      var outputCanvas = document.getElementById('output'),
+        output = outputCanvas.getContext('2d'),
+        bufferCanvas = document.getElementById('buffer'),
+        buffer = bufferCanvas.getContext('2d'),
+        video = document.getElementById('video'),
+        width = window.innerWidth,
+        height = window.innerHeight,
+        interval;
+
+      var vWidth, vHeight, vRate;
+
+      var isStarted = false;
+
+      function processFrame() {
+        buffer.drawImage(video, 0, 0, width, height);
+
+        // this can be done without alphaData, except in Firefox which doesn't like it when image is bigger than the canvas
+        var image = buffer.getImageData(0, 0, width, height),
+          imageData = image.data,
+          alphaData = buffer.getImageData(0, -0, width, height).data;
+
+        for (var i = 3, len = imageData.length; i < len; i = i + 4) {
+          imageData[i] = alphaData[i - 1];
+          // imageData[i] = 123;
+        }
+
+        // console.log(imageData, alphaData);
+        // buffer.globalCompositeOperation = 'destination-over';
+
+        buffer.putImageData(image, 0, 0, 0, 0, width, height);
+      }
+
+      function randomColourVal() {
+        return Math.floor(Math.random() * 256);
+      }
+
+      function setOpts() {
+        vWidth = video.videoWidth;
+        vHeight = video.videoHeight;
+        vRate = vHeight / vWidth;
+        width = window.innerWidth;
+        height = window.innerWidth*vRate;
+
+        outputCanvas.width = width;
+        outputCanvas.height = Math.ceil(height / width * width);
+        bufferCanvas.width = width;
+        bufferCanvas.height = Math.ceil(height / width * width);
+      }
+
+      video.addEventListener('canplaythrough', function () {
+        if (isStarted) return;
+        setOpts();
+        video.play();
+        isStarted = true;
+      });
+
+      video.addEventListener('play', function () {
+        clearInterval(interval);
+        interval = setInterval(processFrame, 40)
+      }, false);
+
+      // Firefox doesn't support looping video, so we emulate it this way
+      video.addEventListener('ended', function () {
+        video.play();
+      }, false);
+    })();
+  </script>
+  <script src="./ga.js" type="text/javascript"></script>
+  <script>
+    (function () {
+      try {
+        var pageTracker = _gat._getTracker("UA-13180254-1");
+        pageTracker._trackPageview();
+      } catch (err) {}
+    })();
+  </script>
+
+  <div id="viewPortSize" class="bottom_right"
+    style="display: none; background-color: rgb(0, 0, 0); color: rgb(192, 192, 192); font-size: 12px;"></div>
+</body>
+
+</html>
