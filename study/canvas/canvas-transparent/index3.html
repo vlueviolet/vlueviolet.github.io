@@ -12,6 +12,8 @@
 
     body {
       height: 100%;
+      margin: 0;
+      padding: 0;
       background-color: black;
       font-family: arial, sans-serif;
     }
@@ -34,14 +36,14 @@
 </head>
 
 <body
-  style="background: url(https://images.samsung.com/is/image/samsung/p5/sec/home/2020/p6/kv/20200618/200622_dishwasher_PC_bg_1.jpg?$ORIGIN_JPG$) no-repeat;background-size: cover">
+  style="background: url(./images/200622_dishwasher_PC_bg_1.jpg) no-repeat 50% 50%;background-size: cover">
   <div id="case1">
-    <video id="video">
-      <source src="./video/kolor.mp4" type="video/mp4; codecs=&quot;avc1.42E01E&quot;">
-    </video>
-    <canvas id="buffer"></canvas>
+    <video id="video" autoplay muted></video>
+    <canvas id="buffer" style="display: none;"></canvas>
     <canvas id="output"></canvas>
   </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
   <script>
     (function () {
       var outputCanvas = document.getElementById('output'),
@@ -50,46 +52,53 @@
         buffer = bufferCanvas.getContext('2d'),
         video = document.getElementById('video'),
         interval;
-      var vWidth, vHeight;
+      var vWidth, vHeight, wWidth, wHeight;
       var isStarted = false;
 
       function processFrame() {
-        buffer.drawImage(video, 0, 0);
+        var ratio = vWidth/vHeight;
+        output.drawImage(video, 0, 0, wWidth*vHeight/vWidth, wHeight);
 
         // this can be done without alphaData, except in Firefox which doesn't like it when image is bigger than the canvas
-        var image = buffer.getImageData(0, 0, width, height),
+        var image = output.getImageData(0, 0, wWidth, wHeight),
           imageData = image.data,
-          alphaData = buffer.getImageData(0, height/2, width, height).data;
+          alphaData = output.getImageData(0, wHeight/2, wWidth, wHeight).data;
 
         for (var i = 3, len = imageData.length; i < len; i = i + 4) {
           // imageData[i] = alphaData[i - 1];
           imageData[i] = Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]);
         }
-        // output.globalCompositeOperation = 'destination-over';
-        output.putImageData(image, 0, 0, 0, 0, width, height);
+        output.putImageData(image, 0, 0, 0, 0, wWidth, wHeight);
+        requestAnimationFrame(processFrame);
       }
 
-      function randomColourVal() {
-        return Math.floor(Math.random() * 256);
+      function fetchVideo() {
+        fetch('./video/black-butterfly-alpha.mp4')
+          .then(function (response) {
+            video.src = response.url;
+          })
+          .catch(function (error) {
+            console.error('Unable this video..');
+          });
       }
 
-      video.addEventListener('canplaythrough', function() {
-        if (isStarted) return;
-        isStarted = true;
-        vWidth = video.videoWidth;
-        vHeight = video.videoHeight;
-        bufferCanvas.width = vWidth;
-        bufferCanvas.height = vHeight;
-        outputCanvas.width = vWidth;
-        outputCanvas.height = vHeight;
-        width = outputCanvas.width;
-        height = outputCanvas.height;
-        video.play();
-      });
+      fetchVideo();
 
       video.addEventListener('play', function () {
-        clearInterval(interval);
-        interval = setInterval(processFrame, 40)
+        if (isStarted) return;
+        isStarted = true;
+
+        vWidth = video.videoWidth;
+        vHeight = video.videoHeight;
+        wWidth = window.innerWidth;
+        wHeight = window.innerHeight;
+        bufferCanvas.width = wWidth;
+        bufferCanvas.height = wHeight;
+        outputCanvas.width = wWidth;
+        outputCanvas.height = wHeight;
+        width = outputCanvas.width;
+        height = outputCanvas.height;
+        processFrame();
       }, false);
 
       // Firefox doesn't support looping video, so we emulate it this way
