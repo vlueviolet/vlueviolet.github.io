@@ -12,9 +12,9 @@ var processor = {
     var self = this;
     this.video = document.querySelector('#video');
     this.normal = document.querySelector('#normal');
-    this.narmalContext = this.normal.getContext('2d');
-    this.transparent = document.querySelector('#transparent');
-    this.transparentContext = this.transparent.getContext('2d');
+    this.normalContext = this.normal.getContext('2d');
+    // this.transparent = document.querySelector('#transparent');
+    // this.transparentContext = this.transparent.getContext('2d');
 
     this.video.addEventListener('play', function() {
       self.width = 150;
@@ -23,13 +23,13 @@ var processor = {
     });
   },
   computeFrame: function() {
-    this.narmalContext.drawImage(this.video, 0, 0, this.width, this.height);
+    this.normalContext.drawImage(this.video, 0, 0, this.width, this.height);
 
-    var image = this.narmalContext.getImageData(0, 0, transparent.width, transparent.height),
+    var image = this.normalContext.getImageData(0, 0, transparent.width, transparent.height),
         imageData = image.data,
-        alphaData = this.narmalContext.getImageData(0, transparent.height, transparent.width, transparent.height).data;
+        alphaData = this.normalContext.getImageData(0, transparent.height, transparent.width, transparent.height).data;
 
-    var frame = this.narmalContext.getImageData(0, 0, this.width, this.height);
+    var frame = this.normalContext.getImageData(0, 0, this.width, this.height);
     var max = frame.data.length / 4;
 
     for(var i=0 ; i<max ; i++) {
@@ -43,7 +43,7 @@ var processor = {
     }
 
     // green, red 처리
-    this.transparentContext.putImageData(frame, 0, 0);
+    this.normalContext.putImageData(frame, 0, 0);
 
     // 전체 opacity
     // this.transparentContext.putImageData(image, 0, 0);

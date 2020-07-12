@@ -1,111 +1,83 @@
-<!DOCTYPE html>
-<!-- saved from url=(0043)https://jakearchibald.com/scratch/alphavid/ -->
+<!DOCTYPE HTML>
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>HTML5 Video with alpha transparency</title>
-  <style>
-    html {
-      height: 100%;
-    }
-
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background-color: black;
-      font-family: arial, sans-serif;
-    }
-
-    video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100px;
-    }
-
-    #buffer {
-      /* display: none */
-    }
-
-    p {
-      background: white;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="./assets/stylesheet/normalize.css">
+  <link rel="stylesheet" type="text/css" href="./assets/stylesheet/style.css">
 </head>
 
-<body
-  style="background: url(./images/200622_dishwasher_PC_bg_1.jpg) no-repeat 50% 50%;background-size: cover">
-  <div id="case1">
-    <video id="video" autoplay muted></video>
-    <canvas id="buffer" style="display: none;"></canvas>
-    <canvas id="output"></canvas>
-  </div>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+<body>
+  <canvas id="canvas" width="2000" height="1200"></canvas>
   <script>
-    (function () {
-      var outputCanvas = document.getElementById('output'),
-        output = outputCanvas.getContext('2d'),
-        bufferCanvas = document.getElementById('buffer'),
-        buffer = bufferCanvas.getContext('2d'),
-        video = document.getElementById('video'),
-        interval;
-      var vWidth, vHeight, wWidth, wHeight;
-      var isStarted = false;
+    // create a full screen canvas
+    var canvas = document.createElement("canvas");
+    canvas.style.position = "absolute";
+    canvas.style.left = "0px";
+    canvas.style.top = "0px";
+    canvas.style.zIndex = 10;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    // var to hold context
+    var ctx;
 
-      function processFrame() {
-        var ratio = vWidth/vHeight;
-        output.drawImage(video, 0, 0, wWidth*vHeight/vWidth, wHeight);
 
-        // this can be done without alphaData, except in Firefox which doesn't like it when image is bigger than the canvas
-        var image = output.getImageData(0, 0, wWidth, wHeight),
-          imageData = image.data,
-          alphaData = output.getImageData(0, wHeight/2, wWidth, wHeight).data;
+    // load an image
+    var image = new Image();
+    image.src = "https://i.stack.imgur.com/C7qq2.png?s=328&g=1";
+    // add resize event
+    var resize = function () {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      ctx = canvas.getContext("2d");
+    }
+    // add mouse event. Because it is full screen no need to bother with offsets
+    var mouse = function (event) {
+      posX = event.clientX;
+      posY = event.clientY;
+    }
+    // incase the canvas size is changed
+    window.addEventListener("resize", resize);
 
-        for (var i = 3, len = imageData.length; i < len; i = i + 4) {
-          // imageData[i] = alphaData[i - 1];
-          imageData[i] = Math.max(alphaData[i - 1], alphaData[i - 2], alphaData[i - 3]);
+    // listen to the mouse move
+    canvas.addEventListener("mousemove", mouse)
+
+    // Call resize as that gets our context
+    resize();
+
+    // define the gradient
+    var cirRadius = 300;
+
+    var posX = 100; // this will be set by the mouse
+    var posY = 100;
+    var RGB = [0, 0, 0]; // black any values from 0 to 255
+    var alphas = [0, 0.1, 0.2, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]; // zero is transparent one is not
+
+    // the update function
+    var update = function () {
+      if (ctx) { // make sure all is in order..
+        if (image.complete) { // draw the image when it is ready
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
+        } else { // while waiting for image clear the canvas
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
-        output.putImageData(image, 0, 0, 0, 0, wWidth, wHeight);
-        requestAnimationFrame(processFrame);
+        // create gradient
+        var grad = ctx.createRadialGradient(posX, posY, 0, posX, posY, cirRadius);
+        // add colour stops
+        var len = alphas.length - 1;
+        alphas.forEach((a, i) => {
+          grad.addColorStop(i / len, `rgba(${RGB[0]},${RGB[1]},${RGB[2]},${a})`);
+        });
+        // set fill style to gradient
+        ctx.fillStyle = grad;
+        // render that gradient
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
+      requestAnimationFrame(update); // keep doing it till cows come home.
 
-      function fetchVideo() {
-        fetch('./video/black-butterfly-alpha.mp4')
-          .then(function (response) {
-            video.src = response.url;
-          })
-          .catch(function (error) {
-            console.error('Unable this video..');
-          });
-      }
-
-      fetchVideo();
-
-      video.addEventListener('play', function () {
-        if (isStarted) return;
-        isStarted = true;
-
-        vWidth = video.videoWidth;
-        vHeight = video.videoHeight;
-        wWidth = window.innerWidth;
-        wHeight = window.innerHeight;
-        bufferCanvas.width = wWidth;
-        bufferCanvas.height = wHeight;
-        outputCanvas.width = wWidth;
-        outputCanvas.height = wHeight;
-        width = outputCanvas.width;
-        height = outputCanvas.height;
-        processFrame();
-      }, false);
-
-      // Firefox doesn't support looping video, so we emulate it this way
-      video.addEventListener('ended', function () {
-        video.play();
-      }, false);
-    })();
+    }
+    // start it all happening;
+    requestAnimationFrame(update);
   </script>
 </body>
 
