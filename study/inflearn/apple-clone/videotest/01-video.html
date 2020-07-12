@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +10,15 @@
 			margin: 0;
 			padding: 0;
 		}
+
 		body {
 			height: 500vh;
 		}
+
 		body.before-load {
 			overflow-y: hidden;
 		}
+
 		.sample-video {
 			position: fixed;
 			top: 0;
@@ -23,6 +27,7 @@
 		}
 	</style>
 </head>
+
 <body class="before-load">
 	<video class="sample-video" src="../video/sample-low.mp4" muted></video>
 	<!-- <video class="sample-video" src="../video/sample-high.mp4" muted></video> -->
@@ -30,21 +35,28 @@
 	<script>
 		const videoElem = document.querySelector('.sample-video');
 		let progress;
-		let currentFrame;
-		function init() {
-			document.body.classList.remove('before-load');
+		let videoDuration;
+		
+		videoElem.addEventListener('loadeddata', () => {
+			console.log('비디오 로드 완료');
+			videoDuration = videoElem.duration;
+			init();
+		});
 
+		const init = () => {
+			document.body.classList.remove('before-load');
 			window.addEventListener('scroll', function () {
-				progress = pageYOffset / (document.body.offsetHeight - window.innerHeight);
+				// 전체 페이지 중에 현재 스크롤이 얼만큼 진행되었는지의 %
+				progress = window.pageYOffset / (document.body.offsetHeight - window.innerHeight);
 				console.log(progress);
+				// 모바일 바운스 대비해서 범위 내로 들어오도록 조정
 				if (progress < 0) progress = 0;
 				if (progress > 1) progress = 1;
 
 				videoElem.currentTime = videoElem.duration * progress;
 			});
-		}
-
-		window.addEventListener('load', init);
+		};
 	</script>
 </body>
+
 </html>

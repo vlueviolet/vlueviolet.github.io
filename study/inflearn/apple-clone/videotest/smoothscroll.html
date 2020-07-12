@@ -29,7 +29,8 @@
 		let rafState;
 
 		window.addEventListener('scroll', () => {
-			// box.style.width = `${window.pageYOffset}px`;
+      // box.style.width = `${window.pageYOffset}px`;
+      console.log('rafState', rafState);
 			if (!rafState) {
 				rafId = requestAnimationFrame(loop);
 				rafState = true;
@@ -39,14 +40,16 @@
 		function loop() {
 			delayedYOffset = delayedYOffset + (pageYOffset - delayedYOffset) * acc;
 			box.style.width = `${delayedYOffset}px`;
-			console.log('loop');
 
-			rafId = requestAnimationFrame(loop);
-
+      rafId = requestAnimationFrame(loop);
+      
 			if (Math.abs(pageYOffset - delayedYOffset) < 1) {
-				cancelAnimationFrame(rafId);
+        cancelAnimationFrame(rafId);
 				rafState = false;
-			}
+			} else {
+        console.log(pageYOffset +', ' + delayedYOffset);
+
+      }
 		}
 
 		loop();
