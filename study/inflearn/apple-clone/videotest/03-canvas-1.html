@@ -44,16 +44,17 @@
 
 		function init() {
 			document.body.classList.remove('before-load');
-			context.drawImage(videoImages[0], 0, 0);
+      context.drawImage(videoImages[0], 0, 0);
+      console.log(videoImages[0]);
 
-			window.addEventListener('scroll', function () {
-				progress = pageYOffset / (document.body.offsetHeight - window.innerHeight);
-				if (progress < 0) progress = 0;
-				if (progress > 1) progress = 1;
+			// window.addEventListener('scroll', function () {
+			// 	progress = pageYOffset / (document.body.offsetHeight - window.innerHeight);
+			// 	if (progress < 0) progress = 0;
+			// 	if (progress > 1) progress = 1;
 
-				currentFrame = Math.round((totalImagesCount - 1) * progress);
-				context.drawImage(videoImages[currentFrame], 0, 0);
-			});
+			// 	currentFrame = Math.round((totalImagesCount - 1) * progress);
+			// 	context.drawImage(videoImages[currentFrame], 0, 0);
+			// });
 		}
 
 		window.addEventListener('load', init);
