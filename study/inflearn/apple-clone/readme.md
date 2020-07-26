@@ -146,3 +146,112 @@ setImages();
   const heightRatio = window.innerHeight / 1080; // canvas 높이 대비 window의 높이
   sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   ```
+
+
+## 부드러운 감속의 원리
+이미지 시퀀스, object 이동 등 Mac의 가속도 스크롤이 적용된것 같은 자연스러운 감속을 적용하는 수식
+
+```javascript
+let acc = 0.1;
+let delayedYOffset = 0;
+
+function loop() {
+  delayedYOffset = delayedYOffset + (pageYOffset - delayedYOffset) * acc;
+  requestAnimationFrame(loop); 
+}
+```
+
+원리는, 처음엔 빠르게 → 나중엔 느리게 동작 시키는 것이다.  
+이동하는 과정을 통해 수식의 원리를 알아보자.  
+
+시작 위치(c)부터 목표 위치까지 10%씩 이동한다고 가정해보자.
+
+c1 위치는 다음과 같이 구할 수 있다.
+
+전체 구간에서 현재 위치까지의 거리를 뺀 값에서 10%(acc)를 곱하면,  
+이동하고자하는 거리가 나온다.
+
+<img width="789" alt="스크린샷 2020-07-26 오후 3 01 59" src="https://user-images.githubusercontent.com/26196090/88472726-f9975800-cf50-11ea-894e-fe57e4ec8b33.png">
+
+
+```
+c1 = (d - c) * acc
+```
+다시 생각해보면,  
+초기 위치(c)에서 위 값을 더한 위치이기 때문에, 수식은 이렇게 정리할 수 있다.
+
+```
+c1 = c + (d - c) * acc
+```
+
+c2의 위치는 다음과 같이 구할 수 있다.
+
+<img width="783" alt="스크린샷 2020-07-26 오후 3 11 57" src="https://user-images.githubusercontent.com/26196090/88472854-5cd5ba00-cf52-11ea-9255-dd344ef04329.png">
+
+
+```
+c2 = c1 + (d - c1) * acc
+```
+
+c3도 마찬가지이다.  
+<img width="786" alt="스크린샷 2020-07-26 오후 3 13 24" src="https://user-images.githubusercontent.com/26196090/88472873-90b0df80-cf52-11ea-9bbd-eb6ff41eb839.png">
+
+```
+c3 = c2 + (d - c2) * acc
+```
+
+
+### 정리
+수식을 다시 정리해보자.
+
+- delayedYOffset: 현재 나의 위치
+- pageYOffset: 현재 스크롤 위치
+
+즉, 스크롤바가 위치한 곳(pageYOffset)까지 가기 위해서 object의 위치(delayedYOffset)를 어떻게 변화를 줄 것인지에 대한 수식이라고 보면 된다.
+
+```
+delayedYOffset = delayedYOffset + (pageYOffset - delayedYOffset) * acc;
+```
+
+### requestAnimationFrame 정리
+requestAnimationFrame을 cancel해주기 위해서는, (목표 위치 - 시작 위치)의 차이가 거의 없는지를 통해 제어할 수 있다.  
+
+이 차이를 절대값(`Math.abs()`)을 사용한 이유는,  
+아래로 페이지가 이동된다면, `pageYOffset > delayedYOffset`이기 때문에 정상이지만,  
+위로 페이지가 이동된다면, `pageYOffset < delayedYOffset`로 음수가 나오게 되어 부드러운 감속이 되지 않는다.  
+
+거리만 판별하면 되기때문에, 절대값을 사용하였다.
+
+```javascript
+const box = document.querySelector('.box');
+let acc = 0.1;
+let delayedYOffset = 0;
+let rafId;
+let rafState;
+
+function loop() {
+  delayedYOffset = delayedYOffset + (pageYOffset - delayedYOffset) * acc;
+  box.style.width = `${delayedYOffset}px`;
+
+  rafId = requestAnimationFrame(loop);
+  
+  if (Math.abs(pageYOffset - delayedYOffset) < 1) { // 둘의 차이가 1보다 작을때
+    cancelAnimationFrame(rafId);
+    rafState = false;
+  } else {
+    console.log(pageYOffset +', ' + delayedYOffset);
+
+  }
+}
+
+loop();
+
+window.addEventListener('scroll', () => {
+  // box.style.width = `${window.pageYOffset}px`;
+  console.log('rafState', rafState);
+  if (!rafState) {
+    rafId = requestAnimationFrame(loop);
+    rafState = true;
+  }
+});
+```
