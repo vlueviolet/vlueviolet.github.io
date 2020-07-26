@@ -188,7 +188,20 @@ const sceneInfo = [
     heightNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
     scrollHeight: 0,
     objs: {
-      container: document.querySelector('#scroll-section-3')
+      container: document.querySelector('#scroll-section-3'),
+      canvasCaption: document.querySelector('.canvas-caption'),
+      canvas: document.querySelector('.image-blend-canvas'),
+      context: document.querySelector('.image-blend-canvas').getContext('2d'),
+      imagesPath: [
+        './images/blend-image-1.jpg',
+        './images/blend-image-2.jpg'
+      ],
+      images: []
+    },
+    values: {
+      rect1X: [0, 0, { start: 0, end: 0 }],
+      rect2X: [0, 0, { start: 0, end: 0 }],
+      rectStartY: 0
     }
   }
 ];

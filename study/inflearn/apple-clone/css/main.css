@@ -227,6 +227,9 @@ body.before-load {
   align-items: center;
 }
 
+.image-blend-canvas {
+}
+
 .image-blend-canvas.sticky {
   position: fixed;
   top: 0;

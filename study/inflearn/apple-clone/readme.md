@@ -132,6 +132,7 @@ window.addEventListener('load', init);
 setImages();
 ```
 
+
 #### canvas 사이즈를 조정하는 방법
 1. javascript로 하는 방법
 2. css scale을 이용하는 방법
@@ -146,6 +147,180 @@ setImages();
   const heightRatio = window.innerHeight / 1080; // canvas 높이 대비 window의 높이
   sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   ```
+
+
+### 블랜딩 캔버스 크키 계산
+원래 캔버스의 비율과 현재 브라우저의 비율을 비교해서 화면에 보이는 캔버스 크기를 조정해줘야 한다.  
+이는 브라우저보다 넘치는 영역을 crop하는 것이 아닌, 브라우저 비율에 맞게 캔버스를 꽉 차게 조절하기 위함이다.
+
+```javascript
+const widthRatio = window.innerWidth / objs.canvas.width;
+const heightRatio = window.innerHeight / objs.canvas.height;
+let canvasScaleRatio; // 적용할 canvas의 비율
+
+if (widthRatio <= heightRatio) {
+  // 캔버스보다 브라우저 창이 홀쭉한 경우
+  canvasScaleRatio = heightRatio;
+} else {
+  // 캔버스보다 브라우저 창이 납작한 경우
+  canvasScaleRatio = widthRatio;
+}
+```
+
+### 좌우 흰색 영역 계산 원리
+예시 이미지와 같이 이미지의 scale 변화되는 인터랙션은 실제 이미지의 크기를 제어하기보다  
+좌우 흰색 box의 위치를 이동시켜서 마치 scale이 바뀌는 효과를 낼 수 있다.
+
+![Jul-26-2020 16-28-53](https://user-images.githubusercontent.com/26196090/88473935-26ea0300-cf5d-11ea-9800-d91a183b634f.gif)
+
+(reference : https://www.apple.com/macbook-pro-16/)
+
+
+- `div`를 좌우에 배치에서 이동하는 방법 (apple)
+- `canvas`에서 흰색 박스를 그려주는 방법 (강의)
+    DOM에서 제어하기보다 canvas 처리하는것이 성능상 좋다.
+
+#### canvas를 이용한 배경 scale 조정
+canvas의 경우, 브라우저 비율에 따라 조정되기때문에 아래와 같이 화면 밖으로 crop되는 경우가 있을 것이다.  
+그렇기 때문에 box의 위치는 브라우저 양 끝에 위치해야한다.
+
+<img width="536" alt="스크린샷 2020-07-26 오후 4 45 27" src="https://user-images.githubusercontent.com/26196090/88474233-6d406180-cf5f-11ea-9281-38ee5260e085.png">
+
+```javascript
+// 가로/세로 모두 꽉 차게 하기 위해 여기서 세팅(계산 필요)
+const widthRatio = window.innerWidth / objs.canvas.width;
+const heightRatio = window.innerHeight / objs.canvas.height;
+let canvasScaleRatio;
+
+if (widthRatio <= heightRatio) {
+  // 캔버스보다 브라우저 창이 홀쭉한 경우
+  canvasScaleRatio = heightRatio;
+} else {
+  // 캔버스보다 브라우저 창이 납작한 경우
+  canvasScaleRatio = widthRatio;
+}
+
+// 캔버스 사이즈에 맞춰 가정한 innerWidth와 innerHeight
+const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio; // document.body.offsetWidth를 쓴 이유는, scrollbar를 제외한 영역을 구하기 위함
+const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+```
+
+canvas에 그려질 box의 초기 위치값을 구해보자.  
+
+```javascript
+const whiteRectWidth = recalculatedInnerWidth * 0.15; // 15% 너비
+// 왼쪽 박스
+values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 전체 canvas.width에서 재계산된 canvas 너비를 빼면, crop된 전체 canvas의 짜투리 영역만 남는다. 그 너비의 50%로하면, 왼쪽 박스의 초기 x 위치값이 나온다.
+values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // animation이 끝나는 최종값, 초기값인 [0] - box1 너비를 뺸 값
+// 오른쪽 박스
+values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // rect1X[0]과 재계산된 canvas 너비를 더한 위치에서 자신의 너비를 뺀 값이 animation 시작 위치이다.
+values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // rect2X[0] 초기 위치에서 자신의 너비를 더하면, animation이 끝나는 위치를 구할 수 있다.
+```  
+
+이미지로 보면 다음과 같다.  
+<img width="622" alt="스크린샷 2020-07-26 오후 5 42 52" src="https://user-images.githubusercontent.com/26196090/88475057-7af9e500-cf67-11ea-9f4b-b21a334b4ff3.png">
+
+
+#### 스크롤시 canvas의 scale 애니메이션이 canvas가 화면 위에 붙었을때까지 알맞게 구현되도록 하기
+그러려면, 이미지와 같이 x값을 알아야 한다.  
+<img width="422" alt="스크린샷 2020-07-26 오후 6 51 36" src="https://user-images.githubusercontent.com/26196090/88476141-0cba2000-cf71-11ea-9839-d8179cd02919.png">
+
+##### 방법 1) getBoundingClientRect을 이용
+이 값은 `getBoundingClientRect`를 이용하면, 화면상의 해당 object의 크기와 위치값을 알 수 있다.  
+(기준은 화면 기준이다.)
+
+```javascript
+objs.canvas.getBoundingClientRect().top;
+```
+
+```javascript
+// common.js
+const sceneInfo = [
+  // ...생략
+  {
+    values: {
+      rect1X: [0, 0, { start: 0, end: 0 }],
+      rect2X: [0, 0, { start: 0, end: 0 }],
+      rectStartY: 0
+    }
+  }
+];
+
+if (!values.rectStartY) {
+  values.rectStartY = objs.canvas.getBoundingClientRect().top;
+  values.rect1X[2].start = (window.innerHeight / 2) / scrollHeight;  // 창 사이즈의 절반정도에서 시작되도록
+  values.rect2X[2].start = (window.innerHeight / 2) / scrollHeight;
+  values.rect1X[2].end = values.rectStartY / scrollHeight;
+  values.rect2X[2].end = values.rectStartY / scrollHeight;
+}
+```
+
+하지만, 스크롤 강도(속도)에 따라 scale이 일정하게 맞아 떨어지지 않는다.
+
+![Jul-26-2020 19-13-02](https://user-images.githubusercontent.com/26196090/88476539-11340800-cf74-11ea-9b76-42b47746bebe.gif)
+
+```
+getBoundingClientRect은 브라우저(화면)을 기준으로 object의 위치값을 가져오기때문에,  
+스크롤에 따라 다른 값을 가져와 scale 애니메이션에서 사용하기 어렵다.
+```
+
+다른 방법을 찾아보자.
+
+##### 방법 2) offsetTop을 이용
+
+`offsetTop`은 document 상단을 기준으로 값을 가져오기때문에, scroll 강도에 영향을 받지 않고, 일정한 값을 출력한다.  
+
+```javascript
+if (!values.rectStartY) {
+  // values.rectStartY = objs.canvas.getBoundingClientRect().top;
+  values.rectStartY = objs.canvas.offsetTop;
+  console.log('values.rectStartY', values.rectStartY);
+  values.rect1X[2].start = (window.innerHeight / 2) / scrollHeight;
+  values.rect2X[2].start = (window.innerHeight / 2) / scrollHeight;
+  values.rect1X[2].end = values.rectStartY / scrollHeight;
+  values.rect2X[2].end = values.rectStartY / scrollHeight;
+}
+```
+<img width="800" alt="스크린샷 2020-07-26 오후 7 32 44" src="https://user-images.githubusercontent.com/26196090/88476885-cb2c7380-cf76-11ea-963f-e4d4ee79046f.png">
+
+하지만, 현재 필요한 값은 document 기준이 아닌  
+canvas가 속해있는 section의 상단으로부터 현재 canvas까지의 거리가 필요하다.
+`offsetTop`은 기준을 바꿔서 출력할 수 있는데, 이는 css의 `positon`을 이용하여 canvas의 기준으로 부모 section으로 바꿔주면 된다.
+
+```css
+.scroll-section {
+  position: relative;
+  padding-top: 50vh;
+}
+```
+
+```javascript
+console.log('values.rectStartY', values.rectStartY);
+```
+<img width="800" alt="스크린샷 2020-07-26 오후 7 35 37" src="https://user-images.githubusercontent.com/26196090/88476967-42620780-cf77-11ea-9988-7654df5ab0de.png">
+
+offsetTop을 이용하면, 일정한 값을 가져오지만, 애니메이션 동작이 상이하다.  
+
+![Jul-26-2020 19-13-02](https://user-images.githubusercontent.com/26196090/88476539-11340800-cf74-11ea-9b76-42b47746bebe.gif)
+
+왜냐하면, canvas가 원래 사이즈가 아닌 scale이 조정된 사이즈인데,  
+offsetTop은 이를 고려하지않고 원래 canvas 사이즈대로 적용하기 때문이다.  
+
+즉, 조정된 canvas 사이즈에 맞게 offsetTop도 조정이 되어야 한다.
+
+<img width="559" alt="스크린샷 2020-07-26 오후 7 52 42" src="https://user-images.githubusercontent.com/26196090/88477265-979f1880-cf79-11ea-8399-440ededdaf17.png">
+
+단순하게 본다면, 아래와 같은 식이 나온다.
+
+```
+조정된 offstTop = 원래 offsetTop + (원래 canavas.height - 조정 canvas.height) / 2;
+```
+
+이를 javascript로하면,
+
+```javascript
+values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2;
+```
 
 
 ## 부드러운 감속의 원리
