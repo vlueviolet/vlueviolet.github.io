@@ -5,15 +5,23 @@
 ```javascript
 let pre = ['apple', 'orange', 100];
 let newData = [...pre];			// 참조를 끊고, 메모리에 새로운 배열로 새로운 값이 생성된 상태, immutable array와 비슷함
-console.log(pre, newData)		// 배열 출력
-console.log(pre === newData)	// false 출력, 둘은 엄연히 다른 배열
+console.log(pre, newData);		// 배열 출력
+console.log(pre === newData);	// false 출력, 둘은 엄연히 다른 배열
+```
+
+```
+["apple", "orange", 100]
+false
 ```
 <br><br>
 ## 배열의 합침
 ```javascript
 let pre = ['apple', 'orange', 100];
 let newData = [0, 1, 2, ...pre, 4 ];
-console.log(newData)	// newData에 pre가 합쳐지는 새로 배열이 됨
+console.log(newData);	// newData에 pre가 합쳐지는 새로 배열이 됨
+```
+```
+[0, 1, 2, "apple", "orange", 100, 4]
 ```
 <br><br>
 ## 배열의 전달의 용이
@@ -25,4 +33,9 @@ var pre = [100, 200, 300];
 sum(pre[0],pre[1],pre[2])
 sum.apply(null, pre);
 sum(...pre);
+```
+```
+600
+600
+600
 ```
