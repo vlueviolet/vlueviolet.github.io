@@ -3,11 +3,10 @@ javascript는 스코프 체인에 의해 지역 스코프에서 i를 찾고, 없
 아래와 같은 경우는 console.log(i)가 for문에 속하는 i가 아니지만 스코프 체인에 의해 100이 출력된다.
 ```javascript
 function cal () {
-	for (var i = 0 ; i < 100 ; i++) {
-		...
-	}
-	console.log(i);	// 100
-
+  for (var i = 0 ; i < 100 ; i++) {
+    ...
+  }
+  console.log(i);	// 100
 }
 ```
 
