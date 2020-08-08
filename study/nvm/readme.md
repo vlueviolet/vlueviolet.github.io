@@ -5,7 +5,7 @@
 `nvm`은 다양한 node 버전을 사용할 수 있게 해주는 툴이다.  
 
 ## nvm 설치 방법
-설치는 (nvm github)[https://github.com/nvm-sh/nvm#install-script]에 나와있다.  
+설치는 [nvm github](https://github.com/nvm-sh/nvm#install-script)에 나와있다.  
 
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
