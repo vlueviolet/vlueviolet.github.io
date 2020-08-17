@@ -196,6 +196,56 @@
           objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
         }
 
+        /* currentScene 3에서 쓰는 캔버스를 미리 그려주기 시작 (s) */
+        if(scrollRatio > 0.9) {
+          // if문 안에서만 3번 scene 변수 제어
+          const objs = sceneInfo[3].objs;
+          const values = sceneInfo[3].values;
+          
+          // 가로/세로 모두 꽉 차게 하기 위해 여기서 세팅(계산 필요)
+          const widthRatio = window.innerWidth / objs.canvas.width;
+          const heightRatio = window.innerHeight / objs.canvas.height;
+          let canvasScaleRatio;
+
+          if (widthRatio <= heightRatio) {
+            // 캔버스보다 브라우저 창이 홀쭉한 경우
+            canvasScaleRatio = heightRatio;
+          } else {
+            // 캔버스보다 브라우저 창이 납작한 경우
+            canvasScaleRatio = widthRatio;
+          }
+
+          objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+          objs.context.fillStyle = 'white';
+          objs.context.drawImage(objs.images[0], 0, 0);
+
+          // 캔버스 사이즈에 맞춰 가정한 innerWidth와 innerHeight
+          const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
+          const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+          
+          const whiteRectWidth = recalculatedInnerWidth * 0.15; // 15% 너비
+          // 왼쪽 박스
+          values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2; // 전체 canvas.width에서 재계산된 canvas 너비를 빼면, crop된 전체 canvas의 짜투리 영역만 남는다. 그 너비의 50%로하면, 왼쪽 박스의 초기 x 위치값이 나온다.c
+          values.rect1X[1] = values.rect1X[0] - whiteRectWidth; // animation이 끝나는 최종값, 초기값인 [0] - box1 너비를 뺸 값
+          // 오른쪽 박스
+          values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth; // rect1X[0]과 재계산된 canvas 너비를 더한 위치에서 자신의 너비를 뺀 값이 animation 시작 위치이다.
+          values.rect2X[1] = values.rect2X[0] + whiteRectWidth; // rect2X[0] 초기 위치에서 자신의 너비를 더하면, animation이 끝나는 위치를 구할 수 있다.
+
+          // 좌우 흰색 박스 그리기
+          objs.context.fillRect(
+            parseInt(values.rect1X[0]), // 초기값으로 설정
+            0,
+            parseInt(whiteRectWidth),
+            objs.canvas.height
+          );
+          objs.context.fillRect(
+            parseInt(values.rect2X[0]), // 초기값으로 설정
+            0,
+            parseInt(whiteRectWidth),
+            objs.canvas.height
+          );
+        }
+        /* currentScene 3에서 쓰는 캔버스를 미리 그려주기 시작 (e) */
         break;
 
       case 3:
@@ -213,7 +263,6 @@
           canvasScaleRatio = widthRatio;
         }
 
-
         objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
         objs.context.fillStyle = 'white';
         objs.context.drawImage(objs.images[0], 0, 0);
@@ -222,7 +271,7 @@
         const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
         const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
         
-
+        // 애니메이션 처리
         if (!values.rectStartY) {
           // values.rectStartY = objs.canvas.getBoundingClientRect().top;
           values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2;
@@ -256,11 +305,11 @@
           objs.canvas.height
         );
 
-        // if (scrollRatio < values.rect1X[2].end) {
-        //   step = 1;
-        //   objs.canvas.classList.remove('sticky');
-        // } else {
-        //   step = 2;
+        if (scrollRatio < values.rect1X[2].end) { // 캔버스가 브라우저 상단에 닿지 않았다면
+          step = 1;
+          objs.canvas.classList.remove('sticky');
+        } else {
+          step = 2;
         //   // 이미지 블렌드
         //   // values.blendHeight: [ 0, 0, { start: 0, end: 0 } ]
         //   values.blendHeight[0] = 0;
@@ -274,8 +323,14 @@
         //     0, objs.canvas.height - blendHeight, objs.canvas.width, blendHeight
         //   );
 
-        //   objs.canvas.classList.add('sticky');
-        //   objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+          objs.canvas.classList.add('sticky');
+          /**
+           * sticky 되는 순간, cale로 조정된 캔버스에 position:fixed시에 top: 0이 제대로 적용되지 않는다.
+           * 그래서 top을 js로 조정하는데, 이 수식은 아래와 같다.
+           * (원래 캔버스 높이 - scale 조정된 캔버스 높이) / 2
+           * 이 값을 위 방향으로 당겨야 하기때문에 -를 붙여준다.
+           */
+          objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
 
         //   if (scrollRatio > values.blendHeight[2].end) {
         //     values.canvas_scale[0] = canvasScaleRatio;
@@ -299,7 +354,7 @@
         //     objs.canvasCaption.style.opacity = calcValues(values.canvasCaption_opacity, currentYOffset);
         //     objs.canvasCaption.style.transform = `translate3d(0, ${calcValues(values.canvasCaption_translateY, currentYOffset)}%, 0)`;
         //   }
-        // }
+        }
 
         break;
     }

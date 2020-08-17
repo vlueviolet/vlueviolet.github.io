@@ -430,3 +430,138 @@ window.addEventListener('scroll', () => {
   }
 });
 ```
+
+## 2번이 끝나갈때, 3번이 시작되기 전에 처리
+머그잔이 애니메이션이 거의 끝나갈때 scale 되는 캔버스가 나타나야하는데,  
+아직 currentScene이 2이기 때문에 캔버스가 나타나지 않다가  
+갑자기 노출되는 어색함을 없애주기 위함
+
+`case 2:` 코드 하단에 캔버스를 그려주는 코드를 `case 3:`에서 가져오고, 중복되는 변수들은 scoped를 이용해서 if문 앞에서만 적용되게 한다.
+```javascript
+if(scrollRatio > 0.9) {
+  const objs = sceneInfo[3].objs;
+  const values = sceneInfo[3].values;
+}
+```
+
+scrollRatio > 0.9 이상일때 처리해준다.
+
+```javascript
+case 2:
+// ... 중략
+
+  // currentScene 3에서 쓰는 캔버스를 미리 그려주기 시작
+  if(scrollRatio > 0.9) {
+    // if문 안에서만 3번 scene 변수 제어
+    const objs = sceneInfo[3].objs;
+    const values = sceneInfo[3].values;
+    
+    // 가로/세로 모두 꽉 차게 하기 위해 여기서 세팅(계산 필요)
+    const widthRatio = window.innerWidth / objs.canvas.width;
+    const heightRatio = window.innerHeight / objs.canvas.height;
+    let canvasScaleRatio;
+    
+    ...
+
+  }
+
+  break;
+```
+
+## scene 3의 애니메이션 단계별 정리
+애니메이션이 복잡해서 단계를 나누고 작업을 해보자.
+
+- 1단계 : 캔버스 상단이 브라우저 끝에 닿기 전
+- 2단계 : 캔버스 상단이 브라우저 끝에 닿는 순간과 이미지 블랜드 처리
+- 3단계 : 이미지 scale이 줄어들고, scroll에 따라 올라가는 순간
+
+이 단계를 변수로 제어해보자
+
+
+```javascript
+let step = 0;
+
+// ...
+if(캔버스가 브라우저 상단에 닿지 않았다면) { // scrollRatio이 애니메이션 끝나는 시점보다 작을때
+  step = 1;
+  objs.canvas.classList.remove('sticky');
+} else { // 닿은 이후
+  step = 2;
+  // 이미지 블랜드
+  objs.canvas.classList.add('sticky');
+  if() {
+    step = 3; // 2 이후에 동작해야하기 때문
+  }
+}
+```
+### 1단계
+애니메이션 end 시점이 scrollRatio보다 작을때를 캔버스가 브라우저 상단에 닿기 전이라고 본다.
+
+```javascript
+if(scrollRatio < values.rect1X[2].end) {
+  step = 1;
+  objs.canvas.classList.remove('sticky');
+}
+```
+
+### 2단계
+
+#### 캔버스 위치 조정
+캔버스가 브라우저 상단에 닿는 순간은 sticky 클래스 추가하여 고정한다.
+```javascript
+if(scrollRatio < values.rect1X[2].end) {
+  // ...
+} else {
+  // 닿는 순간 sticky 클래스를 추가한다.
+  objs.canvas.classList.add('sticky');
+}
+```
+
+하지만, 이미지와 같이 sticky 처리했음에도 캔버스가 상단에 붙지 않는다.  
+이유는 scale로 조정이 되어, top 값도 영향을 받기 떄문이다.  
+
+그래서 scale 비율만큼 top값을 조정해줄 필요가 있다.
+
+<img width="1113" alt="스크린샷 2020-08-17 오전 10 50 40" src="https://user-images.githubusercontent.com/26196090/90350289-9abc8e80-e077-11ea-8d1f-3dbe79b1bfd9.png">
+
+
+sticky 클래스 추가된 후에 top 값을 조정하는 수식을 추가해준다.
+
+이 수식은, 원래 캔버스 사이즈에서 scale로 조정된 캔버스의 사이즈를 빼준 값의 50%를 top값에 반환한다.
+
+```javascript
+objs.canvas.classList.add('sticky');
+objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`;
+```
+
+#### 이미지 블랜드
+이미지 블랜드처리는 시작, 끝 값을 찾아야 한다.
+sceneInfo에 value를 추가해서 애니메이션 처리를 해야한다.
+
+이미지를 그리는 y좌표를 sceneInfo에 등록해서  
+정확한 시작~끝 사이의 구간 안에서 이미지가 스크롤에 따라 그려지도록 하는 것이다.
+
+이를 calcValue를 이용할 수 있고, 앞에서 계속 해오던 방식이다.  
+이전에는 이를 특정 요소의 css 값에 적용했다면,  
+지금은 canvas를 그리는 y좌표에 적용해준다.
+
+>  canvas drawImage의 이해
+이미지 블랜드를 구현하려면, `drawImage`에 대한 이해가 필요하다.
+
+`drawImage`는 3가지 방식을 제공한다.
+
+### `void ctx.drawImage(image, dx, dy);`
+dx, dy 위치에 이미지를 그린다.
+
+### `void ctx.drawImage(image, dx, dy, dWidth, dHeight);`
+dx, dy 위치에 dWidth, dHeight 크기의 이미지를 그린다. 즉 이미지 사이즈를 조정하는 옵션이다.
+
+### `void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);`
+이미지 상의 원하는 위치에서 원하는 크기의 부분을 → s  
+캔버스에 원하는 위치와 원하는 크기로 옮겨 그릴 수 있다. → d
+
+- s : source, 원래 그릴 이미지
+- d : destination, 그래서 이렇게 그릴거야 하는 캔버스에 실제 그릴 이미지
+
+[canvas drawImage](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage)
+
