@@ -45,6 +45,7 @@
   }
 
   75% {
+    /* 157이 전체 길이이니까, 거의 끝에 가서 animation 효과를 줌으로 속도의 변화를 주는 효과를 제공 ㄴ*/
     stroke-dashoffset: -147;
   }
 
@@ -78,6 +79,60 @@ document.querySelector('.loading-circle circle').getTotalLength();
 ```bash
 156.0674285888672
 ```
+
+### stroke 속성
+#### stroke-dasharray
+길이가 100인 선이 있다고 가정하자.  
+이 선의 `dasharray=25`로하면 아래와 같이 그려진다.  
+
+마치 점선처럼 그려진다.
+
+<img width="190" alt="스크린샷 2020-08-17 오후 5 02 21" src="https://user-images.githubusercontent.com/26196090/90372480-6ebb0080-e0ab-11ea-9691-bc62c1c27d13.png">
+
+
+#### stroke-dashoffset
+이 속성을 이용하면 선을 이동시킬 수 있다.
+
+<img width="370" alt="스크린샷 2020-08-17 오후 5 04 29" src="https://user-images.githubusercontent.com/26196090/90372691-bb9ed700-e0ab-11ea-8821-7fe904cf0739.png">
+
+이 두 속성을 이용해서 애니메이션 효과를 줄 수 있다.
+
+```html
+<h4>100</h4>
+<svg viewBox="0 0 100 100">
+  <line x1="0" y1="10" x2="100" y2="10" stroke-width="4" stroke="black" />
+</svg>
+<h4>stroke-dasharray="100", stroke-dashoffset="-10"</h4>
+<svg viewBox="0 0 100 100">
+  <line 
+    x1="0" y1="10" x2="100" y2="10" stroke="black"
+    stroke-width="4"
+    stroke-dasharray="100"
+    stroke-dashoffset="-10"
+  />
+</svg>
+<h4>stroke-dasharray="100", stroke-dashoffset="-20"</h4>
+<svg viewBox="0 0 100 100">
+  <line 
+    x1="0" y1="10" x2="100" y2="10" stroke="black"
+    stroke-width="4"
+    stroke-dasharray="100"
+    stroke-dashoffset="-20"
+  />
+</svg>
+<h4>stroke-dasharray="100", stroke-dashoffset="-50"</h4>
+<svg viewBox="0 0 100 100">
+  <line 
+    x1="0" y1="10" x2="100" y2="10" stroke="black"
+    stroke-width="4"
+    stroke-dasharray="100"
+    stroke-dashoffset="-50"
+  />
+</svg>
+```
+
+<img width="385" alt="스크린샷 2020-08-17 오후 5 08 27" src="https://user-images.githubusercontent.com/26196090/90373104-64e5cd00-e0ac-11ea-8ecd-6f1f69e558bb.png">
+
 
 ## 페이지에 적용하기
 
