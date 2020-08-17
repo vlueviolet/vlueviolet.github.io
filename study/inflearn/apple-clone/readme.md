@@ -323,113 +323,8 @@ values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.he
 ```
 
 
-## 부드러운 감속의 원리
-이미지 시퀀스, object 이동 등 Mac의 가속도 스크롤이 적용된것 같은 자연스러운 감속을 적용하는 수식
-
-```javascript
-let acc = 0.1;
-let delayedYOffset = 0;
-
-function loop() {
-  delayedYOffset = delayedYOffset + (pageYOffset - delayedYOffset) * acc;
-  requestAnimationFrame(loop); 
-}
-```
-
-원리는, 처음엔 빠르게 → 나중엔 느리게 동작 시키는 것이다.  
-이동하는 과정을 통해 수식의 원리를 알아보자.  
-
-시작 위치(c)부터 목표 위치까지 10%씩 이동한다고 가정해보자.
-
-c1 위치는 다음과 같이 구할 수 있다.
-
-전체 구간에서 현재 위치까지의 거리를 뺀 값에서 10%(acc)를 곱하면,  
-이동하고자하는 거리가 나온다.
-
-<img width="789" alt="스크린샷 2020-07-26 오후 3 01 59" src="https://user-images.githubusercontent.com/26196090/88472726-f9975800-cf50-11ea-894e-fe57e4ec8b33.png">
 
 
-```
-c1 = (d - c) * acc
-```
-다시 생각해보면,  
-초기 위치(c)에서 위 값을 더한 위치이기 때문에, 수식은 이렇게 정리할 수 있다.
-
-```
-c1 = c + (d - c) * acc
-```
-
-c2의 위치는 다음과 같이 구할 수 있다.
-
-<img width="783" alt="스크린샷 2020-07-26 오후 3 11 57" src="https://user-images.githubusercontent.com/26196090/88472854-5cd5ba00-cf52-11ea-9255-dd344ef04329.png">
-
-
-```
-c2 = c1 + (d - c1) * acc
-```
-
-c3도 마찬가지이다.  
-<img width="786" alt="스크린샷 2020-07-26 오후 3 13 24" src="https://user-images.githubusercontent.com/26196090/88472873-90b0df80-cf52-11ea-9bbd-eb6ff41eb839.png">
-
-```
-c3 = c2 + (d - c2) * acc
-```
-
-
-### 정리
-수식을 다시 정리해보자.
-
-- delayedYOffset: 현재 나의 위치
-- pageYOffset: 현재 스크롤 위치
-
-즉, 스크롤바가 위치한 곳(pageYOffset)까지 가기 위해서 object의 위치(delayedYOffset)를 어떻게 변화를 줄 것인지에 대한 수식이라고 보면 된다.
-
-```
-delayedYOffset = delayedYOffset + (pageYOffset - delayedYOffset) * acc;
-```
-
-### requestAnimationFrame 정리
-requestAnimationFrame을 cancel해주기 위해서는, (목표 위치 - 시작 위치)의 차이가 거의 없는지를 통해 제어할 수 있다.  
-
-이 차이를 절대값(`Math.abs()`)을 사용한 이유는,  
-아래로 페이지가 이동된다면, `pageYOffset > delayedYOffset`이기 때문에 정상이지만,  
-위로 페이지가 이동된다면, `pageYOffset < delayedYOffset`로 음수가 나오게 되어 부드러운 감속이 되지 않는다.  
-
-거리만 판별하면 되기때문에, 절대값을 사용하였다.
-
-```javascript
-const box = document.querySelector('.box');
-let acc = 0.1;
-let delayedYOffset = 0;
-let rafId;
-let rafState;
-
-function loop() {
-  delayedYOffset = delayedYOffset + (pageYOffset - delayedYOffset) * acc;
-  box.style.width = `${delayedYOffset}px`;
-
-  rafId = requestAnimationFrame(loop);
-  
-  if (Math.abs(pageYOffset - delayedYOffset) < 1) { // 둘의 차이가 1보다 작을때
-    cancelAnimationFrame(rafId);
-    rafState = false;
-  } else {
-    console.log(pageYOffset +', ' + delayedYOffset);
-
-  }
-}
-
-loop();
-
-window.addEventListener('scroll', () => {
-  // box.style.width = `${window.pageYOffset}px`;
-  console.log('rafState', rafState);
-  if (!rafState) {
-    rafId = requestAnimationFrame(loop);
-    rafState = true;
-  }
-});
-```
 
 ## 2번이 끝나갈때, 3번이 시작되기 전에 처리
 머그잔이 애니메이션이 거의 끝나갈때 scale 되는 캔버스가 나타나야하는데,  
@@ -547,23 +442,151 @@ sceneInfo에 value를 추가해서 애니메이션 처리를 해야한다.
 
 <br>
 
-##  canvas drawImage의 이해
+---
+
+##  [Reference] canvas drawImage의 이해
 이미지 블랜드를 구현하려면, `drawImage`에 대한 이해가 필요하다.
 
 `drawImage`는 3가지 방식을 제공한다.
 
-### `void ctx.drawImage(image, dx, dy);`
+#### `void ctx.drawImage(image, dx, dy);`
 dx, dy 위치에 이미지를 그린다.
 
-### `void ctx.drawImage(image, dx, dy, dWidth, dHeight);`
-dx, dy 위치에 dWidth, dHeight 크기의 이미지를 그린다. 즉 이미지 사이즈를 조정하는 옵션이다.
+#### `void ctx.drawImage(image, dx, dy, dWidth, dHeight);`
+dx, dy 위치에 dWidth, dHeight 크기의 이미지를 그린다.  
+즉 이미지 사이즈를 조정하는 옵션이다.
 
-### `void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);`
+#### `void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);`
 이미지 상의 원하는 위치에서 원하는 크기의 부분을 → s  
 캔버스에 원하는 위치와 원하는 크기로 옮겨 그릴 수 있다. → d
 
 - s : source, 원래 그릴 이미지
 - d : destination, 그래서 이렇게 그릴거야 하는 캔버스에 실제 그릴 이미지
 
+### reference 
 [canvas drawImage](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage)
 
+---
+
+다시 돌아와서,  
+이미지 블랜드에서는 이미지의 y좌표, 그려질 이미지 높이 height가 변화를 주면 되는데,  
+height 값이 결정되면, y좌표는 canvas.height - height로 처리가 가능하다.
+
+이를 그려주기 위해서 sceneInfo에 값을 추가하자.
+```javascript
+// common.js
+
+// 3
+// ... 중략
+values: {
+  // ...
+  blendHeight: [ 0, 0, { start: 0, end: 0 } ],
+  rectStartY: 0
+}
+```
+
+이 값을 선언했으니, 값을 셋팅하자.
+
+```javascript
+// main.js
+values.blendHeight[0] = 0; // 블랜드 시작값
+values.blendHeight[1] = objs.canvas.height; // 블랜드 최종값
+values.blendHeight[2].start = values.rect1X[2].end; // 앞의 회색 canvas의 끝나는 시점이 블랜드 시작 시점이 된다.
+values.blendHeight[2].end = values.blendHeight[2].start + 0.2; // end 타이밍 속도는 내 맘대로~, 시작 시점부터 
+```
+
+canvas에 그려보자.
+
+```javascript
+// 현재 scene에서 얼마나 scroll 되었는지를 반환해준다.
+const blendHeight = calcValues(values.blendHeight, currentYOffset);
+
+// s, d가 같은 이유는 canvas와 image의 크기가 동일하기 떄문이다. 계산을 줄이려면, 이렇게 전략적으로 어셋을 셋팅하면 좋다.
+objs.context.drawImage(
+  objs.images[1],
+  0, objs.canvas.height - blendHeight, objs.canvas.width, blendHeight,
+  0, objs.canvas.height - blendHeight, objs.canvas.width, blendHeight
+);
+```
+
+### 3단계
+이미지 블랜드의 scale을 줄이는 단계이다.  
+이 시점은, 블랜드가 종료된 시점으로 보면되는데 `values.blendHeight[2].end` 시점보다 더 스크롤을 하는 시점이다.
+
+```javascript
+if (scrollRatio > values.blendHeight[2].end) {
+  values.canvas_scale[0] = canvasScaleRatio; // 시작값은 canvas 사이즈가 조정된 값
+  values.canvas_scale[1] = document.body.offsetWidth / (1.5 * objs.canvas.width); // 종료값은 브라우저 너비보다 작게 해주고, 1.5는 임의로 조정한 값임
+  values.canvas_scale[2].start = values.blendHeight[2].end;
+  values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2; // values.canvas_scale[2].start 이후로 얼마나 재생될지 값인데, 즉 duration임, 이전에 blend 해준것처럼 20% 동일하게 맞춰준다. 그렇다면, 이미지 블랜드 되고 scale이 줄어는 애니메이션이 해당 스크롤 구간의 40%를 차지하게 된다.
+
+  objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`;
+}
+```
+
+다음은, sticky를 제거해줘야 한다.  
+이 시점은 블랜드 이미지가 축소되고 난 이후이므로, `values.canvas_scale[2].end`를 활용한다.
+
+`values.canvas_scale[2].end > 0`를 넣은 이후는 해당 시점 이전에 실행되는 것을 방지하기 위함이다.  
+
+```javascript
+if (scrollRatio > values.canvas_scale[2].end && values.canvas_scale[2].end > 0) {
+  objs.canvas.classList.remove('sticky');
+}
+```
+sticky 적용을 제거하면, canvas가 사라진다.  
+`position: fixed`가 날아가면서 발생하는 이슈이다.  이를 수정하기 위해서 `marginTop`을 이용해 조정해보자.
+
+![Aug-17-2020 12-10-03](https://user-images.githubusercontent.com/26196090/90353947-b5483500-e082-11ea-8add-882f335d5bc9.gif)
+
+`marginTop`은 스크롤이 머문만큼의 값이 들어간다.  
+
+이 값은 아래 구간의 합이라고 볼 수 있다. 이 구간동안 계속 scroll을 했으니...
+하지만, 우리는 이미 그 답을 알고 있다. 각 코드를 가져와보면,
+
+- 이미지 블랜드 시킨 구간 : 전체 스크롤의 20% 동안 했음
+```javascript
+values.blendHeight[2].end = values.blendHeight[2].start + 0.2; // end 타이밍 속도는 내 맘대로~, 시작 시점부터 20% 더해지도록 해보자.
+```
+- 블랜드 이후, 이미지 scale한 구간 : 그 다음 20% 동안 했음
+```javascript
+values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2; // values.canvas_scale[2].start 이후로 얼마나 재생될지 값인데, 즉 duration임, 이전에 blend 해준것처럼 20% 동일하게 맞춰준다. 그렇다면, 이미지 블랜드 되고 scale이 줄어는 애니메이션이 해당 스크롤 구간의 40%를 차지하게 된다.
+```
+
+위 코드로 정리해볼때, 해당 섹션의 40%동안 스크롤하면서 애니메이션 관련 처리가 들어갔다.  
+그래서 `marginTop`은 아래와 같다.
+
+```javascript
+if (scrollRatio > values.canvas_scale[2].end && values.canvas_scale[2].end > 0) {
+  objs.canvas.classList.remove('sticky');
+  objs.canvas.style.marginTop = `${scrollHeight * 0.4}px`;
+}
+```
+
+`marginTop`을 적용하고, 스크롤을 역방향으로 위로 올려보면, canvas가 사라지는 것을 볼수 있다.  
+이유는 `marginTop` 이 필요없는 구간에 적용되었기 때문이다. 즉, 초기화를 안해줬다.
+![Aug-17-2020 12-21-17](https://user-images.githubusercontent.com/26196090/90354391-2f2cee00-e084-11ea-85af-95617f81aab6.gif)
+
+이 구간은 아래 영역이며, 블랜드 이미지가 상단에 닿았을때, scale 직접에 실행되는 위치이다.
+
+```javascript
+if (scrollRatio > values.blendHeight[2].end) {
+  // ...
+  objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale, currentYOffset)})`;
+  objs.canvas.style.marginTop = 0; // marginTop 초기화
+}
+```
+
+### canvas caption 구간
+이 구간은, canvas 축소가 끝나고 sticky가 제거된 이후에 발생하는 애니메이션을 정의한다.
+
+```javascript
+// common.js
+
+// 3
+values: {
+  // ... 중략
+  canvasCaption_opacity: [ 0, 1,  { start: 0, end: 0 }],     // start, end는 js로 조정
+  canvasCaption_traslateY: [ 20, 0,  { start: 0, end: 0 }],  // 20% 아래에서 0의 위치로 이동
+}
+```
