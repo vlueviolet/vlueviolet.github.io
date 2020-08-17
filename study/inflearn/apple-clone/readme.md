@@ -545,7 +545,9 @@ sceneInfo에 value를 추가해서 애니메이션 처리를 해야한다.
 이전에는 이를 특정 요소의 css 값에 적용했다면,  
 지금은 canvas를 그리는 y좌표에 적용해준다.
 
->  canvas drawImage의 이해
+<br>
+
+##  canvas drawImage의 이해
 이미지 블랜드를 구현하려면, `drawImage`에 대한 이해가 필요하다.
 
 `drawImage`는 3가지 방식을 제공한다.
