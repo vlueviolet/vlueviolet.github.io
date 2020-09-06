@@ -1,0 +1,27 @@
+# 프론트엔드 개발환경의 이해와 실습 (webpack, babel, eslint..)
+
+## node.js가 필요한 이유
+
+[프론트엔드 개발환경의 이해: NPM](https://jeonghwan-kim.github.io/series/2019/12/09/frontend-dev-env-npm.html)
+
+- 최신 스펙으로 개발
+  - js 스펙 대비 브라우저 지원속도의 뒤쳐짐, 이에 대한 바벨 필요
+  - Typescript, sass 등 고수준 프로그래밍 언어 전용 트랜스파일러 필요
+- 빌드 자동화
+  - 파일 압축, 코드 난독화, 브라우저 대응 폴리필 추가 등 과정 필요
+  - 각종 테스트 자동화
+- 개발 환경 커스터마이징
+  - CLI 적용이 어려운 환경에서 직접 개발 환경 구축 필요
+
+## node.js 설치
+
+[node.js](https://nodejs.org/ko/)
+
+<img width="756" alt="스크린샷 2020-09-06 오전 10 42 25" src="https://user-images.githubusercontent.com/26196090/92316356-ade6cc80-f02d-11ea-8b92-452347c281a6.png">
+
+| 구분 | LTS | Current |
+|---|:---:|---:|
+| 의미 | Long Term Support<br>오랜 기간 지원, 2년<br>주로 짝수 | 현재 개발 버전<br>주로 홀수(가끔 짝수) |
+| 내용 | - 취약점 패치, 개선 사항에 대한 패치 등 지원<br>- 안정적 | - 해당 버전에 존재하는 기능이 패치를 통해 사라지거나 변경되어 새로 코드를 작성해야할 가능성이 존재하는 버전<br>-불안정 |
+| 사용 | 서버 구성시 | 개발환경 구성시 |
+
