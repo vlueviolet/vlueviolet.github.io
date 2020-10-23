@@ -390,7 +390,9 @@
     // TODO: 이건 무슨 경우야?
     if (delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
       enterNewScene = true;
-      currentScene++;
+      if(currentScene < sceneInfo.length - 1) { // sceneInfo의 범위를 제한하여 scroll 이벤트 버그 대응
+        currentScene++;
+      }
       document.body.setAttribute('id', `show-scene-${currentScene}`);
     }
     // TODO: 이건 무슨 경우야?
@@ -432,16 +434,6 @@
     }
   }
 
-  window.addEventListener('scroll', () => {
-    yOffset = window.pageYOffset;
-    scrollLoop();
-    checkMenu();
-
-    if(!rafState) {
-      rafId = requestAnimationFrame(loop);
-      rafState = true;
-    }
-  });
 
   /** DOM 구조 load된 후 실행
    * load에 비해 시작이 빠름
@@ -452,16 +444,64 @@
     document.body.classList.remove('before-load');
     setLayout();
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0); // 초기 로딩시 canvas에 그리기
-  });
-  window.addEventListener('resize', () => {
-    if(window.innerWidth > 900) {
-      setLayout();
+
+    // 버그 대응 : 새로고침 시 아무것도 안나오는 현상
+    let tempYOffset = yOffset; // 현재 스크롤 위치를 저장하는 임시변수
+    let tempScrollCount = 0; // 스크롤 count 체크
+    
+    if(yOffset > 0) { // 맨 위에 있을 경우 예외 처리
+      let interval = setInterval(() => {
+        scrollTo(0, tempYOffset);
+        tempYOffset += 5;
+        if(tempScrollCount > 20) {
+          clearInterval(interval);
+        } else {
+          tempScrollCount++;
+        }
+      });
     }
-    sceneInfo[3].values.rectStartY = 0; // resize시 값이 갱신되도록 초기화함
-  });
-  window.addEventListener('orientationchange', setLayout);
-  document.querySelector('.loading').addEventListener('transitionend', (e) => {
-    document.body.removeChild(e.currentTarget);
+
+    window.addEventListener('scroll', () => {
+      yOffset = window.pageYOffset;
+      scrollLoop();
+      checkMenu();
+
+      if(!rafState) {
+        rafId = requestAnimationFrame(loop);
+        rafState = true;
+      }
+    });
+    window.addEventListener('resize', () => {
+      if(window.innerWidth > 900) {
+        setLayout();
+        sceneInfo[3].values.rectStartY = 0; // resize시 값이 갱신되도록 초기화함
+      }
+
+      // scene 3에서 resize시 동작 상이 대응
+      if(currentScene === 3 && window.innerWidth > 450) { // 모바일 기기는 이런 경우가 없어 예외처리
+        let tempYOffset = yOffset; // 현재 스크롤 위치를 저장하는 임시변수
+        let tempScrollCount = 0; // 스크롤 count 체크
+        
+        if(yOffset > 0) { // 맨 위에 있을 경우 예외 처리
+          let interval = setInterval(() => {
+            scrollTo(0, tempYOffset);
+            tempYOffset -= 50;
+            if(tempScrollCount > 20) {
+              clearInterval(interval);
+            } else {
+              tempScrollCount++;
+            }
+          });
+        }
+      }
+    });
+    window.addEventListener('orientationchange', () => {
+      setTimeout(setLayout, 500)
+    });
+
+    document.querySelector('.loading').addEventListener('transitionend', (e) => {
+      document.body.removeChild(e.currentTarget);
+    });
   });
   setCanvasImages();
 })();

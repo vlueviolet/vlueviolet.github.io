@@ -22,7 +22,7 @@ a {
 }
 
 body.before-load {
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .container {
@@ -251,7 +251,7 @@ body.before-load {
 }
 
 .before-load .container {
-  /* display: none; */
+  display: none;
 }
 
 .before-load .loading {
@@ -292,12 +292,17 @@ body.before-load {
   stroke-dashoffset: 0;
   fill: transparent;
   animation: loading-circle-ani 1s infinite;
-  /* transition: 1s; */
+  transition: 1s;
 }
 
-/* .loading-circle:hover circle {
+.loading-circle:hover circle {
 	stroke-dashoffset: -157;
-} */
+}
+
+.normal-content {
+  margin-bottom: 10rem;
+}
+
 
 @media (min-width: 1024px) {
   #scroll-section-0 h1 {

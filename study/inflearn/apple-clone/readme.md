@@ -590,3 +590,269 @@ values: {
   canvasCaption_traslateY: [ 20, 0,  { start: 0, end: 0 }],  // 20% 아래에서 0의 위치로 이동
 }
 ```
+
+### 초기 시점 수정
+
+이미지 로딩 전에 스크롤하면 다음 에러가 발생한다.
+
+<img width="467" alt="스크린샷 2020-08-23 오후 7 08 07" src="https://user-images.githubusercontent.com/26196090/90975977-0620c780-e574-11ea-971a-1ac828e0316d.png">
+
+<img width="953" alt="스크린샷 2020-08-23 오후 7 09 36" src="https://user-images.githubusercontent.com/26196090/90975993-3d8f7400-e574-11ea-9e35-3ec3e4d4e873.png">
+
+`sceneInfo[currentScene].scrollHeight` 값들이 셋팅되기 전에 scroll 이벤트가 발생하며 생긴 버그이다.
+scroll, resize 이벤트를 load 이후에 붙여주면 된다.
+
+```javascript
+window.addEventListener('load', () => {
+  window.addEventListener('scroll', () => {});
+  window.addEventListener('resize', () => {});
+  window.addEventListener('orientationchange', () => {});
+  document.querySelector('.loading').addEventListener('transitionend', (e) => {});
+});
+```
+
+그리고 굳이 scrollbar가 load 이전에는 생길 필요가 없어서 이를 제어해준다.
+`.before-load` 클래스가 있기때문에 여기에 `overflow: hidden`을 적용해준다.
+
+```css
+body.before-load {
+  overflow: hidden;
+}
+```
+
+### css 애니메이션 퍼포먼스 향상시키기 : will-change
+
+css 값이 변화하면서 조정되는 속성들에 시각적인 성능 개선을 할 수 있다.
+
+```scss
+will-change: transform, opacity;
+```
+
+이렇게 값을 설정하면, css의 변화를 브라우저가 미리 대비할 수 있게 해준다.  
+
+아래 링크를 통해 `will-change`에 대한 주의사항을 읽어보자.  
+이 속성을 사용하는 목적을 이해하고 남발하지 말자.
+[will-change](https://developer.mozilla.org/ko/docs/Web/CSS/will-change)
+
+현재 scene에 해당하는 영역들에만 will-change가 적용되도록 한다.
+
+```scss
+#show-scene-0 #scroll-section-0 .sticky-elem,
+#show-scene-1 #scroll-section-1 .sticky-elem,
+#show-scene-2 #scroll-section-2 .sticky-elem,
+#show-scene-3 #scroll-section-3 .sticky-elem {
+  display: block;
+  will-change: transform, opacity;
+}
+```
+
+## 버그 수정
+
+### [모바일] 이미지 블렌드 캔버스 동작 이상
+맨 끝에서 위로 스크롤 이동시, 이미지 블렌드의 동작이 상이한 경우가 있다.  
+
+`resize`와 `orientationchange` 이벤트를 분리한 이유는,  
+iPhone safari에서는 상/하단 메뉴바들이 나타났다 사라졌다하면서 resize 이벤트가 발생하는데,  
+이러한 이유로 iOS 기기들에서 발생하는 오류로 `resize` 대신 `orientationchange`로 해결하게 됐다.
+
+이렇게 적용하려면, `resize`의 `rectStartY`도 같이 변경을 해줘야 한다.
+3번째 scene에서는 scroll 길이를 미리 정할 수가 없고, screen 사이즈를 js로 가져와 길이를 정해주게 되었는데,  
+그 기준을 맞추다보니 `rectStartY`를 초기화 해주었어야 했다.  
+이를 if문 앞으로 이동시킨다.
+
+```javascript
+// as-is
+window.addEventListener('resize', () => {
+  if(window.innerWidth > 900) {
+    setLayout();
+  }
+  sceneInfo[3].values.rectStartY = 0; // resize시 값이 갱신되도록 초기화함
+});
+
+// to-be
+window.addEventListener('resize', () => {
+  if(window.innerWidth > 900) {
+    setLayout();
+    sceneInfo[3].values.rectStartY = 0; // resize시 값이 갱신되도록 초기화함
+  }
+});
+```
+
+### [모바일] orientationchange 동작 버그
+
+가로모드 전환시, 캔버스 레이아웃이 잘 안잡히는 버그가 있다.  
+이는 `setLayout`을 한 템포 느리게 실행하는 방법으로 해결해보자.
+
+```javascript
+window.addEventListener('orientationchange', () => {
+  setTimeout(setLayout, 500)
+});
+```
+
+### 스크롤 중간에서 새로고침 시, 중간 위치에서 새로고침하면, 아무것도 화면에 나오지 않는다.
+
+![Aug-23-2020 21-08-21](https://user-images.githubusercontent.com/26196090/90977950-cf06e200-e584-11ea-95d9-5b360eb6ac90.gif)
+
+#### [해결방안 1] 스크롤 인터랙션 페이지들의 경우, 새로고침 시에는 강제로 맨 위로 보내서 해결하는 경우가 많다.  
+이게 제일 쉬운 방법이긴 하다.  
+하지만 애플에서 그렇게 하지 않으니, 이 방법으로 해결하지는 않겠다.
+
+#### [해결방안 2] 초기 로딩시 scroll 이벤트가 실행되도록 한다. (scrollTo)
+load 후, 현재 scroll 위치에서 약간의 scroll을 실행시켜 주는 방식이다.
+
+```javascript
+let tempYOffset = yOffset; // 현재 스크롤 위치를 저장하는 임시변수
+let tempScrollCount = 0; // 스크롤 count 체크
+
+if(yOffset > 0) { // 맨 위에 있을 경우 예외 처리
+  let interval = setInterval(() => {
+    scrollTo(0, tempYOffset);
+    tempYOffset += 2;
+    if(tempScrollCount > 10) {
+      clearInterval(interval);
+    } else {
+      tempScrollCount++;
+    }
+  });
+}
+```
+
+결과 화면은 아래와 같다.
+
+![Aug-23-2020 22-18-03](https://user-images.githubusercontent.com/26196090/90979208-910ebb80-e58e-11ea-92c8-a7853a2646a4.gif)
+
+
+### 스크롤 중간에서 새로고침 시 스크롤하면 보이지 말아야 할 콘텐츠들이 보이는 현상이 있다.
+"온종일 편한한 맞춤형 손잡이" 위치에서 새로고침했는데, "보통 스크롤" 콘텐츠가 보인다.
+
+![Aug-23-2020 21-19-55](https://user-images.githubusercontent.com/26196090/90978147-6ae51d80-e586-11ea-9d59-c9187ac85082.gif)
+
+
+#### [해결방안] scrollHeight가 셋팅되기 이전까지 css로 콘텐츠들이 보이지 않게 한다. (display: none)
+
+이 이슈에는 2가지 원인이 있다.
+
+##### 원인1) 새로고침 시에 scroll 이벤트가 발생하지 않기 때문이다.
+비디오 이미지가 그려지는 것 자체가 scroll 이벤트가 발생했을때 동작이 되는데,  
+새로고침 시에는 scroll 이벤트가 발생하지 않는다. 그래서 화면에 아무것도 보이지 않는다.
+
+##### 원인2) setLayout 이전에 원래의 콘텐츠 사이즈가 적용되기 때문이다.
+1~4개의 섹션중, 2번만 보통 scroll 영역이고, 나머지는 해당 구간동안 scroll이 되게끔 하기위해 일정 높이를 잡아줬다. 이 scroll이 되는 동안 sticky-elem들의 변화가 있었다.
+
+```javascript
+const sceneInfo = [
+  {
+    // 0
+    type: 'sticky',
+    heightNum: 5, // 브라우저 높이의 5배로 scrollHeight 세팅
+    scrollHeight: 0,
+    // 중략...
+  }
+];
+```
+
+그런데, 보통 scroll 영역은 아무 조치를 하지 않고 자기 콘텐츠 높이 만큼을 잡도록 했다.
+
+```
+즉, js로 인한 계산된 높이가 적용되기 전에
+모든 섹션들이 본연의 콘텐츠 높이만큼 초기에 셋팅이 되기때문에 
+0섹션의 높이는 굉장히 작아 1섹션이 0섹션 스크롤 위치만큼 오게 되는 것이다.
+```
+
+`load`가 되었을때 `debugger`를 걸면 현상을 알 수 있다.
+```javascript
+window.addEventListener('load', () => {
+  debugger;
+  // ...
+});
+```
+![Aug-23-2020 21-33-34](https://user-images.githubusercontent.com/26196090/90978364-5c980100-e588-11ea-83fd-986670b73b5b.gif)
+
+
+load가 되는 순간의 각 section의 높이를 보면, common.js에서 지정한 값과 차이가 있음을 알 수 있다.
+- 0섹션 : 370px
+- 1섹션 : 1109px (보통 스크롤)
+- 2섹션 : 303px
+- 3섹션 : 1543px
+
+`debugger` 다음 실행을 클릭하면, 이제서야 각 section들이 설정된 값으로 셋팅됨을 알 수 있다.
+
+<img width="233" alt="스크린샷 2020-08-23 오후 9 38 25" src="https://user-images.githubusercontent.com/26196090/90978471-26a74c80-e589-11ea-9c7d-55f5f73b23c4.png">
+
+<img width="937" alt="스크린샷 2020-08-23 오후 9 41 09" src="https://user-images.githubusercontent.com/26196090/90978500-5fdfbc80-e589-11ea-851c-fd7c1deb7958.png">
+
+
+`.before-load`에 style을 적용해준다.
+```scss
+.before-load .container {
+  display: none;
+}
+```
+
+### resize시 이미지 블렌드 영역 이슈
+페이지 실행하면서 창 사이즈를 조절하면, 일분이 캐릭터 좌우 흰 박스가 보이거나, 이미지 블랜드 위치가 상이하게 동작한다.
+
+![Aug-23-2020 22-21-52](https://user-images.githubusercontent.com/26196090/90979290-185c2f00-e58f-11ea-80ad-1d708fd5c552.gif)
+
+일분이 캐릭터 좌우의 흰 박스의 위치나, 이미지 블렌드 시작 위치의 기준이 새로운 scene 진입 시점에 결정이 되는데,
+시점 변경이 된 이후에 resize를 하면, 시점을 벗어나지 않는 한 값이 리셋 되지 않기 때문이다.
+
+scene 3에서 만큼은 resize 이벤트가 발생했을 때 scene 3이 시작 직전의 위치로 scroll을 강제로 올려주는 방식으로 해결해보자.
+
+```javascript
+window.addEventListener('resize', () => {
+  // 중략...
+
+  // scene 3에서 resize시 동작 상이 대응
+  if(currentScene === 3 && window.innerWidth > 450) { // 모바일 기기는 이런 경우가 없어 예외처리
+    let tempYOffset = yOffset; // 현재 스크롤 위치를 저장하는 임시변수
+    let tempScrollCount = 0; // 스크롤 count 체크
+    
+    if(yOffset > 0) { // 맨 위에 있을 경우 예외 처리
+      let interval = setInterval(() => {
+        scrollTo(0, tempYOffset);
+        tempYOffset -= 50;
+        if(tempScrollCount > 20) {
+          clearInterval(interval);
+        } else {
+          tempScrollCount++;
+        }
+      });
+    }
+  }
+});
+```
+
+`window.innerWidth > 450` 조건은 모바일 기기에서는 resize가 필요없기 때문이다.  
+모바일 기기의 가로모드 대응은 `orientationchange` 이벤트에서 처리되기 때문에 예외처리를 해준 것이다.
+
+### js 셋팅과 무관한 콘텐츠가 들어간 경우
+
+페이지 맨 하단에 정적인 콘텐츠를 추가해보자.
+
+```html
+<section class="normal-content">
+  <p class="mid-message">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam consequuntur dolore amet eaque rerum. Earum laudantium aliquam, minima iste reprehenderit nihil magni beatae ab animi nobis cumque cum accusantium provident ad iure, reiciendis explicabo saepe deleniti odit consequuntur aspernatur. Quasi corrupti optio mollitia architecto, a reprehenderit nulla autem aut, fugiat ipsam illum esse tenetur nisi. Libero placeat, atque harum eligendi perspiciatis quia nisi? Officia perferendis voluptatem, aperiam maiores corrupti minima modi, sapiente praesentium, fugiat quaerat nihil! Quaerat, ea aliquam veniam ipsum corrupti doloremque explicabo exercitationem, quae, repudiandae eum possimus. Libero repellendus corporis culpa nulla eos nihil consectetur velit maxime odio.</p>
+</section>
+```
+
+<img width="1169" alt="스크린샷 2020-08-23 오후 10 40 58" src="https://user-images.githubusercontent.com/26196090/90979691-cb2d8c80-e591-11ea-9dbb-571bde24d8f7.png">
+
+currentScene은 4를 가리키면서, 오류가 발생한다. common.js에 없는 4번 객체에 접근하멵서 발생하는 오류이다.  
+
+currentScene이 3이면 더이상 증가하지 않도록 해주면 된다.
+
+```javascript
+const scrollLoop = () => {
+  // 중략...
+
+  if (delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+    enterNewScene = true;
+    if(currentScene < sceneInfo.length - 1) { // sceneInfo의 범위를 제한함
+      currentScene++;
+    }
+    document.body.setAttribute('id', `show-scene-${currentScene}`);
+  }
+  // ... 중략...
+}
+```
