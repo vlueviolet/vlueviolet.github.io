@@ -12,4 +12,7 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "HookyQR.beautify"
   },
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
 }

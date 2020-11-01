@@ -2,6 +2,8 @@
 import React from 'react';
 import classnames from 'classnames';
 import style from './Header.module.scss';
+import IconMenu from './ico-menu.svg';
+import Logo from 'asset/images/logo.png';
 
 export interface ProfileProps {
   /** test */
@@ -14,6 +16,10 @@ const Header = ({ gnbList }: ProfileProps) => {
       <h1 className={style.logo}>
         <span className="blind">HIVELAB</span>
       </h1>
+
+      <IconMenu width="100" />
+
+      <img src={Logo} alt="" />
       <button
         type="button"
         className={style.btn_menu}

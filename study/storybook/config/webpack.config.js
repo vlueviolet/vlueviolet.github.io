@@ -380,10 +380,12 @@ module.exports = function (webpackEnv) {
             // smaller than specified limit in bytes as data URLs to avoid requests.
             // A missing `test` is equivalent to a match.
             {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+              test: [/\.gif$/, /\.jpe?g$/, /\.png$/],
               loader: require.resolve('url-loader'),
               options: {
+                publicPath: './dist',
                 limit: imageInlineSizeLimit,
+                fallback: 'file-loader',
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
@@ -482,7 +484,6 @@ module.exports = function (webpackEnv) {
                   ? shouldUseSourceMap
                   : isEnvDevelopment,
                 modules: {
-                  // getLocalIdent: getCSSModuleLocalIdent,
                   localIdentName: '[local]__[hash:base64:5]',
                 },
               }),
@@ -493,15 +494,6 @@ module.exports = function (webpackEnv) {
             {
               test: sassRegex,
               exclude: sassModuleRegex,
-              // use: getStyleLoaders(
-              //   {
-              //     importLoaders: 3,
-              //     sourceMap: isEnvProduction
-              //       ? shouldUseSourceMap
-              //       : isEnvDevelopment,
-              //   },
-              //   'sass-loader'
-              // ),
               use: getStyleLoaders({
                 importLoaders: 2,
                 sourceMap: isEnvProduction && shouldUseSourceMap,
@@ -509,7 +501,7 @@ module.exports = function (webpackEnv) {
                 {
                   loader: require.resolve('sass-loader'),
                   options: {
-                    prependData: "@import 'global';",
+                    prependData: "@import 'global.scss';",
                     sassOptions: {
                       includePaths: [paths.appSrc + '/asset/scss'],
                       sourceMap: isEnvProduction && shouldUseSourceMap,
@@ -533,30 +525,60 @@ module.exports = function (webpackEnv) {
             // using the extension .module.scss or .module.sass
             {
               test: sassModuleRegex,
-              use: getStyleLoaders(
+              use: getStyleLoaders({
+                importLoaders: 2,
+                sourceMap: isEnvProduction && shouldUseSourceMap,
+                modules: {
+                  localIdentName: '[local]__[hash:base64:5]',
+                },
+              }).concat(
                 {
-                  importLoaders: 3,
-                  sourceMap: isEnvProduction
-                    ? shouldUseSourceMap
-                    : isEnvDevelopment,
-                  modules: {
-                    // getLocalIdent: getCSSModuleLocalIdent,
-                    localIdentName: '[local]__[hash:base64:5]',
+                  loader: require.resolve('sass-loader'),
+                  options: {
+                    prependData: "@import 'global.scss';",
+                    sassOptions: {
+                      includePaths: [paths.appSrc + '/asset/scss'],
+                      sourceMap: isEnvProduction && shouldUseSourceMap,
+                    },
                   },
                 },
-                'sass-loader'
-              ).concat({
-                loader: 'sass-resources-loader',
-                options: {
-                  resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`,
-                },
-              }),
+                {
+                  loader: 'sass-resources-loader',
+                  options: {
+                    resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`,
+                  },
+                }
+              ),
+            },
+            {
+              test: /\.svg$/,
+              issuer: /\.(js|jsx|tsx)$/,
+              include: /svg/,
+              exclude: /node_modules/,
+              use: ['@svgr/webpack'],
+            },
+            {
+              test: /\.svg$/,
+              loader: 'url-loader',
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
             // This loader doesn't use a "test" so it will catch all modules
             // that fall through the other loaders.
+            {
+              test: /\.(woff|woff2)$/,
+              use: [
+                {
+                  loader: 'file-loader',
+                  options: {
+                    publicPath: '/font',
+                    outputPath: 'font',
+                    name: '[name].[ext]',
+                  },
+                },
+              ],
+            },
             {
               loader: require.resolve('file-loader'),
               // Exclude `js` files to keep "css" loader working as it injects

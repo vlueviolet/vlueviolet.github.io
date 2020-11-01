@@ -1,7 +1,5 @@
+@import './helper/_mixins.scss';
+@import './helper/_variables.scss';
 @import './common/_reset.scss';
 @import './common/_common.scss';
 @import './common/_font.scss';
-
-header {
-  background-color: orange;
-}

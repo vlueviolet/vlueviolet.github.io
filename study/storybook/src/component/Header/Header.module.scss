@@ -5,5 +5,10 @@
 .btn_menu {
   width: 25px;
   height: 25px;
-  border: 1px solid $red;
+
+  background: {
+    image: url(../../asset/images/logo.png);
+    // image: url(./ico-menu.svg);
+    repeat: no-repeat;
+  }
 }

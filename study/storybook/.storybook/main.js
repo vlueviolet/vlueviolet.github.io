@@ -11,10 +11,15 @@ module.exports = {
     // 'PRODUCTION' is used when building the static version of storybook.
 
     // Make whatever fine-grained changes you need
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '../': path.resolve(__dirname, '../src'),
-    };
+    config.resolve.modules = [
+      ...(config.resolve.modules || []),
+      path.resolve(__dirname, '../src'),
+    ];
+
+    // config.resolve.alias = {
+    //   ...config.resolve.alias,
+    //   '@': path.resolve(__dirname, '../src'),
+    // };
 
     config.module.rules.push({
       test: sassRegex,
@@ -50,6 +55,7 @@ module.exports = {
         },
       ],
     });
+
     config.module.rules.push({
       test: sassModuleRegex,
       use: [
@@ -83,6 +89,26 @@ module.exports = {
         },
       ],
     });
+
+    const fileLoaderRule = config.module.rules.find(
+      (rule) => !Array.isArray(rule.test) && rule.test.test('.svg')
+    );
+    fileLoaderRule.exclude = /\.svg$/;
+
+    config.module.rules.push({
+      test: /\.svg$/,
+      issuer: /\.(js|jsx|tsx)$/,
+      include: /svg/,
+      exclude: /node_modules/,
+      use: ['@svgr/webpack'],
+    });
+
+    config.module.rules.push({
+      test: /\.svg$/,
+      issuer: /\.(scss)$/,
+      loader: 'url-loader',
+    });
+
     return config;
   },
 };
