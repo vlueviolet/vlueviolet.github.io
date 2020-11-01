@@ -2,7 +2,8 @@
 import React from 'react';
 import classnames from 'classnames';
 import style from './Header.module.scss';
-import IconMenu from './images/icon-menu.svg';
+import IconMenu from 'asset/images/svg/icon-menu.svg';
+import IconHome from 'asset/images/svg/icon-home.svg';
 
 export interface ProfileProps {
   /** global nav list */
@@ -21,15 +22,24 @@ const Header = ({ gnbList }: ProfileProps) => {
         <IconMenu className={style.btn_menu_icon} />
       </button>
       <div className={style.gnb}>
-        {[...gnbList].map((item, index) => (
-          <a
-            href="/"
-            className={classnames(style.gnb_item)}
-            key={`gnb-${index}`}
-          >
-            <span>{`${item.label}`}</span>
-          </a>
-        ))}
+        {[...gnbList].map((item, index) => {
+          // const itemComponent = React.createElement(`Icon${item.label}`);
+          // console.log(itemComponent);
+          return (
+            <a
+              href="/"
+              className={classnames(
+                style.gnb_item,
+                style[`gnb_item_${item.label}`]
+              )}
+              key={`gnb-${index}`}
+            >
+              {/* <itemComponent /> */}
+              {/* {React.createElement(`Icon${item.label}`)} */}
+              <span>{`${item.label}`}</span>
+            </a>
+          );
+        })}
       </div>
     </header>
   );

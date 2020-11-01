@@ -1,10 +1,12 @@
 .header {
+  position: relative;
   height: 52px;
   background-color: $dark;
 
   &_logo {
     display: inline-block;
     height: 100%;
+    margin-left: 77px;
 
     &_link {
       display: block;
@@ -21,15 +23,21 @@
 }
 
 .btn_menu {
+  position: absolute;
+  top: 0;
+  left: 26px;
   width: 33px;
-  height: 33px;
-
-  background: {
-    image: url(./images/icon-menu.svg);
-    repeat: no-repeat;
-  }
+  height: 100%;
 
   &_icon {
     color: $white;
+  }
+}
+
+.gnb {
+  display: inline-block;
+
+  &_item {
+    display: inline-block;
   }
 }
