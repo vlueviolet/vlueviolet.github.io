@@ -4,7 +4,11 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 module.exports = {
   stories: ['../src/**/**/*.stories.@(md)x'],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-a11y',
+  ],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
     // You can change the configuration based on that.
