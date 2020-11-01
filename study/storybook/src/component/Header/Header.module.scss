@@ -1,14 +1,35 @@
 .header {
-  border: 1px solid $red;
+  height: 52px;
+  background-color: $dark;
+
+  &_logo {
+    display: inline-block;
+    height: 100%;
+
+    &_link {
+      display: block;
+      width: 118px;
+      height: 100%;
+
+      background: {
+        image: url('asset/images/logo_white.png');
+        repeat: no-repeat;
+        position: center center;
+      }
+    }
+  }
 }
 
 .btn_menu {
-  width: 25px;
-  height: 25px;
+  width: 33px;
+  height: 33px;
 
   background: {
-    image: url(asset/images/logo.png);
-    // image: url(./ico-menu.svg);
+    image: url(./images/icon-menu.svg);
     repeat: no-repeat;
+  }
+
+  &_icon {
+    color: $white;
   }
 }

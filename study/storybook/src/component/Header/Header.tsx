@@ -2,29 +2,24 @@
 import React from 'react';
 import classnames from 'classnames';
 import style from './Header.module.scss';
-import IconMenu from './ico-menu.svg';
-import Logo from 'asset/images/logo.png';
+import IconMenu from './images/icon-menu.svg';
 
 export interface ProfileProps {
-  /** test */
+  /** global nav list */
   gnbList: any;
 }
 
 const Header = ({ gnbList }: ProfileProps) => {
   return (
     <header className={style.header}>
-      <h1 className={style.logo}>
-        <span className="blind">HIVELAB</span>
+      <h1 className={style.header_logo}>
+        <a href="/" className={style.header_logo_link}>
+          <span className="blind">HIVELAB</span>
+        </a>
       </h1>
-
-      <IconMenu width="100" />
-
-      <img src={Logo} alt="" />
-      <button
-        type="button"
-        className={style.btn_menu}
-        aria-label="menu"
-      ></button>
+      <button type="button" className={style.btn_menu} aria-label="menu">
+        <IconMenu className={style.btn_menu_icon} />
+      </button>
       <div className={style.gnb}>
         {[...gnbList].map((item, index) => (
           <a
