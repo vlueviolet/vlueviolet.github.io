@@ -6,8 +6,8 @@ import Header from './Header';
 export const Template = (args) => <Header {...args} />;
 
 <Canvas>
-  <Story name="Basic" args={{gnbList: [{label: 'test1'}, {label: 'test2'}]}}>
-      {Template.bind({})}
+  <Story name="Basic">
+    {Template.bind({})}
   </Story>
 </Canvas>
 
