@@ -165,3 +165,17 @@ input {
     display: none;
   }
 }
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: $noto, -apple-system,
+    BlinkMacSystemFont,
+    "Malgun Gothic",
+    Dotum,
+    Helvetica,
+    sans-serif;
+  font-size: 14px;
+}

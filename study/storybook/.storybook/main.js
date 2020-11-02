@@ -101,7 +101,7 @@ module.exports = {
 
     config.module.rules.push({
       test: /\.svg$/,
-      issuer: /\.(js|jsx|tsx)$/,
+      issuer: /\.(js|jsx|tsx|mdx)$/,
       include: /svg/,
       exclude: /node_modules/,
       use: ['@svgr/webpack'],

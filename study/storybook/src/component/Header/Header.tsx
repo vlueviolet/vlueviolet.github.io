@@ -2,17 +2,20 @@
 import React from 'react';
 import classnames from 'classnames';
 import style from './Header.module.scss';
+import ProfileThumbnail from '../ProfileThumbnail/ProfileThumbnail';
 import IconMenu from 'asset/images/svg/icon-menu.svg';
 import IconHome from 'asset/images/svg/icon-home.svg';
+import IconCloud from 'asset/images/svg/icon-cloud.svg';
+import IconMail from 'asset/images/svg/icon-mail.svg';
+import IconMessage from 'asset/images/svg/icon-message.svg';
+import IconOffice from 'asset/images/svg/icon-office.svg';
+import IconCalendar from 'asset/images/svg/icon-calendar.svg';
+import IconContact from 'asset/images/svg/icon-contact.svg';
+import IconSearch from 'asset/images/svg/icon-search.svg';
 
-export interface ProfileProps {
-  /** global nav list */
-  gnbList: any;
-}
-
-const Header = ({ gnbList }: ProfileProps) => {
-  return (
-    <header className={style.header}>
+const Header = () => (
+  <header className={style.header}>
+    <div className={style.header_inner}>
       <h1 className={style.header_logo}>
         <a href="/" className={style.header_logo_link}>
           <span className="blind">HIVELAB</span>
@@ -22,27 +25,89 @@ const Header = ({ gnbList }: ProfileProps) => {
         <IconMenu className={style.btn_menu_icon} />
       </button>
       <div className={style.gnb}>
-        {[...gnbList].map((item, index) => {
-          // const itemComponent = React.createElement(`Icon${item.label}`);
-          // console.log(itemComponent);
-          return (
-            <a
-              href="/"
-              className={classnames(
-                style.gnb_item,
-                style[`gnb_item_${item.label}`]
-              )}
-              key={`gnb-${index}`}
-            >
-              {/* <itemComponent /> */}
-              {/* {React.createElement(`Icon${item.label}`)} */}
-              <span>{`${item.label}`}</span>
-            </a>
-          );
-        })}
+        <a
+          href="/"
+          className={classnames(style.gnb_item, style.gnb_item_home)}
+          arai-label="home"
+          aria-pressed={true}
+        >
+          <IconHome />
+        </a>
+        <a
+          href="/"
+          className={classnames(style.gnb_item, style.gnb_item_home)}
+          arai-label="message"
+          aria-pressed={false}
+        >
+          <IconMessage />
+        </a>
+        <a
+          href="/"
+          className={classnames(style.gnb_item, style.gnb_item_home)}
+          arai-label="mail"
+          aria-pressed={false}
+        >
+          <IconMail />
+        </a>
+        <a
+          href="/"
+          className={classnames(style.gnb_item, style.gnb_item_home)}
+          arai-label="calendar"
+          aria-pressed={false}
+        >
+          <IconCalendar />
+        </a>
+        <a
+          href="/"
+          className={classnames(style.gnb_item, style.gnb_item_home)}
+          arai-label="contact"
+          aria-pressed={false}
+        >
+          <IconContact />
+        </a>
+        <a
+          href="/"
+          className={classnames(style.gnb_item, style.gnb_item_home)}
+          arai-label="cloud"
+          aria-pressed={false}
+        >
+          <IconCloud />
+        </a>
+        <a
+          href="/"
+          className={classnames(style.gnb_item, style.gnb_item_home)}
+          arai-label="office"
+          aria-pressed={false}
+        >
+          <IconOffice />
+        </a>
       </div>
-    </header>
-  );
-};
+      <div className={style.utils}>
+        <div className={style.utils_service}>
+          <a href="#" className={style.utils_service_link}>
+            인트라넷
+          </a>
+          <a href="#" className={style.utils_service_link}>
+            HRMS
+          </a>
+          <a href="#" className={style.utils_service_link}>
+            NAS
+          </a>
+        </div>
+        <div className={style.utils_search}>
+          <input
+            type="search"
+            className={style.utils_search_input}
+            placeholder="사원검색"
+          />
+          <button type="button" className={style.utils_search_btn}>
+            <IconSearch />
+          </button>
+        </div>
+        <ProfileThumbnail />
+      </div>
+    </div>
+  </header>
+);
 
 export default Header;
