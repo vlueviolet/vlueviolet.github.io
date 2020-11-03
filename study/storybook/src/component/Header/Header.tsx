@@ -14,8 +14,10 @@ import IconContact from 'asset/images/svg/icon-contact.svg';
 import IconSearch from 'asset/images/svg/icon-search.svg';
 
 const Header = () => (
-  <header className={style.header}>
-    <div className={style.header_inner}>
+  <header className={classnames(style.header, style['header-wrapper'])}>
+    <div
+      className={classnames(style.header_inner, style['header-wrapper__inner'])}
+    >
       <h1 className={style.header_logo}>
         <a href="/" className={style.header_logo_link}>
           <span className="blind">HIVELAB</span>
