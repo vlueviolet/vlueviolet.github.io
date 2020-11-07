@@ -501,10 +501,10 @@ module.exports = function (webpackEnv) {
                 {
                   loader: require.resolve('sass-loader'),
                   options: {
-                    prependData: "@import 'global.scss';",
+                    additionalData: "@import 'global.scss';",
+                    sourceMap: isEnvProduction && shouldUseSourceMap,
                     sassOptions: {
                       includePaths: [paths.appSrc + '/asset/scss'],
-                      sourceMap: isEnvProduction && shouldUseSourceMap,
                     },
                   },
                 },
@@ -535,10 +535,10 @@ module.exports = function (webpackEnv) {
                 {
                   loader: require.resolve('sass-loader'),
                   options: {
-                    prependData: "@import 'global.scss';",
+                    additionalData: "@import 'global.scss';",
+                    sourceMap: isEnvProduction && shouldUseSourceMap,
                     sassOptions: {
                       includePaths: [paths.appSrc + '/asset/scss'],
-                      sourceMap: isEnvProduction && shouldUseSourceMap,
                     },
                   },
                 },

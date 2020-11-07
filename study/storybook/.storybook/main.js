@@ -44,10 +44,10 @@ module.exports = {
         {
           loader: 'sass-loader',
           options: {
-            prependData: "@import 'global.scss';",
+            additionalData: "@import 'global.scss';",
+            sourceMap: true,
             sassOptions: {
               includePaths: ['./src/asset/scss'],
-              sourceMap: true,
             },
           },
         },
@@ -78,10 +78,10 @@ module.exports = {
         {
           loader: 'sass-loader',
           options: {
-            prependData: "@import 'global.scss';",
+            additionalData: "@import 'global.scss';",
+            sourceMap: true,
             sassOptions: {
               includePaths: ['./src/asset/scss'],
-              sourceMap: true,
             },
           },
         },
