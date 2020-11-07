@@ -166,7 +166,8 @@ module.exports = function (webpackEnv) {
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry:
+    entry: [
+      `${paths.appSrc}/asset/scss/global.scss`,
       isEnvDevelopment && !shouldUseReactRefresh
         ? [
             // Include an alternative client for WebpackDevServer. A client's job is to
@@ -191,6 +192,7 @@ module.exports = function (webpackEnv) {
             // changing JS code would still trigger a refresh.
           ]
         : paths.appIndexJs,
+    ],
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -500,13 +502,13 @@ module.exports = function (webpackEnv) {
               }).concat([
                 {
                   loader: require.resolve('sass-loader'),
-                  options: {
-                    additionalData: "@import 'global.scss';",
-                    sourceMap: isEnvProduction && shouldUseSourceMap,
-                    sassOptions: {
-                      includePaths: [paths.appSrc + '/asset/scss'],
-                    },
-                  },
+                  // options: {
+                  //   additionalData: "@import 'global.scss';",
+                  //   sourceMap: isEnvProduction && shouldUseSourceMap,
+                  //   sassOptions: {
+                  //     includePaths: [paths.appSrc + '/asset/scss'],
+                  //   },
+                  // },
                 },
                 {
                   loader: 'sass-resources-loader',
@@ -534,13 +536,13 @@ module.exports = function (webpackEnv) {
               }).concat(
                 {
                   loader: require.resolve('sass-loader'),
-                  options: {
-                    additionalData: "@import 'global.scss';",
-                    sourceMap: isEnvProduction && shouldUseSourceMap,
-                    sassOptions: {
-                      includePaths: [paths.appSrc + '/asset/scss'],
-                    },
-                  },
+                  // options: {
+                  //   additionalData: "@import 'global.scss';",
+                  //   sourceMap: isEnvProduction && shouldUseSourceMap,
+                  //   sassOptions: {
+                  //     includePaths: [paths.appSrc + '/asset/scss'],
+                  //   },
+                  // },
                 },
                 {
                   loader: 'sass-resources-loader',
