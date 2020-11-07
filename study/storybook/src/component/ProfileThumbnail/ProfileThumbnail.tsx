@@ -9,7 +9,7 @@ export interface ProfileThumbnailProps {
 
 const ProfileThumbnail = ({ url }: ProfileThumbnailProps) => (
   <>
-    <a href="#" className={style.profile_thumbnail}>
+    <a href="/" className={style.profile_thumbnail}>
       {url && (
         <img
           src={url}

@@ -27,72 +27,72 @@ const Header = () => (
         <IconMenu className={style.btn_menu_icon} />
       </button>
       <div className={style.gnb}>
-        <a
-          href="/"
+        <button
+          type="button"
           className={classnames(style.gnb_item, style.gnb_item_home)}
           arai-label="home"
           aria-pressed={true}
         >
           <IconHome />
-        </a>
-        <a
-          href="/"
+        </button>
+        <button
+          type="button"
           className={classnames(style.gnb_item, style.gnb_item_home)}
           arai-label="message"
           aria-pressed={false}
         >
           <IconMessage />
-        </a>
-        <a
-          href="/"
+        </button>
+        <button
+          type="button"
           className={classnames(style.gnb_item, style.gnb_item_home)}
           arai-label="mail"
           aria-pressed={false}
         >
           <IconMail />
-        </a>
-        <a
-          href="/"
+        </button>
+        <button
+          type="button"
           className={classnames(style.gnb_item, style.gnb_item_home)}
           arai-label="calendar"
           aria-pressed={false}
         >
           <IconCalendar />
-        </a>
-        <a
-          href="/"
+        </button>
+        <button
+          type="button"
           className={classnames(style.gnb_item, style.gnb_item_home)}
           arai-label="contact"
           aria-pressed={false}
         >
           <IconContact />
-        </a>
-        <a
-          href="/"
+        </button>
+        <button
+          type="button"
           className={classnames(style.gnb_item, style.gnb_item_home)}
           arai-label="cloud"
           aria-pressed={false}
         >
           <IconCloud />
-        </a>
-        <a
-          href="/"
+        </button>
+        <button
+          type="button"
           className={classnames(style.gnb_item, style.gnb_item_home)}
           arai-label="office"
           aria-pressed={false}
         >
           <IconOffice />
-        </a>
+        </button>
       </div>
       <div className={style.utils}>
         <div className={style.utils_service}>
-          <a href="#" className={style.utils_service_link}>
+          <a href="/" className={style.utils_service_link}>
             인트라넷
           </a>
-          <a href="#" className={style.utils_service_link}>
+          <a href="/" className={style.utils_service_link}>
             HRMS
           </a>
-          <a href="#" className={style.utils_service_link}>
+          <a href="/" className={style.utils_service_link}>
             NAS
           </a>
         </div>
