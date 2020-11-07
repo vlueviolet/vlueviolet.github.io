@@ -1,4 +1,5 @@
 const path = require('path');
+const paths = require('../config/paths');
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
@@ -14,10 +15,12 @@ module.exports = {
     // You can change the configuration based on that.
     // 'PRODUCTION' is used when building the static version of storybook.
 
+    config.entry.push(`${paths.appSrc}/asset/scss/global.scss`);
+
     // Make whatever fine-grained changes you need
     config.resolve.modules = [
       ...(config.resolve.modules || []),
-      path.resolve(__dirname, '../src'),
+      path.resolve(__dirname, `${paths.appSrc}`),
     ];
 
     // config.resolve.alias = {
@@ -41,20 +44,11 @@ module.exports = {
             sourceMap: true,
           },
         },
-        {
-          loader: 'sass-loader',
-          options: {
-            additionalData: "@import 'global.scss';",
-            sourceMap: true,
-            sassOptions: {
-              includePaths: ['./src/asset/scss'],
-            },
-          },
-        },
+        'sass-loader',
         {
           loader: 'sass-resources-loader',
           options: {
-            resources: `./src/asset/scss/helper/**/*.scss`,
+            resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`,
           },
         },
       ],
@@ -75,20 +69,11 @@ module.exports = {
             sourceMap: true,
           },
         },
-        {
-          loader: 'sass-loader',
-          options: {
-            additionalData: "@import 'global.scss';",
-            sourceMap: true,
-            sassOptions: {
-              includePaths: ['./src/asset/scss'],
-            },
-          },
-        },
+        'sass-loader',
         {
           loader: 'sass-resources-loader',
           options: {
-            resources: `./src/asset/scss/helper/**/*.scss`,
+            resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`,
           },
         },
       ],

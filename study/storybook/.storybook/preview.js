@@ -1,6 +1,8 @@
 import React from 'react';
 import { addParameters } from '@storybook/react';
 
+// import '../src/asset/scss/global.scss';
+
 addParameters({
   options: {
     storySort: (a, b) =>
