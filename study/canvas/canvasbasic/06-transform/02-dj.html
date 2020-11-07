@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Canvas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .canvas {
+      background: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Transform</h1>
+  <canvas class="canvas" width="500" height="500"></canvas>
+
+  <script>
+    const canvas = document.querySelector('.canvas');
+    const context = canvas.getContext('2d');
+    let scaleValue = 1;
+    let rotationValue = 0;
+
+    const toRadian = (d) => {
+      return d * Math.PI / 180;
+    };
+
+    const draw = () => {
+      // 이전에 그린 사각형 지우기 (canvas 범위 전체)
+      // save, restore가 없다면, (0, 0)은 (350, 350)부터 캔버스 나머지 영역까지만 clearRect하게 될 것이다.
+      // context.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 현재 상태 저장
+      context.save();
+
+      // context.setTransform(1, 0, 0, 1, 0, 0);
+      // context.resetTransform();
+
+      // 기준점이 (0, 0) → (350, 350) 위치로 이동됨
+      context.translate(350, 350);
+
+      // 크기 지정
+      context.scale(scaleValue, scaleValue);
+
+      // 각도 변경
+      context.rotate(toRadian(rotationValue));
+      
+      // stroke 사각형 그리기
+      context.strokeRect(-50, -50, 100, 100);
+      // context.setTransform(1, 0, 0, 1, 0, 0);
+      
+      // 최근에 저장한 canvas 상태 복원, clearRect를 복원하기 위함이다.
+      context.restore();
+      context.fillRect(10, 10, 30, 30);
+      
+      // 크기 증가
+      scaleValue += 0.05;
+      rotationValue += 1;
+      
+      
+      requestAnimationFrame(draw);
+    };
+
+    draw();
+  </script>
+</body>
+
+</html>

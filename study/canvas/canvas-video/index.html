@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-GB" itemscope="" itemtype="https://schema.org/WebPage">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta http-equiv="content-Security-Policy" content="upgrade-insecure-requests">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Samsung</title>
+  <link rel="stylesheet" type="text/css" href="http://cdn.samsung.com/etc/designs/smg/global/templates/page.css">
+  <link rel="stylesheet" type="text/css" href="http://cdn.samsung.com/etc/designs/smg/global/templates/page-home.css">
+  <!-- <link rel="stylesheet" type="text/css" href="http://cdn.samsung.com/etc/designs/smg/{Country Code}/css/{Country Code}.css"> -->
+</head>
+
+<body>
+  <div id="wrap">
+    <header id="header" role="banner">@header</header>
+    <div id="content" role="main">
+      <div class="par parsys">
+
+        <!-- Staic Component Area ===================================== -->
+        <div class="cm-g-static-content section">
+          <style scoped="scoped">
+            body {
+              background: #fff000;
+            }
+
+            .bland-test__video {
+              width: 200px;
+              height: 200px;
+              overflow: hidden;
+              border: 2px solid #0000ff;
+            }
+
+            .bland-test__video video {
+              width: 100%;
+              height: 100%;
+            }
+
+            .bland-test__container {
+              position: fixed;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              top: 0;
+              z-index: 999999;
+              box-sizing: border-box;
+            }
+            .bland-test__container:before {
+              position: absolute;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              z-index: inherit;
+              border: 2px solid red;
+              content: '';
+            }
+
+            .bland-test__container canvas {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: auto;
+            }
+
+            .bland-test__container .gra {
+              top: auto;
+              bottom: 0;
+            }
+          </style>
+          <!-- @html -->
+          <div class="bland-test__video">
+            <video id="testVideo" autoplay playsinline muted oncontextmenu="return false;" loop>
+              <!-- <source src="https://images.samsung.com/is/content/samsung/p5/sec/home/2020/p6/kv/0428/0428_BESPOKE_video_PC_1920_810.mp4" type="video/mp4"> -->
+              <source src="./video/0428_BESPOKE_video_PC_1920_810.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="bland-test__container">
+            <canvas id="testCanvas"></canvas>
+            <canvas id="testCanvasGra" class="gra"></canvas>
+          </div>
+
+          <script>
+            ;
+            (function (win, doc, callback) {
+              'use strict';
+              callback = callback || function () {};
+
+              function detach() {
+                if (doc.addEventListener) {
+                  doc.removeEventListener('DOMContentLoaded', completed);
+                } else {
+                  doc.detachEvent('onreadystatechange', completed);
+                }
+              }
+
+              function completed() {
+                if (doc.addEventListener || event.type === 'load' || doc.readyState === 'complete') {
+                  detach();
+                  callback(window, window.jQuery);
+                }
+              }
+
+              function init() {
+                if (doc.addEventListener) {
+                  doc.addEventListener('DOMContentLoaded', completed);
+                } else {
+                  doc.attachEvent('onreadystatechange', completed);
+                }
+              }
+              init();
+            })(window, document, function (win, $) {
+
+              var video = document.getElementById('testVideo');
+              var canvas = document.getElementById("testCanvas");
+              var context = canvas.getContext("2d");
+              var canvasGra = document.getElementById("testCanvasGra");
+              var contextGra = canvasGra.getContext("2d");
+
+              var vWidth, vHeight;  // video 너비, 높이
+              var grayY;        // gradient 영역
+              var isStarted = false;  // FIXME: 이 변수를 사용하지 않는 방법 고민하기
+
+              
+
+              function setOpts() {
+                vWidth = video.videoWidth || 1920;
+                vHeight = video.videoHeight || 810;
+                
+                canvas.width = win.innerWidth;
+                canvas.height = Math.ceil(vHeight/vWidth * win.innerWidth);
+                
+                grayY = win.innerHeight - canvas.height;
+                
+                canvasGra.width = win.innerWidth;
+                canvasGra.height = grayY;
+              };
+
+              function animate(time) {
+                context.drawImage(video, 0, 0, vWidth, vHeight, 0, 0, canvas.width, canvas.height);
+
+                var frame = context.getImageData(0, 0, canvas.width, canvas.height);
+                var frameLength = frame.data.length / 4;
+
+                for (var i = 0; i < frameLength; i++) {
+                  var r = frame.data[i * 4 + 0];
+                  var g = frame.data[i * 4 + 1];
+                  var b = frame.data[i * 4 + 2];
+                  if (g < 50 && r < 50 && b < 50) {
+                    frame.data[i * 4 + 3] = 50;
+                  }
+                }
+
+                context.putImageData(frame, 0, 0);
+
+                // 이전 rect 지우기
+                contextGra.clearRect(0, 0, canvasGra.width, canvasGra.height);
+                // 배치 순서에 따라 그라데이션 방향이 바뀜
+                var gradient = contextGra.createLinearGradient(canvasGra.width, 0, canvasGra.width, canvasGra.height);
+                
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                contextGra.fillStyle = gradient;
+                contextGra.fillRect(0, 0, canvasGra.width, canvasGra.height);
+
+                requestAnimationFrame(animate);
+              }
+
+
+              // FIXME: canplaythrough 반복실행 안되게 하는 방법은?
+              video.addEventListener('canplaythrough', function() {
+                if(isStarted) return;
+                setOpts();
+                animate();
+                isStarted = true;
+              });
+              win.addEventListener('resize', function() {
+                setOpts();
+              });
+            });
+          </script>
+        </div>
+        <!-- //Staic Component Area ===================================== -->
+
+      </div>
+    </div>
+    <footer id="footer" role="contentinfo">@footer</footer>
+  </div>
+  <script type="text/javascript" src="http://cdn.samsung.com/etc/designs/smg/global/templates/page.js"></script>
+  <!-- <script type="text/javascript" src="http://cdn.samsung.com/etc/designs/smg/global/templates/page-video.js"></script> -->
+  <!-- <script type="text/javascript" src="./js/page-video_for_localtest.js"></script> -->
+  <script type="text/javascript" src="http://cdn.samsung.com/etc/designs/smg/global/templates/page-home.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+body {
+  background-color: orange;
+}
+section {
+  padding: 20px 0;
+  text-align: center;
+}
+
+h1 {
+  padding: 10px 0;
+  background-color: #1a1a1a;
+  font-size: 2rem;
+  color: #fff;
+}
+
+div + div {
+  padding-top: 20px;
+}
+canvas,
+video {
+  border: 1px solid #1a1a1a;
+  box-sizing: border-box;
+}
+
+video {
+}

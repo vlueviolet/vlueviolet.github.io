@@ -1,0 +1,16 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import Header from './Header';
+
+<Meta title="Component/Header" component={Header} />
+
+export const Template = (args) => <Header {...args} />;
+
+<Canvas>
+  <Story name="Basic">
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+# 안녕하세요
+
+<ArgsTable of={Header} />

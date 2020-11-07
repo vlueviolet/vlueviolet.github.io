@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camvas Transition</title>
+  <style>
+    .canvas {
+      background: eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>Transform</h1>
+  <canvas class="canvas" width="500" height="500"></canvas>
+
+  <script>
+    const canvas = document.querySelector('.canvas');
+    const context = canvas.getContext('2d');
+    
+    context.fillRect(100, 100, 200, 200);
+    context.fillStyle = 'orange';
+    context.fillRect(150, 150, 200, 200);
+
+    /** save()
+     * canvas의 모든 상태 저장
+     */
+    context.save();
+
+
+    // blue
+    context.fillStyle='blue';
+    context.beginPath();
+    context.arc(300, 300, 50, 0, Math.PI*2, false);
+    context.fill();
+    
+    /** restore()
+     * 가장 최근에 save한 canvas 상태 복원
+     */
+    context.restore();
+    
+    context.beginPath();
+    context.arc(300, 300, 20, 0, Math.PI*2, false);
+    context.fill();
+    
+    
+  </script>
+</body>
+</html>

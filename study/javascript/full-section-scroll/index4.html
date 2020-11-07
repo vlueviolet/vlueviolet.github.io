@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // similar to _.debounce, but was having issues with it, so I made this.
+    function rateLimit(func, time) {
+      var callback = func,
+        waiting = false,
+        context = this;
+      var rtn = function () {
+        if (waiting) return;
+        waiting = true;
+        var args = arguments;
+        setTimeout(function () {
+          waiting = false;
+          callback.apply(context, args);
+        }, time);
+      };
+      return rtn;
+    }
+
+    function onWheel(e) {
+      // Add your code here
+      console.log('wheel');
+    }
+
+    // will only fire a maximum of 10 times a second
+    var debouncedOnWheel = rateLimit(onWheel, 100);
+    window.addEventListener("wheel", debouncedOnWheel);
+  </script>
+</body>
+
+</html>

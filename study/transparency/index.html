@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>HTML5 Video with alpha transparency</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <style>
+    .hero-unit {
+      background-color: rgba(0, 0, 0, 0);
+      display: none;
+    }
+    </style>
+  <link href="./css/style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="span10">
+      <h2>How to use transparency info from a video on a website</h2>
+      <div class="button_bar">
+        <a href="#" id="animation_off" class="tips btn btn-danger btn-large" rel="popover"
+          data-content="This will turn off the canvas. Use this if performance on your site suffers">Canvas
+          hide/show</a>
+        <a href="#" id="animation" class="btn btn-primary btn-large"
+          data-content="Click here to see the actual video being processed by the animation. Notice how it is actually one video stacked.">animation</a>
+        <a href="#" id="text_btn" class="btn btn-primary btn-large"
+          data-content="Click this to see how text placed with different Z-indices run in front and behind the ball animation.">text</a>
+        <a href="#" id="pattern" class="btn btn-primary btn-large"
+          data-content="Click here to see how the background can dynamically be changed by adding and removing classes.">background
+          pattern</a>
+        <a href="#" id="directions" class="btn btn-primary btn-large"
+          data-content="Click here to read directions on how to create this transparency effect">Directions</a>
+
+      </div>
+      <div class="" id="canvas_output">
+        <video id="video" style="display:none" autoplay>
+          <source src="video/compressed_stacked.mp4" type='video/mp4; codecs="avc1.42E01E"' />
+          <source src="video/compressed_stacked.webm" type='video/webm; codecs="vorbis,vp8"' />
+          <source src="compressed_stacked.theora.ogv" type='video/ogg; codecs="theora, vorbis"' />
+        </video>
+        <canvas width="640" height="720" id="buffer"></canvas>
+        <canvas width="640" height="360" id="output"></canvas>
+        <h1 class="text under push">TRIAL TEXT UNDER</h1>
+        <h1 class="text over push_2">TRIAL TEXT OVER</h1>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="./js/script.js"></script>
+</body>
+</html>

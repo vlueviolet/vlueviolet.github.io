@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!-- saved from url=(0072)https://code.almeros.com/code-examples/water-effect-canvas/#.UXqYkhzFUsw -->
+<html xmlns:fb="http://www.facebook.com/2008/fbml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="robots" content="index,follow">
+
+		<link rel="icon" href="https://code.almeros.com/wp-content/uploads/2019/01/cropped-chips-1-32x32.jpg" sizes="32x32">
+		<link rel="icon" href="https://code.almeros.com/wp-content/uploads/2019/01/cropped-chips-1-192x192.jpg" sizes="192x192">
+		<link rel="apple-touch-icon-precomposed" href="https://code.almeros.com/wp-content/uploads/2019/01/cropped-chips-1-180x180.jpg">
+		<meta name="msapplication-TileImage" content="https://code.almeros.com/wp-content/uploads/2019/01/cropped-chips-1-270x270.jpg">
+
+		<title>Water canvas by Almer Thie</title>
+
+		<style>
+
+			html {
+	  		overflow-x: hidden;
+			}
+			body {
+			  position: relative;
+				overflow-x: hidden;
+
+				background-color: #000;
+				color: #fff;
+				padding: 1em;
+				font-family: verdana;
+				font-size: 1em;
+			}
+
+			a {
+				color: #9adffd;
+			}
+
+			.holder {
+				max-width: 450px;
+			}
+
+			#waterHolder {
+				margin-bottom: 40px;
+			}
+
+			.text {
+				font-family: verdana;
+				font-size: 1em;
+			}
+
+			#imageChooser {
+				width:100%;
+			}
+
+			#width, #height {
+				width: 3em;
+			}
+
+			.buttons {
+				margin-left: 1em;
+			}
+
+			.slider {
+				margin:.6em 0 1em 0;
+			}
+
+			input[type='text']{
+				font-size: 1em;
+			}
+		</style>
+
+		<script type="text/javascript" async="" src="./Water canvas by Almer Thie_files/ga.js"></script><script src="./Water canvas by Almer Thie_files/jquery.min.js"></script>
+		<script src="./Water canvas by Almer Thie_files/jquery-ui.min.js"></script>
+		<link href="./Water canvas by Almer Thie_files/jquery-ui.css" rel="stylesheet" type="text/css">
+
+		<script src="./Water canvas by Almer Thie_files/watercanvas.js"></script>
+
+		<script>
+			var pixel 		= create2DArray(createRadialCanvas(2,2));
+			var raindrop 	= create2DArray(createRadialCanvas(4,4));
+			var finger 		= create2DArray(createRadialCanvas(14,14));
+
+			var width = 400;
+			var height = 300;
+
+			function init(){
+				// Init the basic components
+				var waterModel = new WaterModel(width, height, {
+												resolution:2.0,
+												interpolate:false,
+												damping:0.985,
+												clipping:5,
+												evolveThreshold:0.05,
+												maxFps:50,
+												showStats:true
+											});
+				var waterCanvas = new WaterCanvas(width, height, "waterHolder", waterModel, {
+												backgroundImageUrl:null,
+												lightRefraction:9.0,
+												lightReflection:0.1,
+												showStats:true
+											});
+
+
+				// Init some utils
+				var rainMaker = new RainMaker(width, height, waterModel, raindrop);
+				rainMaker.setRaindropsPerSecond(1);
+				enableMouseInteraction(waterModel, "waterHolder");
+
+
+				// Sliders and knobs with JQueryUI
+				$("#imageChooser").change(function () {
+					$("#imageChooser option:selected").each(function () {
+						waterCanvas.setBackground($(this).val());
+					});
+				});
+
+				$("#width").val(width);
+				$("#height").val(height);
+
+				$("#setImage").button();
+				$("#setImage").click(function() {
+					width = $("#width").val();
+					height = $("#height").val();
+					waterCanvas.setSize(
+						width , height);
+					waterModel.resetSizeAndResolution(
+						width , height,
+						$("#resolution").slider("option", "value"));
+				});
+
+
+				$("#rainSpeedLabel").html(1);
+				$("#rainSpeed").slider({ min:0, max:50, step: 0.1, value:1 });
+				$("#rainSpeed").bind("slide", function(event, ui) {
+					$("#rainSpeedLabel").html(ui.value);
+					rainMaker.setRaindropsPerSecond(ui.value);
+				});
+
+				$("#rainPressureLabel").html("1.0 to 3.0");
+				$("#rainPressure").slider({range: true, min:0, max:10, step: 0.1, values:[1.0, 3.0] });
+				$("#rainPressure").bind("slide", function(event, ui) {
+					$("#rainPressureLabel").html(ui.values[0] + " to " + ui.values[1]);
+					rainMaker.setRainMinPressure(ui.values[0]);
+					rainMaker.setRainMaxPressure(ui.values[1]);
+				});
+
+				$("#fpsWaterLabel").html(50);
+				$("#fpsWater").slider({ min:0, max:70, step: 0.1, value:50 });
+				$("#fpsWater").bind("slide", function(event, ui) {
+					$("#fpsWaterLabel").html(ui.value);
+					waterModel.setMaxFps(ui.value);
+				});
+
+				$("#refractionLabel").html(9);
+				$("#refraction").slider({ min:0, max:60, step: 0.1, value:9 });
+				$("#refraction").bind("slide", function(event, ui) {
+					$("#refractionLabel").html(ui.value);
+					waterCanvas.setLightRefraction(ui.value);
+				});
+
+				$("#reflectionLabel").html(0.1);
+				$("#reflection").slider({ min:0, max:1, step: 0.01, value:0.1 });
+				$("#reflection").bind("slide", function(event, ui) {
+					$("#reflectionLabel").html(ui.value);
+					waterCanvas.setLightReflection(ui.value);
+				});
+
+				$("#dampingLabel").html(0.985);
+				$("#damping").slider({ min:0.8, max:1.0, step: 0.001, value:0.985});
+				$("#damping").bind("slide", function(event, ui) {
+					$("#dampingLabel").html(ui.value);
+					waterModel.setDamping(ui.value);
+				});
+
+
+				$("#resolutionLabel").html(3);
+				$("#resolution").slider({ min:1, max:10, step: 0.1, value:3});
+				$("#resolution").bind("slide", function(event, ui) {
+					$("#resolutionLabel").html(ui.value);
+					waterModel.resetSizeAndResolution(width, height, ui.value);
+				});
+
+				$("#interpolate").button();
+				$("#interpolate").click(function(){
+					waterModel.setInterpolation(this.checked);
+				});
+			}
+
+		</script>
+
+	</head>
+	<body onload="init();">
+		<div class="holder">
+			<div class="text">
+				For more information about this Water Canvas and a tutorial on how to put it on your own website, see my blog post
+				<a href="https://code.almeros.com/water-ripple-canvas-and-javascript">
+				Water ripple FX with Canvas and Javascript</a> on code.almeros.com.
+			</div>
+			<br><br>
+
+			<div id="waterHolder"><canvas width="400" height="300"></canvas></div>
+
+			<div id="buttons">
+				<select id="imageChooser" class="text ui-widget-content ui-corner-all">
+				  <option value="">Choose image...</option>
+				  <option value="images/art-tiles.jpg">art-tiles.jpg</option>
+					<option value="images/autumn-leafs.jpg">autumn-leafs.jpg</option>
+					<option value="images/stones.jpg">stones.jpg</option>
+					<option value="images/bathroom-floor.jpg">bathroom-floor.jpg</option>
+					<option value="images/blue-tiles.jpg">blue-tiles.jpg</option>
+					<option value="images/circular-metal.jpg">circular-metal.jpg</option>
+					<option value="images/fish.jpg">fish.jpg</option>
+					<option value="images/floor.jpg">floor.jpg</option>
+					<option value="images/hardwood.jpg">hardwood.jpg</option>
+					<option value="images/koi-fish.jpg">koi-fish.jpg</option>
+					<option value="images/leafs.jpg">leafs.jpg</option>
+					<option value="images/mosaic.jpg">mosaic.jpg</option>
+					<option value="images/shape-tiles.jpg">shape-tiles.jpg</option>
+					<option value="images/color-stones.jpg">color-stones.jpg</option>
+					<option value="images/tiles.jpg">tiles.jpg</option>
+				</select>
+				<br><br>
+
+				Width: <input type="text" id="width" class="text ui-widget-content ui-corner-all"> px,
+				Height: <input type="text" id="height" class="text ui-widget-content ui-corner-all"> px
+				<button id="setImage" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Set size</span></button>
+				<br><br>
+
+
+				Raindrops per second: <span id="rainSpeedLabel">1</span>
+				<div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="rainSpeed"><a href="https://code.almeros.com/code-examples/water-effect-canvas/#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 2%;"></a></div>
+
+				Raindrop pressure: <span id="rainPressureLabel">1.0 to 3.0</span>
+				<div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="rainPressure"><div class="ui-slider-range ui-widget-header" style="left: 10%; width: 20%;"></div><a href="https://code.almeros.com/code-examples/water-effect-canvas/#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 10%;"></a><a href="https://code.almeros.com/code-examples/water-effect-canvas/#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 30%;"></a></div>
+
+				Max. water renders per second (FPS Water): <span id="fpsWaterLabel">50</span>
+				<div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="fpsWater"><a href="https://code.almeros.com/code-examples/water-effect-canvas/#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 71.4286%;"></a></div>
+
+				Refraction of light in water: <span id="refractionLabel">9</span>
+				<div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="refraction"><a href="https://code.almeros.com/code-examples/water-effect-canvas/#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 15%;"></a></div>
+
+				Reflection of light on water ripples: <span id="reflectionLabel">0.1</span>
+				<div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="reflection"><a href="https://code.almeros.com/code-examples/water-effect-canvas/#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 10%;"></a></div>
+
+				Damping of waterwaves: <span id="dampingLabel">0.985</span>
+				<div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="damping"><a href="https://code.almeros.com/code-examples/water-effect-canvas/#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 92.5%;"></a></div>
+
+				Resolution of watermodel (height above water): <span id="resolutionLabel">3</span>
+				<div class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="resolution"><a href="https://code.almeros.com/code-examples/water-effect-canvas/#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 22.2222%;"></a></div>
+				<input type="checkbox" id="interpolate" class="ui-helper-hidden-accessible"><label for="interpolate" aria-pressed="false" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Interpolate</span></label>
+			</div>
+		</div>
+
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-792529-7']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+
+	
+
+<div id="viewPortSize" class="bottom_right" style="background-color: rgb(0, 0, 0); color: rgb(192, 192, 192); font-size: 12px; display: block; opacity: 0.0120416;">Inner: 798 x 759<br>Outer: 1440 x 900</div></body></html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Canvas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    canvas {
+      background: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Interaction</h1>
+  <canvas class="canvas" width="600" height="400"></canvas>
+
+  <script src="./Box.js"></script>
+  <script src="./Panel.js"></script>
+  <script>
+    const canvas = document.querySelector('.canvas');
+    const context = canvas.getContext('2d');
+
+    const boxes = []; // 생성되는 box들의 정보를 담는 배열
+    const mousePos = {
+      x: 0,
+      y: 0
+    }; // 마우스 클릭시 x, y 정보
+    let panel; // panel을 담는 변수
+    let selectedBox; // 클릭된 box의 정보
+
+    let oX; // panel 위치를 잡기 위한 canvas.width를 담기위한 변수
+    let oY; // panel 위치를 잡기 위한 canvas.height 담기위한 변수
+    let step; // 애플리케이션 상태 정보를 담기 위한 변수(1~4)
+
+    context.font = 'bold 30px sans-serif'; // set text font
+
+    // 각 box를 이동시키는 함수
+    const render = () => {
+      // 이전 rect 지우기
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      let box;
+
+      // frame 단위마다 box를 그리기만 함
+      for (let i = 0, max = boxes.length; i < max; i++) {
+        box = boxes[i];
+        box.draw();
+      }
+
+      switch (step) {
+        case 1:
+          // 1 상태일때 box 이동시키기
+          for (let i = 0, max = boxes.length; i < max; i++) {
+            box = boxes[i];
+
+            box.x += box.speed; // x좌표를 speed만큼 증가
+            if (box.x > canvas.width) box.x = -box.width; // canvas.width를 벗어나면 초기화
+          }
+          break;
+        case 2:
+          // box 이동이 없고, panel만 노출, 마치 정지된 것처럼 보임
+
+          // panel.scale = panel.scale + (목표크기 - 현재크기) * 0.1
+          panel.scale = panel.scale + (1 - panel.scale) * 0.1;
+          panel.draw();
+          if (panel.scale >= 0.999) { // 1에서 빼기때문에 1이 될수 없음
+            panel.scale = 1;
+            step = 3;
+          }
+          break;
+        case 3:
+          panel.draw();
+          panel.showContent();
+          break;
+      }
+
+
+      requestAnimationFrame(render); // 1/60 프레임마다 render함수 재실행
+    };
+
+    let tempX, tempY, tempSpeed;
+
+    const init = () => {
+      step = 1;
+
+      // panel 위치 잡기위한 canvas 위치 잡기
+      oX = canvas.width / 2;
+      oY = canvas.height / 2;
+
+      // x, y, speed를 random하게 생성
+      for (let i = 0, max = 10; i < max; i++) {
+        tempX = Math.random() * canvas.width * 0.8; // canvas 너비의 80% 이내까지 찍히도록
+        tempY = Math.random() * canvas.height * 0.8;
+        tempSpeed = Math.random() * 4 + 1; // 1~5ㄴ
+        boxes.push(new Box(i, tempX, tempY, tempSpeed));
+      }
+
+      panel = new Panel();
+      render();
+    };
+
+    // 클릭시, 마우스 좌표에 해당하는 box 찾기
+    const clickHandler = (e) => {
+      mousePos.x = e.layerX;
+      mousePos.y = e.layerY;
+
+      for (let i = 0, max = 10; i < max; i++) {
+        box = boxes[i];
+        if (
+          mousePos.x > box.x &&
+          mousePos.x < box.x + box.width &&
+          mousePos.y > box.y &&
+          mousePos.y < box.y + box.height
+        ) {
+          selectedBox = box;
+        }
+      }
+      if (step === 1 && selectedBox) {
+        step = 2;
+      } else if (step === 3) {
+        step = 1;
+        panel.scale = 0;
+        selectedBox = null; // click 이외의 영역에 이전의 데이터가 남아있어 계속 노출되는 것 처리
+      }
+    };
+
+    canvas.addEventListener('click', clickHandler);
+    init();
+  </script>
+</body>
+
+</html>
