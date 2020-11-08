@@ -10,7 +10,7 @@
   "author": "vlueviolet",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19"
   },
   "devDependencies": {
     "live-server": "^1.2.1"
