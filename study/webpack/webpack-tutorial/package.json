@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "css-loader": "^3.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "style-loader": "^1.0.0"
   },
   "devDependencies": {
