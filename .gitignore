@@ -7,3 +7,5 @@ vendor
 .bundle
 node_modules
 *.log
+study/codelab/.vscode
+
