@@ -1,5 +1,12 @@
-import { Meta, Story, Canvas, ArgsTable, ColorPalette, ColorItem } from '@storybook/addon-docs/blocks';
-import { IconGallery } from "storybook-icon-gallery";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ArgsTable,
+  ColorPalette,
+  ColorItem,
+} from '@storybook/addon-docs/blocks';
+import { IconGallery } from 'storybook-icon-gallery';
 import IconSvgCloud from 'asset/images/svg/icon-cloud.svg';
 import IconSvgForm from 'asset/images/svg/icon-form.svg';
 import IconSvgHome from 'asset/images/svg/icon-home.svg';
@@ -11,16 +18,22 @@ import IconPngLogo from 'asset/images/png/logo.png';
 
 import Icon from './Icon';
 
-export const IconArgsType = { 
+export const IconArgsType = {
   IconSvgElement: {
-    table: { disable: true }
+    table: { disable: true },
   },
-  color: { control: { type: 'color' } }
+  color: { control: { type: 'color' } },
 };
 
-export function renderItem(name, 
-  Icon1, Size1=25, Color1="#000",
-  Icon2, Size2=25, Color2="#000") {
+export function renderItem(
+  name,
+  Icon1,
+  Size1 = 25,
+  Color1 = '#000',
+  Icon2,
+  Size2 = 25,
+  Color2 = '#000'
+) {
   return (
     <IconGallery.Variants name={name}>
       <IconGallery.Variant size={Size1}>
@@ -36,12 +49,13 @@ export function renderItem(name,
 <Meta title="Icons/svg" component={Icon} argTypes={IconArgsType} />
 
 # SVG Viewer
+
 > svg 파일을 웹에서 볼 수 있고, `width`, `height`, `color`를 테스트 할 수 있습니다.
 
-<br /><br />
+<br />
+<br />
 
 export const Template = (args) => <Icon {...args} />;
-
 
 ## 플러그인을 이용한 SVG Viewer
 
@@ -50,13 +64,29 @@ export const Template = (args) => <Icon {...args} />;
 <Canvas>
   <Story name="all">
     <IconGallery>
-      {renderItem("icon-cloud.svg", IconSvgCloud, 25, '#000', IconSvgCloud, 25, '#79b7ff')}
-      {renderItem("icon-form.svg", IconSvgForm, 25, '#000', IconSvgForm, 25, '#ff7979')}
-      {renderItem("icon-home.svg", IconSvgHome, 25, '#000')}
-      {renderItem("icon-menu.svg", IconSvgMenu, 25, '#000')}
-      {renderItem("icon-home.svg", IconSvgMail, 25, '#000')}
-      {renderItem("icon-message.svg", IconSvgMessage, 25, '#000', )}
-      {renderItem("icon-office.svg", IconSvgOffice, 25, '#000')}
+      {renderItem(
+        'icon-cloud.svg',
+        IconSvgCloud,
+        25,
+        '#000',
+        IconSvgCloud,
+        25,
+        '#79b7ff'
+      )}
+      {renderItem(
+        'icon-form.svg',
+        IconSvgForm,
+        25,
+        '#000',
+        IconSvgForm,
+        25,
+        '#ff7979'
+      )}
+      {renderItem('icon-home.svg', IconSvgHome, 25, '#000')}
+      {renderItem('icon-menu.svg', IconSvgMenu, 25, '#000')}
+      {renderItem('icon-home.svg', IconSvgMail, 25, '#000')}
+      {renderItem('icon-message.svg', IconSvgMessage, 25, '#000')}
+      {renderItem('icon-office.svg', IconSvgOffice, 25, '#000')}
     </IconGallery>
   </Story>
 </Canvas>
@@ -64,28 +94,29 @@ export const Template = (args) => <Icon {...args} />;
 ## Icon 컴포넌트를 이용한 SVG Viewer
 
 <Canvas>
-  <Story name="icon-cloud" args={{IconSvgElement: IconSvgHome}}>
+  <Story name="icon-cloud" args={{ IconSvgElement: IconSvgHome }}>
     {Template.bind({})}
   </Story>
-  <Story name="icon-form" args={{IconSvgElement: IconSvgForm}}>
+  <Story name="icon-form" args={{ IconSvgElement: IconSvgForm }}>
     {Template.bind({})}
   </Story>
-  <Story name="icon-home" args={{IconSvgElement: IconSvgHome}}>
+  <Story name="icon-home" args={{ IconSvgElement: IconSvgHome }}>
     {Template.bind({})}
   </Story>
-  <Story name="icon-mail" args={{IconSvgElement: IconSvgMail}}>
+  <Story name="icon-mail" args={{ IconSvgElement: IconSvgMail }}>
     {Template.bind({})}
   </Story>
-  <Story name="icon-menu" args={{IconSvgElement: IconSvgMenu}}>
+  <Story name="icon-menu" args={{ IconSvgElement: IconSvgMenu }}>
     {Template.bind({})}
   </Story>
-  <Story name="icon-message" args={{IconSvgElement: IconSvgMessage}}>
+  <Story name="icon-message" args={{ IconSvgElement: IconSvgMessage }}>
     {Template.bind({})}
   </Story>
-  <Story name="icon-office" args={{IconSvgElement: IconSvgOffice}}>
+  <Story name="icon-office" args={{ IconSvgElement: IconSvgOffice }}>
     {Template.bind({})}
   </Story>
 </Canvas>
 
 ## Props Table
+
 <ArgsTable of={Icon} />

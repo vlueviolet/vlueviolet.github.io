@@ -3,12 +3,24 @@ import Header from './Header';
 
 <Meta title="Component/Header" component={Header} />
 
-export const Template = (args) => <Header {...args} />;
+export const getCaptionForLocale = (locale) => {
+  switch (locale) {
+    case 'en':
+      return 'Hivelab';
+    case 'fr':
+      return 'Bonjour';
+    case 'zh':
+      return '你好';
+    case 'kr':
+      return '하이브랩';
+  }
+};
+export const Template = (args, { globals: { locale } }) => (
+  <Header {...{ ...args, label: getCaptionForLocale(locale) }} />
+);
 
 <Canvas>
-  <Story name="Basic">
-    {Template.bind({})}
-  </Story>
+  <Story name="Basic">{Template.bind({})}</Story>
 </Canvas>
 
 # 안녕하세요
