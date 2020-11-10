@@ -1,5 +1,6 @@
 import React from 'react';
 import { addParameters } from '@storybook/react';
+import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 // import '../src/asset/scss/global.scss';
 
@@ -15,6 +16,30 @@ addParameters({
   docs: { page: null },
 });
 
+const customViewports = {
+  iPhone11Pro: {
+    name: 'iPhoneX',
+    styles: {
+      width: '375px',
+      height: '812px',
+    },
+  },
+  kindleFire2: {
+    name: 'Kindle Fire 2',
+    styles: {
+      width: '600px',
+      height: '963px',
+    },
+  },
+  kindleFireHD: {
+    name: 'Kindle Fire HD',
+    styles: {
+      width: '533px',
+      height: '801px',
+    },
+  },
+};
+
 export const parameters = {
   a11y: {
     element: '#root',
@@ -25,6 +50,8 @@ export const parameters = {
   controls: {
     expanded: true,
   },
+  viewport: { viewports: customViewports },
+
   backgrounds: {
     default: 'light',
     values: [

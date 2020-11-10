@@ -1,0 +1,28 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import SayHello from './SayHello';
+
+<Meta title="Component/SayHello" component={SayHello} />
+
+export const getCaptionForLocale = (locale) => {
+  switch (locale) {
+    case 'en':
+      return 'Hello';
+    case 'fr':
+      return 'Bonjour';
+    case 'zh':
+      return '你好';
+    case 'kr':
+      return '안녕하세요';
+  }
+};
+export const Template = (args, { globals: { locale } }) => (
+  <SayHello {...{ ...args, label: getCaptionForLocale(locale) }} />
+);
+
+<Canvas>
+  <Story name="Basic">{Template.bind({})}</Story>
+</Canvas>
+
+# 안녕하세요
+
+<ArgsTable of={SayHello} />

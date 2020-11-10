@@ -13,12 +13,7 @@ import IconCalendar from 'asset/images/svg/icon-calendar.svg';
 import IconContact from 'asset/images/svg/icon-contact.svg';
 import IconSearch from 'asset/images/svg/icon-search.svg';
 
-export interface HeaderProps {
-  /** 사용자 이미지 경로 */
-  label?: string;
-}
-
-const Header = ({ label }: HeaderProps) => (
+const Header = () => (
   <header className={classnames(style.header, style['header-wrapper'])}>
     <div
       className={classnames(style.header_inner, style['header-wrapper__inner'])}
@@ -27,7 +22,6 @@ const Header = ({ label }: HeaderProps) => (
         <a href="/" className={style.header_logo_link}>
           <span className="blind">HIVELAB</span>
         </a>
-        {label}
       </h1>
       <button type="button" className={style.btn_menu} aria-label="menu">
         <IconMenu className={style.btn_menu_icon} />
