@@ -1,12 +1,23 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
 import Header from './Header';
 
-<Meta title="Component/Header" component={Header} />
+<Meta title='Component/Header' component={Header} />
 
 export const Template = (args) => <Header {...args} />;
 
 <Canvas>
-  <Story name="Basic">{Template.bind({})}</Story>
+  <Story
+    name='Basic'
+    parameters={{
+      assets: [
+        'path/to/your/asset.png',
+        'path/to/another/asset.png',
+        'path/to/yet/another/asset.png'
+      ]
+    }}
+  >
+    {Template.bind({})}
+  </Story>
 </Canvas>
 
 # 안녕하세요

@@ -11,9 +11,9 @@ addParameters({
         ? 0
         : a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
     showPanel: true,
-    panelPosition: 'bottom',
+    panelPosition: 'bottom'
   },
-  docs: { page: null },
+  docs: { page: null }
 });
 
 const customViewports = {
@@ -21,23 +21,23 @@ const customViewports = {
     name: 'iPhoneX',
     styles: {
       width: '375px',
-      height: '812px',
-    },
+      height: '812px'
+    }
   },
   kindleFire2: {
     name: 'Kindle Fire 2',
     styles: {
       width: '600px',
-      height: '963px',
-    },
+      height: '963px'
+    }
   },
   kindleFireHD: {
     name: 'Kindle Fire HD',
     styles: {
       width: '533px',
-      height: '801px',
-    },
-  },
+      height: '801px'
+    }
+  }
 };
 
 export const parameters = {
@@ -45,10 +45,10 @@ export const parameters = {
     element: '#root',
     config: {},
     options: {},
-    manual: true,
+    manual: true
   },
   controls: {
-    expanded: true,
+    expanded: true
   },
   viewport: { viewports: customViewports },
 
@@ -57,22 +57,22 @@ export const parameters = {
     values: [
       {
         name: 'light',
-        value: '#fff',
+        value: '#fff'
       },
       {
         name: 'dark',
-        value: 'rgba(0,0,0,0.8)',
+        value: 'rgba(0,0,0,0.8)'
       },
       {
         name: 'twitter',
-        value: '#00aced',
+        value: '#00aced'
       },
       {
         name: 'facebook',
-        value: '#3b5998',
-      },
-    ],
-  },
+        value: '#3b5998'
+      }
+    ]
+  }
 };
 // .storybook/preview.js
 
@@ -99,8 +99,8 @@ export const globalTypes = {
     toolbar: {
       icon: 'circlehollow',
       // array of plain string values or MenuItem shape (see below)
-      items: ['light', 'dark'],
-    },
+      items: ['light', 'dark']
+    }
   },
   locale: {
     name: 'Locale',
@@ -112,8 +112,8 @@ export const globalTypes = {
         { value: 'en', right: '🇺🇸', title: 'English' },
         { value: 'fr', right: '🇫🇷', title: 'Français' },
         { value: 'zh', right: '🇨🇳', title: '中文' },
-        { value: 'kr', right: '🇰🇷', title: '한국어' },
-      ],
-    },
-  },
+        { value: 'kr', right: '🇰🇷', title: '한국어' }
+      ]
+    }
+  }
 };

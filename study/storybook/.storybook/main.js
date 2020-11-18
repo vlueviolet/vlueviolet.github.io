@@ -9,6 +9,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
+    './design-addon/register.js'
   ],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -20,7 +21,7 @@ module.exports = {
     // Make whatever fine-grained changes you need
     config.resolve.modules = [
       ...(config.resolve.modules || []),
-      path.resolve(__dirname, `${paths.appSrc}`),
+      path.resolve(__dirname, `${paths.appSrc}`)
     ];
 
     // config.resolve.alias = {
@@ -33,50 +34,50 @@ module.exports = {
       exclude: sassModuleRegex,
       use: [
         {
-          loader: 'style-loader',
+          loader: 'style-loader'
         },
         {
           loader: 'css-loader',
           options: {
             modules: {
-              localIdentName: '[local]__[hash:base64:5]',
+              localIdentName: '[local]__[hash:base64:5]'
             },
-            sourceMap: true,
-          },
+            sourceMap: true
+          }
         },
         'sass-loader',
         {
           loader: 'sass-resources-loader',
           options: {
-            resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`,
-          },
-        },
-      ],
+            resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`
+          }
+        }
+      ]
     });
 
     config.module.rules.push({
       test: sassModuleRegex,
       use: [
         {
-          loader: 'style-loader',
+          loader: 'style-loader'
         },
         {
           loader: 'css-loader',
           options: {
             modules: {
-              localIdentName: '[local]__[hash:base64:5]',
+              localIdentName: '[local]__[hash:base64:5]'
             },
-            sourceMap: true,
-          },
+            sourceMap: true
+          }
         },
         'sass-loader',
         {
           loader: 'sass-resources-loader',
           options: {
-            resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`,
-          },
-        },
-      ],
+            resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`
+          }
+        }
+      ]
     });
 
     const fileLoaderRule = config.module.rules.find(
@@ -89,15 +90,38 @@ module.exports = {
       issuer: /\.(js|jsx|tsx|mdx)$/,
       include: /svg/,
       exclude: /node_modules/,
-      use: ['@svgr/webpack'],
+      use: ['@svgr/webpack']
     });
 
-    config.module.rules.push({
-      test: /\.svg$/,
+    // config.module.rules.push({
+    //   test: /\.svg$/,
+    //   issuer: /\.(scss)$/,
+    //   loader: 'url-loader'
+    // });
+
+    config.module.rules.unshift({
+      test: [/\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
       issuer: /\.(scss)$/,
-      loader: 'url-loader',
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+        esModule: false
+        //   publicPath: '/images',
+        //   outputPath: 'images'
+      }
     });
+
+    // config.module.rules.push({
+    //   test: /\.svg$/,
+    //   issuer: /\.(scss)$/,
+    //   loader: 'file-loader',
+    //   options: {
+    //     publicPath: '/img',
+    //     outputPath: 'img',
+    //     name: '[name].[ext]'
+    //   }
+    // });
 
     return config;
-  },
+  }
 };
