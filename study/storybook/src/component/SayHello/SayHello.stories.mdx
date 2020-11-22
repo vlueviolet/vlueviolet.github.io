@@ -1,4 +1,16 @@
-import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import {
+  Meta,
+  Story,
+  Canvas,
+  ArgsTable,
+  Title,
+  Subtitle,
+  Description,
+  Primary,
+  Stories,
+  IconGallery
+} from '@storybook/addon-docs/blocks';
+import { TabsState, Button, Badge, StorybookIcon } from '@storybook/components';
 import SayHello from './SayHello';
 
 <Meta title="Component/SayHello" component={SayHello} />
@@ -15,13 +27,39 @@ export const getCaptionForLocale = (locale) => {
       return '안녕하세요';
   }
 };
+
 export const Template = (args, { globals: { locale } }) => (
   <SayHello {...{ ...args, label: getCaptionForLocale(locale) }} />
 );
 
-<Canvas>
-  <Story name="Basic">{Template.bind({})}</Story>
-</Canvas>
+<Title />
+
+<Subtitle />
+
+<Description />
+
+<Primary />
+
+<Stories />
+
+<StorybookIcon width="100px" />
+
+<TooltipNote note="TooltipNote" />
+
+<Button primary disabled>
+  button primary
+</Button>
+
+<Badge status="neutral">bedge neutral</Badge>
+
+<TabsState initial="yarn">
+  <div id="yarn" title="Yarn">
+    <div>```sh yarn add -D storybook-addon-designs ```</div>
+  </div>
+  <div id="npm" title="NPM">
+    <div>```sh npm i -D storybook-addon-designs ```</div>
+  </div>
+</TabsState>
 
 # 안녕하세요
 
