@@ -1,0 +1,27 @@
+.card-list-container {
+  width: $full-width;
+  height: $full-height;
+  background-color: $bg-gray;
+
+  &.wrapper {
+    position: relative;
+    width: 900px;
+    height: $full-height;
+    margin: 0 auto;
+    padding: 0 20px;
+    background-color: $white;
+
+    .card {
+      display: inline-block;
+      width: 200px;
+      height: 300px;
+      margin-left: 20px;
+      border: 1px solid $bd-gray;
+      border-radius: 5px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}

@@ -305,6 +305,33 @@ touch .babelrc
 
 # styled-component
 
+```jsx
+import Document, { Head, Main, NextScript } from 'next/document';
+
+export default class MyDocument extends Document {
+  render() {
+    return (
+      <html lang="en">
+        <Head>
+          <meta charSet="utf-8" />
+          <title>React Practice</title>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+        </Head>
+        <body>
+          {/* 라우터에 해당하는 페이지가 렌더링 되는 부분 */}
+          <Main />
+          {/* next 관련된 자바스크립트 파일 */}
+          <NextScript />
+        </body>
+      </html>
+    );
+  }
+}
+```
+
 ## 문법 등 참고
 
 https://styled-components.com/docs/basics
@@ -315,3 +342,29 @@ https://styled-components.com/docs/basics
 - global로 미리 세팅하고 가져오는 방식
 - 컴포넌트가 복잡해질때 단점이 될 순 있다.
 - 그래서 scss로 하기도 한다.
+
+# scss 세팅
+
+```bash
+npm install --save @zeit/next-sass node-sass
+npm install --save @zeit/next-css
+```
+
+```js
+// next.config.js
+const withSass = require('@zeit/next-sass');
+const withCss = require('@zeit/next-css');
+
+module.exports = withCss(withSass());
+```
+
+```zsh
+cd styles
+mkdir scss # 개별 스타일
+touch styles.scss # 전체 스타일 집합
+```
+
+```js
+// pages/_app.js
+import import '../styles/styles.scss';
+```
