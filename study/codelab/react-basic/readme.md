@@ -166,3 +166,152 @@ component did update  # <-- name state가 바뀌면 뜸
   문제는 3)번과 겹치기 때문에 3)는 조건을 달아야 한다.
 - 3)은 특정 state 변화에 감지하지만, 초기에도 state가 변한다고 감지하게 때문에 2)와 중복되지 않도록 해야 한다.
 - did mount, did update를 많이 쓴다.
+
+## Next
+
+### Next를 사용하면 좋은 장점
+
+- ssr
+- seo
+- routing
+
+### 폴더 구조
+
+- components
+  - 컴포넌트 파일들
+- pages
+  - component root 개념의 페이지 단위의 파일들
+  - 기본 세팅
+    - \_app.js
+    - \_document.js
+    - \_error.js
+- public/
+  - asset(img, font), json 등 필요한 구성하면 됨
+  - 네이밍은 public으로 해야함, 예약어
+- styles : hot reload를 위해 public안에 넣지 않고 밖으로 뺌
+
+#### 그외
+
+- .babelrc
+- next.config.js
+
+# 서버 달기
+
+- express라는 nodejs에서 제공하는 서버를 next와 연결해서 사용하기 위함
+
+```bash
+touch server.js
+npm install --save express morgan cookie-parser express-session
+```
+
+```jsx
+const express = require('express');
+const next = require('next');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const expressSession = require('express-session');
+
+const dev = process.env.NODE_ENV !== 'production';
+
+const app = next({ dev }); // next안에서 가져옴
+const handle = app.getRequestHandler(); // next에서 불러옴
+
+app.prepare().then(() => {
+  const server = express(); // next 안에서 express를 불러옴
+
+  server.use(morgan('dev'));
+  server.use(express.json());
+  server.use(express.urlencoded({ extended: true }));
+  server.use(cookieParser('!ASD!@ASd!AVZXC!@!@#'));
+  server.use(
+    expressSession({
+      resave: false,
+      saveUninitialized: false,
+      secret: '!ASD!@ASd!AVZXC!@!@#',
+      cookit: {
+        httpOnly: true,
+        secure: false
+      }
+    })
+  );
+
+  // server.get('product/:id/:name/:price', (req, res) => {
+  //   const actualPage = 'product_detail';
+  //   const queryParams = {
+  //     id: req.params.id,
+  //     name: req.params.name,
+  //     price: req.params.price
+  //   };
+  //   return app.render(req, res, actualPage, queryParams);
+  // });
+
+  // next에서 구성한 page 단위 구성을 하기 위한 코드
+  server.get('*', (req, res) => {
+    return handle(req, res); // next의 handler 기준으로 맞춤
+  });
+
+  server.listen(3000, () => {
+    console.log('next + express running on port 3000');
+  });
+});
+```
+
+- ssr이 가능하며, routing을 통제하기 위함
+
+### 서버를 별도로 설치하는 이유
+
+- next에서 routing의 제한적인 부분을 해결하기 위함
+- 새로고침했을때 뒤에 붙는 문자열을 못 가져오는 경우가 있음
+- product/:id/:name/:price 이런 구조를 제공하지 않기때문에 서버를 제공해서 이런 구조를 사용하려는 것이 목적
+
+## nodemon
+
+package.json 명령어 바꾸기
+
+```json
+"scripts": {
+  "dev": "nodemon",
+  "start": "node server.js",
+  "build": "next build"
+},
+```
+
+## styled component 세팅
+
+```bash
+npm install --save babel-plugin-styled-components styled-components
+touch .babelrc
+```
+
+```json
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ]
+  ]
+}
+```
+
+참고 코드
+
+[https://medium.com/@qsx314/3-next-js-styled-components-36ef818438d9](https://medium.com/@qsx314/3-next-js-styled-components-36ef818438d9)
+
+# styled-component
+
+## 문법 등 참고
+
+https://styled-components.com/docs/basics
+
+## 한 파일에 코드가 길어지는 대응
+
+- 컴포넌트별로 잘게 쪼갠다.
+- global로 미리 세팅하고 가져오는 방식
+- 컴포넌트가 복잡해질때 단점이 될 순 있다.
+- 그래서 scss로 하기도 한다.
