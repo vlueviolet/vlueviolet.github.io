@@ -9,6 +9,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
+    'storybook-design-token',
     './design-addon/register.js'
   ],
   webpackFinal: async (config, { configType }) => {

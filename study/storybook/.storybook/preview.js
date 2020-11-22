@@ -2,7 +2,14 @@ import React from 'react';
 import { addParameters } from '@storybook/react';
 import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 
-// import '../src/asset/scss/global.scss';
+const svgIconsReq = require.context(
+  '!!raw-loader!../src/asset/images/svg',
+  true,
+  /.\.svg$/
+);
+const svgIconTokenFiles = svgIconsReq
+  .keys()
+  .map((filename) => ({ filename, content: svgIconsReq(filename).default }));
 
 addParameters({
   options: {
@@ -13,7 +20,13 @@ addParameters({
     showPanel: true,
     panelPosition: 'bottom'
   },
-  docs: { page: null }
+  docs: { page: null },
+  designToken: {
+    files: { svgIcons: svgIconTokenFiles },
+    options: {
+      hideMatchingHardCodedValues: false
+    }
+  }
 });
 
 const customViewports = {
