@@ -8,8 +8,6 @@ const svgIconsReq = require.context(
   /.\.svg$/
 );
 
-console.log('!!', svgIconsReq.keys()[0]);
-
 const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
   return {
     filename,
