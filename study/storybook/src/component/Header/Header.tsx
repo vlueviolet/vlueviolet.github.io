@@ -12,73 +12,103 @@ import IconOffice from 'asset/images/svg/icon-office.svg';
 import IconCalendar from 'asset/images/svg/icon-calendar.svg';
 import IconContact from 'asset/images/svg/icon-contact.svg';
 import IconSearch from 'asset/images/svg/icon-search.svg';
+import ReactDOM from 'react-dom';
+// import SvgIconSample from '../../../.storybook/preview';
+
+const svgIconsReq = require.context(
+  '!!raw-loader!../../asset/images',
+  true,
+  /.\.svg$/
+);
+
+const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
+  return {
+    filename,
+    content: svgIconsReq(filename).default
+  };
+});
+
+// const IconTest = React.createElement(
+//   React.Fragment,
+//   null,
+//   svgIconTokenFiles[0].content
+// );
 
 const Header = () => (
   <header className={classnames(style.header, style['header-wrapper'])}>
+    {svgIconTokenFiles.map((item: any, index: number) => {
+      return (
+        <>
+          <span className='name'>{item.filename.replace('./svg/', '')}</span>
+          <div dangerouslySetInnerHTML={{ __html: item.content }} />
+          <div className='tag-view'>{item.content}</div>
+        </>
+      );
+    })}
     <div
       className={classnames(style.header_inner, style['header-wrapper__inner'])}
     >
       <h1 className={style.header_logo}>
-        <a href="/" className={style.header_logo_link}>
-          <span className="blind">HIVELAB</span>
+        <a href='/' className={style.header_logo_link}>
+          <span className='blind'>HIVELAB</span>
         </a>
       </h1>
-      <button type="button" className={style.btn_menu} aria-label="menu">
+      <button type='button' className={style.btn_menu} aria-label='menu'>
         <IconMenu className={style.btn_menu_icon} />
       </button>
       <div className={style.gnb}>
         <button
-          type="button"
+          type='button'
           className={classnames(style.gnb_item, style.gnb_item_home)}
-          arai-label="home"
+          arai-label='home'
           aria-pressed={true}
         >
           <IconHome />
         </button>
         <button
-          type="button"
+          type='button'
           className={classnames(style.gnb_item, style.gnb_item_home)}
-          arai-label="message"
+          arai-label='message'
           aria-pressed={false}
         >
           <IconMessage />
         </button>
         <button
-          type="button"
+          type='button'
           className={classnames(style.gnb_item, style.gnb_item_home)}
-          arai-label="mail"
+          arai-label='mail'
           aria-pressed={false}
         >
           <IconMail />
         </button>
         <button
-          type="button"
+          type='button'
           className={classnames(style.gnb_item, style.gnb_item_home)}
-          arai-label="calendar"
+          arai-label='calendar'
           aria-pressed={false}
         >
           <IconCalendar />
         </button>
         <button
-          type="button"
+          type='button'
           className={classnames(style.gnb_item, style.gnb_item_home)}
-          arai-label="contact"
+          arai-label='contact'
           aria-pressed={false}
         >
           <IconContact />
         </button>
         <button
-          type="button"
+          type='button'
           className={classnames(style.gnb_item, style.gnb_item_home)}
-          arai-label="cloud"
+          arai-label='cloud'
           aria-pressed={false}
         >
           <IconCloud />
         </button>
         <button
-          type="button"
+          type='button'
           className={classnames(style.gnb_item, style.gnb_item_home)}
-          arai-label="office"
+          arai-label='office'
           aria-pressed={false}
         >
           <IconOffice />
@@ -86,23 +116,23 @@ const Header = () => (
       </div>
       <div className={style.utils}>
         <div className={style.utils_service}>
-          <a href="/" className={style.utils_service_link}>
+          <a href='/' className={style.utils_service_link}>
             인트라넷
           </a>
-          <a href="/" className={style.utils_service_link}>
+          <a href='/' className={style.utils_service_link}>
             HRMS
           </a>
-          <a href="/" className={style.utils_service_link}>
+          <a href='/' className={style.utils_service_link}>
             NAS
           </a>
         </div>
         <div className={style.utils_search}>
           <input
-            type="search"
+            type='search'
             className={style.utils_search_input}
-            placeholder="사원검색"
+            placeholder='사원검색'
           />
-          <button type="button" className={style.utils_search_btn}>
+          <button type='button' className={style.utils_search_btn}>
             <IconSearch />
           </button>
         </div>

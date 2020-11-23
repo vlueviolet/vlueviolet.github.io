@@ -4,7 +4,7 @@ import {
   Canvas,
   ArgsTable,
   ColorPalette,
-  ColorItem,
+  ColorItem
 } from '@storybook/addon-docs/blocks';
 import { IconGallery } from 'storybook-icon-gallery';
 import IconSvgCloud from 'asset/images/svg/icon-cloud.svg';
@@ -16,13 +16,11 @@ import IconSvgMessage from 'asset/images/svg/icon-message.svg';
 import IconSvgOffice from 'asset/images/svg/icon-office.svg';
 import IconPngLogo from 'asset/images/png/logo.png';
 
-import Icon from './Icon';
-
 export const IconArgsType = {
   IconSvgElement: {
-    table: { disable: true },
+    table: { disable: true }
   },
-  color: { control: { type: 'color' } },
+  color: { control: { type: 'color' } }
 };
 
 export function renderItem(
@@ -46,7 +44,7 @@ export function renderItem(
   );
 }
 
-<Meta title="Icons/svg" component={Icon} argTypes={IconArgsType} />
+<Meta title='Icons/svg/plugin' component={Icon} argTypes={IconArgsType} />
 
 # SVG Viewer
 
@@ -62,7 +60,7 @@ export const Template = (args) => <Icon {...args} />;
 [storybook-icon-gallery](https://storybook-icon-gallery.netlify.com/)
 
 <Canvas>
-  <Story name="all">
+  <Story name='all' parameters={{ options: { showPanel: false } }}>
     <IconGallery>
       {renderItem(
         'icon-cloud.svg',
@@ -90,33 +88,3 @@ export const Template = (args) => <Icon {...args} />;
     </IconGallery>
   </Story>
 </Canvas>
-
-## Icon 컴포넌트를 이용한 SVG Viewer
-
-<Canvas>
-  <Story name="icon-cloud" args={{ IconSvgElement: IconSvgHome }}>
-    {Template.bind({})}
-  </Story>
-  <Story name="icon-form" args={{ IconSvgElement: IconSvgForm }}>
-    {Template.bind({})}
-  </Story>
-  <Story name="icon-home" args={{ IconSvgElement: IconSvgHome }}>
-    {Template.bind({})}
-  </Story>
-  <Story name="icon-mail" args={{ IconSvgElement: IconSvgMail }}>
-    {Template.bind({})}
-  </Story>
-  <Story name="icon-menu" args={{ IconSvgElement: IconSvgMenu }}>
-    {Template.bind({})}
-  </Story>
-  <Story name="icon-message" args={{ IconSvgElement: IconSvgMessage }}>
-    {Template.bind({})}
-  </Story>
-  <Story name="icon-office" args={{ IconSvgElement: IconSvgOffice }}>
-    {Template.bind({})}
-  </Story>
-</Canvas>
-
-## Props Table
-
-<ArgsTable of={Icon} />

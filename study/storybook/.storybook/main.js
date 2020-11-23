@@ -8,9 +8,9 @@ module.exports = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@storybook/addon-a11y',
-    'storybook-design-token',
-    './design-addon/register.js'
+    '@storybook/addon-a11y'
+    // 'storybook-design-token'
+    // './design-addon/register.js'
   ],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'

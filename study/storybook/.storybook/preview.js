@@ -3,13 +3,21 @@ import { addParameters } from '@storybook/react';
 import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 const svgIconsReq = require.context(
-  '!!raw-loader!../src/asset/images/svg',
+  '!!raw-loader!../src/asset/images',
   true,
   /.\.svg$/
 );
-const svgIconTokenFiles = svgIconsReq
-  .keys()
-  .map((filename) => ({ filename, content: svgIconsReq(filename).default }));
+
+console.log('!!', svgIconsReq.keys()[0]);
+
+const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
+  return {
+    filename,
+    content: svgIconsReq(filename).default
+  };
+});
+
+// export const SvgIconSample = svgIconTokenFiles[0].content;
 
 addParameters({
   options: {
