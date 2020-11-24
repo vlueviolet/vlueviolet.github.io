@@ -6,13 +6,7 @@ import Header from './Header';
 export const Template = (args) => <Header {...args} />;
 
 <Canvas>
-  <Story
-    name="Basic"
-    parameters={{
-    }}
-  >
-    {Template.bind({})}
-  </Story>
+  <Story name="Basic">{Template.bind({})}</Story>
 </Canvas>
 
 # 안녕하세요
