@@ -48,7 +48,6 @@
     }
   }
 
-
   &_path {
     display: flex;
     overflow: hidden;
@@ -98,8 +97,8 @@
 
   &_file {
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    max-width: 50px;
+    max-height: 50px;
 
     svg {
       width: 100%;
