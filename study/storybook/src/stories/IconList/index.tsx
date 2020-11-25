@@ -19,7 +19,12 @@ const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
   };
 });
 
-const IconList = () => {
+export interface IconListProps {
+  /** svg 아이콘 컬러 변경 */
+  color?: any;
+}
+
+const IconList = ({ color }: IconListProps) => {
   const [iconList, setIconList] = useState(svgIconTokenFiles);
   const [clickCopy, setClickCopy] = useState(false);
 
@@ -59,7 +64,7 @@ const IconList = () => {
                   <span className={style.list_path_inner}>{item.filename}</span>
                 </div>
                 <button
-                  type="button"
+                  type='button'
                   className={style.copy}
                   onClick={() => handleCopyFilename(filename)}
                   onBlur={handleBlurFilename}
@@ -82,6 +87,7 @@ const IconList = () => {
               >
                 <span
                   className={style.list_file}
+                  style={{ color: `${color}` }}
                   dangerouslySetInnerHTML={{ __html: item.content }}
                 />
                 {!item.isSelectedViewer && (

@@ -9,7 +9,15 @@ import {
 
 import IconList from './';
 
-<Meta title='Icons/svg/all' component={IconList} />
+export const IconArgsTypes = {
+  color: {
+    control: {
+      type: 'color'
+    }
+  }
+};
+
+<Meta title='Icons/svg/all' component={IconList} argTypes={IconArgsTypes} />
 
 export const Template = (args) => <IconList {...args} />;
 
@@ -18,7 +26,5 @@ export const Template = (args) => <IconList {...args} />;
 > 프로젝트에서 사용되는 `svg` 정보를 볼 수 있습니다.
 
 <Canvas>
-  <Story name='list' parameters={{ options: { showPanel: false } }}>
-    {Template.bind({})}
-  </Story>
+  <Story name='list'>{Template.bind({})}</Story>
 </Canvas>

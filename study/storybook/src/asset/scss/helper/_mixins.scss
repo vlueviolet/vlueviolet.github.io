@@ -1,5 +1,5 @@
 @mixin ellipsis($lines: 1,
-  $display: inline-block,
+  $display: block,
   $width: null,
   $max-width: null,
   $overflow: hidden) {
