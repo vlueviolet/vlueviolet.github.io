@@ -354,7 +354,6 @@ const AddonSvgViewer = () => {
   };
 
   const handleBlurFilename = (type, idx) => {
-    console.log('blur');
     if (type === 'name') {
       setIconList(
         iconList.map((item) =>
@@ -448,6 +447,7 @@ const AddonSvgViewer = () => {
               const filename = item.filename.split('/')[
                 item.filename.split('/').length - 1
               ];
+              const filePath = item.filename.substring(2, item.filename.length);
               return (
                 <ListItem className="svg-viewer-item" key={index}>
                   <div className="svg-viewer-item-inner">
@@ -467,9 +467,9 @@ const AddonSvgViewer = () => {
                             'svg-viewer-item-path-inner',
                             item.isPathCopied && 'copy'
                           )}
-                          onClick={() => handleCopyFilename(item.filename)}
+                          onClick={() => handleCopyFilename(filePath)}
                         >
-                          <span>{item.filename}</span>
+                          <span>{filePath}</span>
                         </span>
                       </div>
                       {/* <button
