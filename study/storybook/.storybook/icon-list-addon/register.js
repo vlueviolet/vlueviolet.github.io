@@ -20,6 +20,67 @@ const buttonInitial = `
   -webkit-user-select: none;
 `;
 
+const inputInitial = `
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  &::-ms-reveal {
+    display: none;
+  }
+  &::-ms-clear,
+  &::-ms-reveal{
+    display:none;width:0;height:0;
+  }
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration{
+    display:none;
+  }
+`;
+
+const SearchBox = styled.div`
+  padding: 10px;
+  text-align: right;
+  label {
+    display: inline-block;
+    vertical-align: top;
+  }
+  input {
+    ${inputInitial}
+    height: 30px;
+    padding: 0 5px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    font-size: 13px;
+    line-height: 30px;
+  }
+  button {
+    ${buttonInitial}
+    min-width: 60px;
+    height: 30px;
+    margin-left: 5px;
+    border-radius: 3px;
+    background-color: #2a2a2a;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    vertical-align: top;
+    box-sizing: border-box;
+    transition: background-color 0.1s ease-out;
+    &:disabled {
+      background-color: #ddd;
+      cursor: default;
+      point-events: none;
+    }
+  }
+`;
+
 const List = styled.ul`
   ${initialStyle}
   list-style: none;
@@ -38,6 +99,8 @@ const ListItem = styled.li`
 `;
 
 const ListName = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   padding: 10px;
   color: #2a2a2a;
@@ -155,6 +218,18 @@ const ListSource = styled.div`
   }
 `;
 
+const NoResult = styled.div`
+  padding: 50px 0;
+  font-size: 15px;
+  color: #2a2a2a;
+  text-align: center;
+  em {
+    font-style: normal;
+    font-weight: bold;
+    color: tomato;
+  }
+`;
+
 const svgIconsReq = require.context(
   '!!raw-loader!../../src/asset/images',
   true,
@@ -174,8 +249,9 @@ const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
 const AddonIconList = () => {
   const [iconList, setIconList] = useState(svgIconTokenFiles);
   const [clickCopy, setClickCopy] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
-  const handleCopyFilename = (item: any) => {
+  const handleCopyFilename = (item) => {
     setClickCopy(true);
     return navigator.clipboard.writeText(item);
   };
@@ -184,7 +260,7 @@ const AddonIconList = () => {
     setClickCopy(false);
   };
 
-  const handleClickViewer = (idx: number) => {
+  const handleClickViewer = (idx) => {
     setIconList(
       iconList.map((item) =>
         item.idx === idx
@@ -193,59 +269,106 @@ const AddonIconList = () => {
       )
     );
   };
+  const handleChangeSearch = (e) => {
+    const { value } = e.target;
+    setInputValue(value);
+    if (value) {
+      const list = svgIconTokenFiles.filter((item) => {
+        const filename = item.filename.split('/')[
+          item.filename.split('/').length - 1
+        ];
+        const array = filename.toLowerCase().includes(value);
+        return array;
+      });
+      setIconList(list);
+    } else {
+      setIconList(svgIconTokenFiles);
+    }
+  };
+
+  const handleClickSearch = (e) => {};
 
   useEffect(() => {}, [iconList]);
 
   return (
-    <List>
-      {iconList.map((item: any, index: number) => {
-        const filename = item.filename.split('/')[
-          item.filename.split('/').length - 1
-        ];
-        return (
-          <ListItem key={index}>
-            <div className="list_inner">
-              <ListName>
-                <span className="list_name_inner">{filename}</span>
-                <div className="list_path">
-                  <span className="list_path_inner">{item.filename}</span>
+    <>
+      <SearchBox>
+        <label htmlFor="srch">
+          <input
+            type="search"
+            id="srch"
+            placeholder="검색어를 입력하세요"
+            value={inputValue}
+            onChange={handleChangeSearch}
+          />
+        </label>
+        <button
+          type="button"
+          onClick={handleClickSearch}
+          disabled={!inputValue}
+        >
+          검색
+        </button>
+      </SearchBox>
+      <List>
+        {iconList.length > 0 ? (
+          iconList.map((item, index) => {
+            const filename = item.filename.split('/')[
+              item.filename.split('/').length - 1
+            ];
+            return (
+              <ListItem key={index}>
+                <div className="list_inner">
+                  <ListName>
+                    <span className="list_name_inner">{filename}</span>
+                    <div className="list_path">
+                      <span className="list_path_inner">{item.filename}</span>
+                    </div>
+                    <button
+                      type="button"
+                      className="copy"
+                      onClick={() => handleCopyFilename(filename)}
+                      onBlur={handleBlurFilename}
+                    >
+                      {!clickCopy && (
+                        <>
+                          Click to Copy{' '}
+                          <em className="list_name_em">Filename</em>
+                        </>
+                      )}
+                      {clickCopy && <>Copied!</>}
+                    </button>
+                  </ListName>
+                  <ListViewer
+                    className={classnames(
+                      'list_viewer',
+                      item.isSelectedViewer && 'dark'
+                    )}
+                    onClick={() => handleClickViewer(index)}
+                  >
+                    <ListFile
+                      dangerouslySetInnerHTML={{ __html: item.content }}
+                    />
+                    {!item.isSelectedViewer && (
+                      <span className="list_viewer_text">
+                        Click to view in dark mode
+                      </span>
+                    )}
+                  </ListViewer>
+                  <ListSource>
+                    <span className="list_source_inner">{item.content}</span>
+                  </ListSource>
                 </div>
-                <button
-                  type="button"
-                  className="copy"
-                  onClick={() => handleCopyFilename(filename)}
-                  onBlur={handleBlurFilename}
-                >
-                  {!clickCopy && (
-                    <>
-                      Click to Copy <em className="list_name_em">Filename</em>
-                    </>
-                  )}
-                  {clickCopy && <>Copied!</>}
-                </button>
-              </ListName>
-              <ListViewer
-                className={classnames(
-                  'list_viewer',
-                  item.isSelectedViewer && 'dark'
-                )}
-                onClick={() => handleClickViewer(index)}
-              >
-                <ListFile dangerouslySetInnerHTML={{ __html: item.content }} />
-                {!item.isSelectedViewer && (
-                  <span className="list_viewer_text">
-                    Click to view in dark mode
-                  </span>
-                )}
-              </ListViewer>
-              <ListSource>
-                <span className="list_source_inner">{item.content}</span>
-              </ListSource>
-            </div>
-          </ListItem>
-        );
-      })}
-    </List>
+              </ListItem>
+            );
+          })
+        ) : (
+          <NoResult>
+            <em>'{inputValue}'</em> 에 대한 검색결과가 없습니다.
+          </NoResult>
+        )}
+      </List>
+    </>
   );
 };
 
