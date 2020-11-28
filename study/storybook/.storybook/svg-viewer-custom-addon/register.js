@@ -1,9 +1,7 @@
-//.storybook/icon-list-addon/register.js
 import React, { Fragment, useState, useEffect } from 'react';
 import { AddonPanel } from '@storybook/components';
 import { addons, types } from '@storybook/addons';
 import classnames from 'classnames';
-import { TabsState } from '@storybook/components';
 import { styled } from '@storybook/theming';
 
 const initialStyle = `
@@ -43,9 +41,20 @@ const inputInitial = `
   }
 `;
 
+const Wrapper = styled.section`
+  min-width: 500px;
+`;
+
 const SearchBox = styled.div`
   padding: 10px;
-  text-align: right;
+  .svg-viewer-search-inner {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    padding-left: 5px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+  }
   label {
     display: inline-block;
     vertical-align: top;
@@ -53,13 +62,41 @@ const SearchBox = styled.div`
   input {
     ${inputInitial}
     height: 30px;
-    padding: 0 5px;
-    border: 1px solid #eee;
-    border-radius: 3px;
+    padding: 0 25px 0 5px;
     font-size: 13px;
     line-height: 30px;
+    outline: none;
   }
   button {
+    ${buttonInitial}
+  }
+  .svg-viewer-srch-delete {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    &:before,
+    &:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 12px;
+      margin-top: -6px;
+      border-left: 1px solid #2a2a2a;
+      content: '';
+    }
+    &:before {
+      transform: rotate(-45deg);
+    }
+    &:after {
+      transform: rotate(45deg);
+    }
+  }
+  .btn-search {
     ${buttonInitial}
     min-width: 60px;
     height: 30px;
@@ -76,7 +113,7 @@ const SearchBox = styled.div`
     &:disabled {
       background-color: #ddd;
       cursor: default;
-      point-events: none;
+      pointer-events: none;
     }
   }
 `;
@@ -90,7 +127,7 @@ const ListItem = styled.li`
   display: inline-block;
   width: 20%;
 
-  .list_inner {
+  .svg-viewer-item-inner {
     overflow: hidden;
     margin: 10px;
     border: 1px solid #eee;
@@ -107,20 +144,18 @@ const ListName = styled.div`
   text-align: center;
 
   &:hover {
-    .copy {
+    .svg-viewer-item-copy {
       visibility: visible;
     }
   }
 
-  .list_name {
-    &_inner {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+  .svg-viewer-item-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .list_path {
+  .svg-viewer-item-path {
     display: flex;
     overflow: hidden;
     align-items: center;
@@ -131,14 +166,14 @@ const ListName = styled.div`
     text-align: center;
     box-sizing: border-box;
 
-    &_inner {
+    &-inner {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
   }
 
-  .copy {
+  .svg-viewer-item-copy {
     ${buttonInitial}
     visibility: hidden;
     display: block;
@@ -180,7 +215,7 @@ const ListViewer = styled.div`
     background-color: #2a2a2a;
   }
 
-  .list_viewer_text {
+  .svg-viewer-text {
     visibility: hidden;
     position: absolute;
     right: 5px;
@@ -208,7 +243,7 @@ const ListSource = styled.div`
   font-weight: 300;
   color: rgba(51, 51, 51, 0.5);
 
-  .list_source_inner {
+  .svg-viewer-source-inner {
     display: block;
     overflow: hidden;
     margin: 10px;
@@ -217,10 +252,12 @@ const ListSource = styled.div`
 `;
 
 const NoResult = styled.div`
-  padding: 50px 0;
+  padding: 50px 30px;
   font-size: 15px;
   color: #2a2a2a;
+  line-height: 30px;
   text-align: center;
+  word-break: break-all;
   em {
     font-style: normal;
     font-weight: bold;
@@ -244,10 +281,11 @@ const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
   };
 });
 
-const AddonIconList = () => {
+const AddonSvgViewer = () => {
   const [iconList, setIconList] = useState(svgIconTokenFiles);
   const [clickCopy, setClickCopy] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  let searchResultList = [];
 
   const handleCopyFilename = (item) => {
     setClickCopy(true);
@@ -267,115 +305,136 @@ const AddonIconList = () => {
       )
     );
   };
+
   const handleChangeSearch = (e) => {
+    console.log('???');
     const { value } = e.target;
     setInputValue(value);
     if (value) {
-      const list = svgIconTokenFiles.filter((item) => {
+      console.log('있음');
+      searchResultList = svgIconTokenFiles.filter((item) => {
         const filename = item.filename.split('/')[
           item.filename.split('/').length - 1
         ];
-        const array = filename.toLowerCase().includes(value);
-        return array;
+        return filename.toLowerCase().includes(value);
       });
-      setIconList(list);
+      setIconList(searchResultList);
     } else {
-      setIconList(svgIconTokenFiles);
+      console.log('없음');
+      setInputValue('');
+      resetIconList();
     }
   };
 
-  const handleClickSearch = (e) => {};
+  const handleClickDelete = (e) => {
+    e.preventDefault();
+    resetIconList();
+  };
+
+  const resetIconList = () => {
+    setIconList(svgIconTokenFiles);
+  };
 
   useEffect(() => {}, [iconList]);
 
   return (
     <>
-      <SearchBox>
-        <label htmlFor="srch">
-          <input
-            type="search"
-            id="srch"
-            placeholder="검색어를 입력하세요"
-            value={inputValue}
-            onChange={handleChangeSearch}
-          />
-        </label>
-        <button
-          type="button"
-          onClick={handleClickSearch}
-          disabled={!inputValue}
-        >
-          검색
-        </button>
-      </SearchBox>
-      <List>
-        {iconList.length > 0 ? (
-          iconList.map((item, index) => {
-            const filename = item.filename.split('/')[
-              item.filename.split('/').length - 1
-            ];
-            return (
-              <ListItem key={index}>
-                <div className="list_inner">
-                  <ListName>
-                    <span className="list_name_inner">{filename}</span>
-                    <div className="list_path">
-                      <span className="list_path_inner">{item.filename}</span>
-                    </div>
-                    <button
-                      type="button"
-                      className="copy"
-                      onClick={() => handleCopyFilename(filename)}
-                      onBlur={handleBlurFilename}
-                    >
-                      {!clickCopy && (
-                        <>
-                          Click to Copy <em>Filename</em>
-                        </>
+      <Wrapper className="svg-viewer">
+        <SearchBox className="svg-viewer-search">
+          <div className="svg-viewer-search-inner">
+            🔎
+            <label htmlFor="srch">
+              <input
+                type="search"
+                id="srch"
+                placeholder="검색어를 입력하세요"
+                value={inputValue}
+                onChange={handleChangeSearch}
+              />
+            </label>
+            {inputValue && (
+              <button
+                type="button"
+                className="svg-viewer-srch-delete"
+                aria-label="검색어삭제"
+                onClick={handleClickDelete}
+              />
+            )}
+          </div>
+        </SearchBox>
+        <List className="svg-viewer-list">
+          {iconList.length > 0 ? (
+            iconList.map((item, index) => {
+              const filename = item.filename.split('/')[
+                item.filename.split('/').length - 1
+              ];
+              return (
+                <ListItem className="svg-viewer-item" key={index}>
+                  <div className="svg-viewer-item-inner">
+                    <ListName>
+                      <span className="svg-viewer-item-name">{filename}</span>
+                      <div className="svg-viewer-item-path">
+                        <span className="svg-viewer-item-path-inner">
+                          {item.filename}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        className="svg-viewer-item-copy"
+                        onClick={() => handleCopyFilename(filename)}
+                        onBlur={handleBlurFilename}
+                      >
+                        {!clickCopy && (
+                          <>
+                            Click to Copy <em>Filename</em>
+                          </>
+                        )}
+                        {clickCopy && <>Copied!</>}
+                      </button>
+                    </ListName>
+                    <ListViewer
+                      className={classnames(
+                        'svg-viewer-item-look',
+                        item.isSelectedViewer && 'dark'
                       )}
-                      {clickCopy && <>Copied!</>}
-                    </button>
-                  </ListName>
-                  <ListViewer
-                    className={classnames(
-                      'list_viewer',
-                      item.isSelectedViewer && 'dark'
-                    )}
-                    onClick={() => handleClickViewer(index)}
-                  >
-                    <ListFile
-                      dangerouslySetInnerHTML={{ __html: item.content }}
-                    />
-                    {!item.isSelectedViewer && (
-                      <span className="list_viewer_text">
-                        Click to view in dark mode
+                      onClick={() => handleClickViewer(item.idx)}
+                    >
+                      <ListFile
+                        dangerouslySetInnerHTML={{ __html: item.content }}
+                      />
+                      {!item.isSelectedViewer && (
+                        <span className="svg-viewer-text">
+                          Click to view in dark mode
+                        </span>
+                      )}
+                    </ListViewer>
+                    <ListSource className="svg-viewer-source">
+                      <span className="svg-viewer-source-inner">
+                        {item.content}
                       </span>
-                    )}
-                  </ListViewer>
-                  <ListSource>
-                    <span className="list_source_inner">{item.content}</span>
-                  </ListSource>
-                </div>
-              </ListItem>
-            );
-          })
-        ) : (
-          <NoResult>
-            <em>'{inputValue}'</em> 에 대한 검색결과가 없습니다.
-          </NoResult>
-        )}
-      </List>
+                    </ListSource>
+                  </div>
+                </ListItem>
+              );
+            })
+          ) : (
+            <NoResult>
+              <em>'{inputValue}'</em> 에 대한 검색결과가 없습니다.
+            </NoResult>
+          )}
+        </List>
+      </Wrapper>
     </>
   );
 };
 
-addons.register('dajung/icon-list-addon', () => {
-  addons.add('icon-list-addon/panel', {
-    title: 'Icon List',
+addons.register('dajung/svg-viewer-addon', () => {
+  addons.add('svg-viewer-addon/panel', {
+    title: 'SVG Viewer',
     type: types.PANEL,
     render: ({ active, key }) => (
       <AddonPanel active={active} key={key}>
-        <AddonIconList />
+        <AddonSvgViewer />
       </AddonPanel>
     )
   });

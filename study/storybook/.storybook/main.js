@@ -9,7 +9,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
-    './icon-list-addon/register.js'
+    './svg-viewer-custom-addon/register.js'
     // 'storybook-design-token'
   ],
   webpackFinal: async (config, { configType }) => {
