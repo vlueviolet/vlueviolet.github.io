@@ -141,9 +141,6 @@ const ListItem = styled.li`
 `;
 
 const ListName = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: relative;
   padding: 10px;
   color: #2a2a2a;
   text-align: center;
@@ -155,9 +152,38 @@ const ListName = styled.div`
   }
 
   .svg-viewer-item-name {
+    display: inline-block;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    position: relative;
+    max-width: 100%;
+    em {
+      display: block;
+      overflow: hidden;
+      position: relative;
+      font-style: normal;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+      &:hover {
+        &:after {
+          width: 100%;
+        }
+      }
+      &:active {
+        background: tomato;
+        color: #fff;
+      }
+      &:after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background-color: tomato;
+        transition: all 0.3s ease-out;
+        content: '';
+      }
+    }
   }
 
   .svg-viewer-item-path {
@@ -175,6 +201,35 @@ const ListName = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      span {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        max-width: 100%;
+        font-style: normal;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        &:hover {
+          &:after {
+            width: 100%;
+          }
+        }
+        &:active {
+          background-color: blueviolet;
+          color: #fff;
+        }
+        &:after {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background-color: blueviolet;
+          transition: all 0.3s ease-out;
+          content: '';
+        }
+      }
     }
   }
 
@@ -281,7 +336,8 @@ const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
     idx: index,
     filename,
     content: svgIconsReq(filename).default,
-    isCopied: false,
+    isNameCopied: false,
+    isPathCopied: false,
     isSelectedViewer: false
   };
 });
@@ -289,16 +345,34 @@ const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
 const AddonSvgViewer = () => {
   const [iconList, setIconList] = useState(svgIconTokenFiles);
   const [clickCopy, setClickCopy] = useState(false);
+  const [clickPathCopy, setClickPathCopy] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef(null);
 
   const handleCopyFilename = (item) => {
-    setClickCopy(true);
     return navigator.clipboard.writeText(item);
   };
 
-  const handleBlurFilename = () => {
-    setClickCopy(false);
+  const handleBlurFilename = (type, idx) => {
+    console.log('blur');
+    if (type === 'name') {
+      setIconList(
+        iconList.map((item) =>
+          item.idx === idx
+            ? { ...item, isNameCopied: !item.isNameCopied }
+            : item
+        )
+      );
+    }
+    if (type === 'path') {
+      setIconList(
+        iconList.map((item) =>
+          item.idx === idx
+            ? { ...item, isPathCopied: !item.isPathCopied }
+            : item
+        )
+      );
+    }
   };
 
   const handleClickViewer = (idx) => {
@@ -378,17 +452,30 @@ const AddonSvgViewer = () => {
                 <ListItem className="svg-viewer-item" key={index}>
                   <div className="svg-viewer-item-inner">
                     <ListName>
-                      <span className="svg-viewer-item-name">{filename}</span>
+                      <span
+                        className={classnames(
+                          'svg-viewer-item-name',
+                          item.isNameCopied && 'copy'
+                        )}
+                        onClick={() => handleCopyFilename(filename)}
+                      >
+                        <em>{filename}</em>
+                      </span>
                       <div className="svg-viewer-item-path">
-                        <span className="svg-viewer-item-path-inner">
-                          {item.filename}
+                        <span
+                          className={classnames(
+                            'svg-viewer-item-path-inner',
+                            item.isPathCopied && 'copy'
+                          )}
+                          onClick={() => handleCopyFilename(item.filename)}
+                        >
+                          <span>{item.filename}</span>
                         </span>
                       </div>
-                      <button
+                      {/* <button
                         type="button"
                         className="svg-viewer-item-copy"
                         onClick={() => handleCopyFilename(filename)}
-                        onBlur={handleBlurFilename}
                       >
                         {!clickCopy && (
                           <>
@@ -396,7 +483,7 @@ const AddonSvgViewer = () => {
                           </>
                         )}
                         {clickCopy && <>Copied!</>}
-                      </button>
+                      </button> */}
                     </ListName>
                     <ListViewer
                       className={classnames(
