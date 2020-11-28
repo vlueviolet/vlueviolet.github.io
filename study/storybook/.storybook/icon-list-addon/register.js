@@ -118,11 +118,6 @@ const ListName = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
-    &_em {
-      margin-left: 3px;
-      color: orange;
-    }
   }
 
   .list_path {
@@ -146,10 +141,8 @@ const ListName = styled.div`
   .copy {
     ${buttonInitial}
     visibility: hidden;
-    display: flex;
+    display: block;
     overflow: visible;
-    align-items: center;
-    justify-content: center;
     position: absolute;
     top: 0;
     left: 0;
@@ -158,6 +151,11 @@ const ListName = styled.div`
     background-color: #2a2a2a;
     font-size: 13px;
     color: #fff;
+    em {
+      margin-left: 3px;
+      font-style: normal;
+      color: orange;
+    }
   }
 `;
 
@@ -332,8 +330,7 @@ const AddonIconList = () => {
                     >
                       {!clickCopy && (
                         <>
-                          Click to Copy{' '}
-                          <em className="list_name_em">Filename</em>
+                          Click to Copy <em>Filename</em>
                         </>
                       )}
                       {clickCopy && <>Copied!</>}
