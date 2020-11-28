@@ -46,7 +46,12 @@ const Wrapper = styled.section`
 `;
 
 const SearchBox = styled.div`
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
   padding: 10px;
+  background-color: #fff;
   .svg-viewer-search-inner {
     display: inline-flex;
     align-items: center;
@@ -125,7 +130,7 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   display: inline-block;
-  width: 20%;
+  width: 25%;
 
   .svg-viewer-item-inner {
     overflow: hidden;
