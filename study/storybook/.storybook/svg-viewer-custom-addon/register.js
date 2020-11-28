@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import { AddonPanel } from '@storybook/components';
 import { addons, types } from '@storybook/addons';
 import classnames from 'classnames';
@@ -206,7 +206,7 @@ const ListViewer = styled.div`
   box-sizing: border-box;
 
   &:hover {
-    .list_viewer_text {
+    .svg-viewer-text {
       visibility: visible;
     }
   }
@@ -285,7 +285,7 @@ const AddonSvgViewer = () => {
   const [iconList, setIconList] = useState(svgIconTokenFiles);
   const [clickCopy, setClickCopy] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  let searchResultList = [];
+  const inputRef = useRef(null);
 
   const handleCopyFilename = (item) => {
     setClickCopy(true);
@@ -307,12 +307,10 @@ const AddonSvgViewer = () => {
   };
 
   const handleChangeSearch = (e) => {
-    console.log('???');
     const { value } = e.target;
     setInputValue(value);
     if (value) {
-      console.log('있음');
-      searchResultList = svgIconTokenFiles.filter((item) => {
+      const searchResultList = svgIconTokenFiles.filter((item) => {
         const filename = item.filename.split('/')[
           item.filename.split('/').length - 1
         ];
@@ -320,8 +318,6 @@ const AddonSvgViewer = () => {
       });
       setIconList(searchResultList);
     } else {
-      console.log('없음');
-      setInputValue('');
       resetIconList();
     }
   };
@@ -329,13 +325,17 @@ const AddonSvgViewer = () => {
   const handleClickDelete = (e) => {
     e.preventDefault();
     resetIconList();
+    inputRef.current.focus();
   };
 
   const resetIconList = () => {
+    setInputValue('');
     setIconList(svgIconTokenFiles);
   };
 
-  useEffect(() => {}, [iconList]);
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [iconList]);
 
   return (
     <>
@@ -350,6 +350,7 @@ const AddonSvgViewer = () => {
                 placeholder="검색어를 입력하세요"
                 value={inputValue}
                 onChange={handleChangeSearch}
+                ref={inputRef}
               />
             </label>
             {inputValue && (
