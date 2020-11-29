@@ -138,6 +138,7 @@ useEffect(() => {
 }); // state 없음
 
 // 2)
+[] 빈 배열이면 useEffect는 componentDidUpdate와 같다.
 useEffect(() => {
   // 초기 데이터 fetch
   // 페이지 분기 처리
@@ -367,4 +368,85 @@ touch styles.scss # 전체 스타일 집합
 ```js
 // pages/_app.js
 import import '../styles/styles.scss';
+```
+
+# 3주차 강의
+
+- ajax data fetch
+- ssr
+  - get query index data fetch
+- hook
+  - user customizing hook
+  - set redux in next
+
+# API
+
+## 대표적인 api fetch library
+
+promise 기반
+
+### fetch
+
+- js에 내장된 모듈
+- 모듈 설치 없이 사용 가능
+- 적은 기능, 가볍다.
+- error를 catch로 걸러내는 것이 귀찮다.
+
+### axios
+
+- 모듈 설치 필요
+- 기능이 더 많고, 무겁다.
+
+### jsonplaceholder 사용 (강의 임시 API)
+
+https://jsonplaceholder.typicode.com/
+
+## Fetch 방식
+
+componentDidMount()에서 데이터를 가져와야한다.
+
+```js
+const getPostDataByJson = () => {
+  fetch('https://jsonplaceholder.typicode.com/users')
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+};
+
+useEffect(() => {
+  getPostDataByJson();
+}, []);
+```
+
+```
+Array(100)
+```
+
+## Axios
+
+```zsh
+npm install --save axios
+```
+
+```js
+import axios from 'axios';
+
+// axios
+const getPostDataByJsonAxios = () => {
+  axios
+    .get('https://jsonplaceholder.typicode.com/users')
+    .then((res) => {
+      console.log(res);
+      setCardList(res.data);
+    })
+    .catch((error) => console.error(error));
+};
+```
+
+```
+{data: Array(100), config: {...}}
+```
+
+```js
+// 초기 상태가 []여야 에러가 안난다.
+const [cardList, setCardList] = useState([]);
 ```
