@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import Router from 'next/router';
 import Card from '../components/card';
 import axios from 'axios';
 
@@ -11,17 +12,40 @@ const CardList = () => {
 
   const [selectedCard, setSelectedCard] = useState();
 
-  const handleChangeInput = (e) => {
-    const { name, value } = e.target;
-    setInputVal({
-      ...inputVal,
-      [name]: value
-    });
-  };
+  const [imgFile, setImgFile] = useState();
 
-  const handleClickCard = (idx) => {
-    setSelectedCard(idx);
-  };
+  const fileInputFileRef = useRef(null);
+  const imgPreviewRef = useRef(null);
+
+  const handleChangeInput = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setInputVal({
+        ...inputVal,
+        [name]: value
+      });
+    },
+    [setInputVal]
+  );
+
+  // const handleClickCard = (idx) => {
+  //   setSelectedCard(idx);
+  //   // Router.push(`/cardDetail?idx=${idx}`).then(() => window.scrollTo(0, 0));
+  //   Router.push(`/detail/${idx}`);
+  //   // Router.push(`/detail/${idx}`).then(() => window.scrollTo(0, 0));
+  //   // Router.push((pathname: '/cardDetail/[idx]'), (query: { idx: 1 }));
+  // };
+
+  const handleClickCard = useCallback(
+    (idx) => {
+      // Router.push(`/cardDetail?idx=${idx}`).then(() => window.scrollTo(0, 0));
+      setSelectedCard(idx);
+      Router.push(`/detail/${idx}`);
+      // Router.push(`/detail/${idx}`).then(() => window.scrollTo(0, 0));
+      // Router.push((pathname: '/cardDetail/[idx]'), (query: { idx: 1 }));
+    },
+    [selectedCard]
+  );
 
   const handleAddCard = () => {
     if (!inputVal.name) return alert('이름을 입력해주세요.');
@@ -34,13 +58,14 @@ const CardList = () => {
     };
 
     axios({
-      url: 'https://jsonplaceholder.typicode.com/users',
+      // url: 'https://jsonplaceholder.typicode.com/users',
+      url: '/cardList/users',
       method: 'post',
       data: newObj
     })
       .then((res) => {
-        console.log(res.data);
         // getPostDataByJson();
+        console.log(res.data);
         setCardList(cardList.concat(res.data)); // api가 save를 지원 안해줘서 임시 처리
       })
       .catch((error) => console.error(error));
@@ -50,26 +75,41 @@ const CardList = () => {
   const handleUpdateCard = () => {
     if (selectedCard === undefined) return alert('선택된 카드가 없습니다.');
     if (!inputVal.name) return alert('이름을 입력하세요');
-    if (!inputVal.job) return alert('직업을 입력하세요');
+    // if (!inputVal.job) return alert('직업을 입력하세요');
     setCardList(
       cardList.map((item) =>
-        item.idx === selectedCard
-          ? { ...item, name: inputVal.name, job: inputVal.job }
-          : item
+        item.id === selectedCard ? { ...item, name: inputVal.name } : item
       )
     );
   };
 
   const handleDeleteCard = () => {
     if (selectedCard === undefined) return alert('선택된 카드가 없습니다.');
-    setCardList(cardList.filter((item) => item.idx !== selectedCard));
+    axios({
+      url: `https://jsonplaceholder.typicode.com/users/${selectedCard}`,
+      method: 'delete'
+    })
+      .then((res) => {
+        setCardList(cardList.filter((item) => item.id !== selectedCard));
+      })
+      .catch((error) => console.error(error.response));
+  };
+
+  const handleAddImg = () => {
+    fileInputFileRef.current.click();
+  };
+
+  const handleChangeFile = (e) => {
+    const { files } = e.target;
+    console.log(files);
+    setImgFile(files[0]);
   };
 
   // fetch 구문
   const getPostDataByJson = () => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((json) => console.log(json));
+    fetch('https://jsonplaceholder.typicode.com/users').then((response) =>
+      response.json()
+    );
   };
 
   // axios
@@ -87,9 +127,18 @@ const CardList = () => {
     getPostDataByJsonAxios();
   }, []);
 
+  useEffect(() => {}, [selectedCard]);
+
   useEffect(() => {
-    console.log(selectedCard);
-  }, [selectedCard]);
+    if (imgFile) {
+      const preview = imgPreviewRef.current;
+      var reader = new FileReader(); // old한 방식이라고 함, uri 어쩌구 방식이 있데
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+      };
+      reader.readAsDataURL(imgFile);
+    }
+  }, [imgFile]);
 
   return (
     <section className="card-list-container">
@@ -132,7 +181,27 @@ const CardList = () => {
           >
             삭제
           </button>
+          <div className="card-list-control-viewer">
+            <button
+              type="button"
+              className="card-list-control-btn"
+              onClick={handleAddImg}
+            >
+              이미지 추가
+            </button>
+            <input
+              className="blind"
+              type="file"
+              ref={fileInputFileRef}
+              onChange={handleChangeFile}
+            />
+          </div>
         </div>
+        {imgFile && (
+          <div className="card-list-preview-image">
+            <img ref={imgPreviewRef} src={imgFile} />
+          </div>
+        )}
         <ul className="card-list-box">
           {cardList
             // .filter((item) => inputVal && item.name === inputVal)

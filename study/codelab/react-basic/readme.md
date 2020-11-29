@@ -397,9 +397,10 @@ promise 기반
 - 모듈 설치 필요
 - 기능이 더 많고, 무겁다.
 
-### jsonplaceholder 사용 (강의 임시 API)
+### 임시 API
 
-https://jsonplaceholder.typicode.com/
+- https://jsonplaceholder.typicode.com/
+- https://my-json-server.typicode.com/
 
 ## Fetch 방식
 
@@ -450,3 +451,114 @@ const getPostDataByJsonAxios = () => {
 // 초기 상태가 []여야 에러가 안난다.
 const [cardList, setCardList] = useState([]);
 ```
+
+# Router
+
+router는 `/user/${idx}` 같은 형태보다는 `/user?cardDetail=${idx}` 같은 형태로 쓴다.
+
+```js
+import Router from 'next/router';
+
+//...
+// 이동하는 페이지 최상단으로 가는 코드, 주로 이렇게 넣는다.
+Router.push(`/cardDetail?idx=${idx}`).then(() => window.scrollTo(0, 0));
+```
+
+## withRouter
+
+next 내장 모듈로 router 정보를 가져올 수 있다.
+
+```js
+import { useState, useEffect } from 'react';
+import { withRouter } from 'next/router';
+
+const CardDetailPage = (props) => {
+  console.log(props); // router 정보가 props에 담겨온다.
+  return <div></div>;
+};
+
+export default withRouter(CardDetailPage);
+```
+
+```js
+// query를 찍어서 필요한 정보를 확인할 수 있다.
+import { useState, useEffect } from 'react';
+import { withRouter } from 'next/router';
+
+const CardDetailPage = ({ router }) => {
+  console.log(router.query);
+  return <div></div>;
+};
+
+export default withRouter(CardDetailPage);
+```
+
+## Router를 하는 방법
+
+1. 각 페이지에서 axios를 하는 방법
+2. path와 파라메터를 server에서 새롭게 구성했음
+
+   - 실제 이름이 다르더라도 특정 페이지로 이동할 수 있게 할 수 있음
+   - 이렇게하면 주소창이 폴더, 파일 구성일텐데, 이런 정보가 노출되지 않고, 사용자가 파라메터를 바꿔가며 노출되면 안되는 정보를 가져가는것도 방지할 수 있나봄.
+   - server.js에서 원하는 path를 지정하는 방법
+
+3 server.js에서 axios를 하는 방법
+
+4. getInitialProps에 대해서 공부해보기
+
+- https://velog.io/@cyranocoding/Next-js-%EA%B5%AC%EB%8F%99%EB%B0%A9%EC%8B%9D-%EA%B3%BC-getInitialProps
+- https://nextjs.org/docs/advanced-features/custom-app
+- https://nextjs.org/docs/api-reference/data-fetching/getInitialProps
+
+# API 도구
+
+- swagger : api 작업자가 제공하면 좋다.
+- postman : swagger 없고 주소만 있다면 postman을 써도 됨
+
+# .env (닷엔브이이)
+
+- 보안상 노출되는 정보들의 세팅을 숨길 수 있게 도와주는 환경 세팅 파일
+
+# Hook
+
+## useRef
+
+- 특정한 element를 가져올 때 사용한다.
+- https://ko.reactjs.org/docs/hooks-reference.html#useref
+
+## useMemo
+
+- 특정한 상태값을 function, 숫자값을 저장해 놓는 것
+- 변화가 없으면 렌더링에 반영하지 않도록 해줌, function을 막는다거나 할때
+
+## useCallback
+
+- 거의 생활화 하듯이 씀
+- 특정 컴포넌트가 변경되면 연결된 함수나 컴포넌트도 재렌더링이 되는데, 이를 방지하는 훅
+- 귀찮더라도 해주는게 좋음
+
+```js
+// cardListFetch.js
+import { useEffect, useState, useCallback } from 'react';
+
+// 기존에 작성한 함수를 useCallback으로 감싸고, 관련된 useState를 배열로 넣음
+const handleClickCard = useCallback(
+  (idx) => {
+    // Router.push(`/cardDetail?idx=${idx}`).then(() => window.scrollTo(0, 0));
+    setSelectedCard(idx);
+    Router.push(`/detail/${idx}`);
+    // Router.push(`/detail/${idx}`).then(() => window.scrollTo(0, 0));
+    // Router.push((pathname: '/cardDetail/[idx]'), (query: { idx: 1 }));
+  },
+  [selectedCard]
+);
+```
+
+해당 함수가 쓰이는 하위 component에서는 export defualt를 `React.memo`로 감싸줌
+
+```js
+// card.js
+export default React.memo(CardComponent);
+```
+
+# custom hook

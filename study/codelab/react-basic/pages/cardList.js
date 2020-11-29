@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Card from '../components/card';
 
 const CardList = () => {
@@ -14,6 +14,11 @@ const CardList = () => {
   ]);
 
   const [selectedCard, setSelectedCard] = useState();
+
+  const [imgFile, setImgFile] = useState();
+
+  const fileInputFileRef = useRef(null);
+  const imgPreviewRef = useRef(null);
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
@@ -54,9 +59,30 @@ const CardList = () => {
     setCardList(cardList.filter((item) => item.idx !== selectedCard));
   };
 
+  const handleAddImg = () => {
+    fileInputFileRef.current.click();
+  };
+
+  const handleChangeFile = (e) => {
+    const { files } = e.target;
+    console.log(files);
+    setImgFile(files[0]);
+  };
+
   useEffect(() => {
     console.log(selectedCard);
   }, [selectedCard]);
+
+  useEffect(() => {
+    if (imgFile) {
+      const preview = imgPreviewRef.current;
+      var reader = new FileReader(); // old한 방식이라고 함, uri 어쩌구 방식이 있데
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+      };
+      reader.readAsDataURL(imgFile);
+    }
+  }, [imgFile]);
 
   return (
     <section className="card-list-container">
@@ -99,7 +125,27 @@ const CardList = () => {
           >
             삭제
           </button>
+          <button
+            type="button"
+            className="card-list-control-btn"
+            onClick={handleAddImg}
+          >
+            이미지 추가
+          </button>
+          <input
+            className="card-list-control-input"
+            type="file"
+            ref={fileInputFileRef}
+            onChange={handleChangeFile}
+          />
         </div>
+        {imgFile && (
+          <img
+            ref={imgPreviewRef}
+            src={imgFile}
+            style={{ width: '400px', height: '400px' }}
+          />
+        )}
         <div className="card-list-box">
           {cardList
             // .filter((item) => inputVal && item.name === inputVal)

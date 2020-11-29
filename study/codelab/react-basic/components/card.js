@@ -1,7 +1,8 @@
+import React from 'react';
 const CardComponent = ({ data, onClickCB }) => {
   return (
     <li className="card-list-item" onClick={() => onClickCB(data.id)}>
-      <a href="" className="card-list-item-link">
+      <span className="card-list-item-link">
         <dl className="card-list-item-box">
           <dt className="card-list-item-title">Name</dt>
           <dd className="card-list-item-data">
@@ -16,8 +17,8 @@ const CardComponent = ({ data, onClickCB }) => {
             <span>{data.website}</span>
           </dd>
         </dl>
-      </a>
+      </span>
     </li>
   );
 };
-export default CardComponent;
+export default React.memo(CardComponent);
