@@ -160,6 +160,7 @@ const ListName = styled.div`
       display: block;
       overflow: hidden;
       position: relative;
+      padding: 0 5px;
       font-style: normal;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -206,6 +207,7 @@ const ListName = styled.div`
         overflow: hidden;
         position: relative;
         max-width: 100%;
+        padding: 0 5px;
         font-style: normal;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -336,8 +338,6 @@ const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
     idx: index,
     filename,
     content: svgIconsReq(filename).default,
-    isNameCopied: false,
-    isPathCopied: false,
     isSelectedViewer: false
   };
 });
@@ -345,33 +345,11 @@ const svgIconTokenFiles = svgIconsReq.keys().map((filename, index) => {
 const AddonSvgViewer = () => {
   const [iconList, setIconList] = useState(svgIconTokenFiles);
   const [clickCopy, setClickCopy] = useState(false);
-  const [clickPathCopy, setClickPathCopy] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef(null);
 
   const handleCopyFilename = (item) => {
     return navigator.clipboard.writeText(item);
-  };
-
-  const handleBlurFilename = (type, idx) => {
-    if (type === 'name') {
-      setIconList(
-        iconList.map((item) =>
-          item.idx === idx
-            ? { ...item, isNameCopied: !item.isNameCopied }
-            : item
-        )
-      );
-    }
-    if (type === 'path') {
-      setIconList(
-        iconList.map((item) =>
-          item.idx === idx
-            ? { ...item, isPathCopied: !item.isPathCopied }
-            : item
-        )
-      );
-    }
   };
 
   const handleClickViewer = (idx) => {
@@ -453,20 +431,14 @@ const AddonSvgViewer = () => {
                   <div className="svg-viewer-item-inner">
                     <ListName>
                       <span
-                        className={classnames(
-                          'svg-viewer-item-name',
-                          item.isNameCopied && 'copy'
-                        )}
+                        className="svg-viewer-item-name"
                         onClick={() => handleCopyFilename(filename)}
                       >
                         <em>{filename}</em>
                       </span>
                       <div className="svg-viewer-item-path">
                         <span
-                          className={classnames(
-                            'svg-viewer-item-path-inner',
-                            item.isPathCopied && 'copy'
-                          )}
+                          className="svg-viewer-item-path-inner"
                           onClick={() => handleCopyFilename(filePath)}
                         >
                           <span>{filePath}</span>
