@@ -536,6 +536,8 @@ export default withRouter(CardDetailPage);
 - 거의 생활화 하듯이 씀
 - 특정 컴포넌트가 변경되면 연결된 함수나 컴포넌트도 재렌더링이 되는데, 이를 방지하는 훅
 - 귀찮더라도 해주는게 좋음
+- 함수가 작성되면서 리랜더링 되는 이슈를 막아줌
+- 성능에 중요함
 
 ```js
 // cardListFetch.js
@@ -562,3 +564,19 @@ export default React.memo(CardComponent);
 ```
 
 # custom hook
+
+- 반복적으로 사용하는 기능을 독립적으로 사용하도록 뽑아놓음
+- 본인만의 훅 만들기
+- form을 통으로 모든 기능을 담아서 훅으로 만드는건 엄청 어렵다. 차라리 input 같은걸 훅으로 만들어라
+- 입력을 받아 state로 반환이 가능하다면 훅으로 만들어라
+- https://donis-note.medium.com/react-%EC%BB%A4%EC%8A%A4%ED%85%80-%ED%9B%85-custom-hook-210f5226cebf
+
+# redux
+
+- 상태관리를 글로벌하게 관리함
+- 하나의 컴포넌트에 갇힌 state를 밖으로 끌어내줌
+- 하나의 스토어를 갖는다.
+- 상태는 불변성을 갖는다.
+- redux saga는 redux와 결합하는 미들웨어이다.
+  - api나 데이터 관리에 좋은 미들웨어
+  - 비동기 처리를 자연스럽게 처리가능, redux의 단점이기도 함
