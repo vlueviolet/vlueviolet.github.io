@@ -627,3 +627,56 @@ npm install --save-dev redux react-redux redux-devtools-extension next-redux-wra
 ```
 
 ## Redux middleware
+
+- middleward를 쓰기위해 redux를 쓴다. redux의 부족한 점을 middleward가 채워줌
+- 비동기 처리 등 redux의 한계가 있다.
+
+# Redux saga
+
+- 제너레이터 함수의 이해 필요
+- saga의 effect를 이용
+
+```zsh
+npm install --save-dev redux-saga next-redux-saga
+```
+
+# 제너레이터 함수
+
+- function 뒤에 \*를 붙여주면 제너레이터 함수로 인식이 된다.
+- 여러개의 함수를 호출해서 여러개의 return을 내보내는 것이 js의 난점이다.
+
+```js
+function abcFunc() {
+  return 'a';
+  return 'b';
+  return 'c';
+}
+
+abcFunc(); // a
+```
+
+```js
+function* generatorFunc() {
+  console.log('첫번째 호출');
+  yield 'a';
+  console.log('두번째 호출');
+  yield 'b';
+  console.log('세번째 호출');
+  yield 'c';
+  console.log('마지막 호출');
+  return 'end';
+}
+
+const generator = generatorFunc(); // a
+generator.next(); // a
+generator.next(); // b
+generator.next(); // c
+generator.next(); // end
+```
+
+# 앞으로 공부해볼 것
+
+- react 불변성 관련 : immer.js
+- mobx
+- typescript
+- graphql (fe의 확장형 구조 잡기)
