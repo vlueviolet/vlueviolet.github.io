@@ -580,3 +580,50 @@ export default React.memo(CardComponent);
 - redux saga는 redux와 결합하는 미들웨어이다.
   - api나 데이터 관리에 좋은 미들웨어
   - 비동기 처리를 자연스럽게 처리가능, redux의 단점이기도 함
+
+# 컴포넌트를 나누는 기준
+
+- 컴포넌트를 잘게 나눌때마다 state를 활용하는 부담이 늘어날 수 밖에 없다.
+- 구조적인 설계의 정답은 없다.
+- 자신만의 기준과 좀더 세부적으로 나누려면 state를 local 단위로 쓰면 안된다.
+- state를 global하게 관리하면서, 재사용 컴포넌트를 쪼개는 고민을 해야한다.
+- 초급 단계이고 컴포넌트 설계를 잘 모른다면, 한 페이지에서 컴포넌트를 만들어라. 쪼개지 말고.
+
+# Redux
+
+| https://ko.redux.js.org/
+
+## Redux가 필요한 이유
+
+- 컴포넌트가 잘게 나뉘면 state를 local 단위로 활용할 수 없기때문에 이를 global하게 사용하는 것이 필요함
+- Redux는 이른 state를 global하게 관리하는 context
+- 자체가 가지는 범용성, 미들웨어를 사용할 수 있다.
+- hook에서는 mobx 도 있다. redux에 비해 쉽다.
+- flux 구조에서 시작했다.
+- flux와 다르게 하나의 store를 가진다. 패턴이 더 단순하다.
+- reducer는 여러개 생길수 있다.
+- hook의 useReducer와 비슷하다. 이게 Redux의 구조를 가져왔음
+- redux는 페이지에서는 잘 쓰지 않고, 컴포넌트 단위에서 쓴다.
+- action과 reducer는 주로 분리해서 쓴다.
+- reducer를 쪼개는 기준은 재사용성, 독립적인 기능 단위로 고려한다.
+- 액션함수의 네이밍은 다른 reducer에서도 같은 네이밍을 쓸 수 있겠지만, 넘겨주는 인자가 다른 액션객체, 페이로드가 다르면 조건문에 따라 다르게 반영할 수 있다. (무슨 말이지?)
+
+## Flux
+
+- Redux의 시작
+
+<img width="926" alt="스크린샷 2020-12-06 오전 11 04 54" src="https://user-images.githubusercontent.com/26196090/101269538-22f3aa80-37b3-11eb-99ac-7e164b851617.png">
+
+### Redux 구조
+
+- store : 가상으로 redux가 생성함, 이를 우리가 만든 app에 provider 형태로 제공됨
+- reducer : action의 정의, initial State, action, action func을 담는 개념, 컴바인하는 폴더로 존재함, 내부에 initial state, action함수를 세팅함
+- components: dispatch와 action함수를 이용해서 상태값을 연결함
+
+## Redux 설치
+
+```zsh
+npm install --save-dev redux react-redux redux-devtools-extension next-redux-wrapper
+```
+
+## Redux middleware
