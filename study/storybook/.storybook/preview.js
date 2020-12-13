@@ -91,6 +91,9 @@ export const parameters = {
         value: '#3b5998'
       }
     ]
+  },
+  actions: {
+    argTypesRegex: '^on.*'
   }
 };
 // .storybook/preview.js

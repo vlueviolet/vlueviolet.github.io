@@ -1,0 +1,65 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import { action } from '@storybook/addon-actions';
+import Button from './Button';
+
+<Meta
+  title="Component/Button"
+  component={Button}
+  argTypes={{
+    ...ButtonArgTypes
+  }}
+/>
+
+export const Template = (args) => <Button {...args} />;
+export const ButtonArgTypes = {
+  type: {
+    control: {
+      type: 'select',
+      options: ['default', 'primary', 'warning']
+    },
+    table: {
+      type: {
+        summary: 'string',
+        detail: 'default, primary, warning'
+      }
+    }
+  },
+  onClick: {
+    dfaultValue: null,
+    description: '`Actions` 참고',
+    table: {
+      type: {
+        summary: 'function',
+        detail: '(e: MouseEvent<HTMLButtonElement>) => void;'
+      }
+    },
+    control: { disable: true },
+    action: 'onClick function'
+  },
+  onMouseOver: {
+    dfaultValue: null,
+    description: '`Actions` 참고',
+    table: {
+      type: {
+        summary: 'function',
+        detail: '(e: MouseEvent<HTMLButtonElement>): void;'
+      }
+    },
+    control: { disable: true }
+  }
+};
+
+<Canvas>
+  <Story
+    name="Basic"
+    args={{
+      label: 'button'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+# 안녕하세요
+
+<ArgsTable of={Button} />

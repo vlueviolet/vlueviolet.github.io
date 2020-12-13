@@ -1,0 +1,23 @@
+.btn {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  color: #fff;
+
+  &-primary {
+    background-color: #2196f3;
+    color: #fff;
+  }
+
+  &-warning {
+    background-color: #f44336;
+    color: #fff;
+  }
+
+  &[disabled] {
+    opacity: .5;
+    pointer-events: none;
+    cursor: default;
+  }
+}

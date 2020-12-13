@@ -4,20 +4,24 @@ import style from './ProfileThumbnail.module.scss';
 
 export interface ProfileThumbnailProps {
   /** 사용자 이미지 경로 */
-  url?: string;
+  thumbnailUrl?: string;
+  /** 사용자 이름*/
+  alt?: string;
 }
 
-const ProfileThumbnail = ({ url }: ProfileThumbnailProps) => (
+const ProfileThumbnail = ({ thumbnailUrl, alt }: ProfileThumbnailProps) => (
   <>
     <a href="/" className={style.profile_thumbnail}>
-      {url && (
+      {thumbnailUrl && (
         <img
-          src={url}
+          src={thumbnailUrl}
           className={style.profile_thumbnail_image}
-          alt="username"
+          alt={alt ? alt : ''}
         />
       )}
-      {!url && <span className={style.no_image} aria-label="username" />}
+      {!thumbnailUrl && (
+        <span className={style.no_image} aria-label="username" />
+      )}
     </a>
   </>
 );
