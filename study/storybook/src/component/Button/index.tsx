@@ -1,7 +1,6 @@
-// /* eslint-disable */
 import React, { MouseEvent } from 'react';
 import classnames from 'classnames';
-import style from './Button.module.scss';
+import style from './index.module.scss';
 // import IconSearch from 'asset/images/svg/icon-search.svg';
 
 export interface ButtonProps {

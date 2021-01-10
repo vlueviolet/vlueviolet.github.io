@@ -1,0 +1,50 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import { action } from '@storybook/addon-actions';
+import Search from './index';
+
+<Meta title="Component/Search" component={Search} argTypes={SearchArgTypes} />
+
+# 검색
+
+> 검색 결과에 따른 화면을 제공합니다.
+
+<br />
+
+export const Template = (args) => <Search {...args} />;
+
+export const SearchArgTypes = {};
+
+## 상태별 화면
+
+<br />
+
+### 검색 결과 있음
+
+<Canvas>
+  <Story
+    name="검색 결과 있음"
+    args={{
+      searchText: '과일',
+      results: ['사과', '배', '감', '귤']
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### 검색 결과 없음
+
+<Canvas>
+  <Story
+    name="검색 결과 없음"
+    args={{
+      searchText: '!$%$@#$#%'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props Table
+
+<ArgsTable of={Search} />

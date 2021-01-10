@@ -12,7 +12,7 @@ import IconOffice from 'asset/images/svg/icon-office.svg';
 import IconCalendar from 'asset/images/svg/icon-calendar.svg';
 import IconContact from 'asset/images/svg/icon-contact.svg';
 import IconSearch from 'asset/images/svg/icon-search.svg';
-import Button from '../Button/Button';
+import Button from '../Button';
 
 const Header = () => {
   const handleClickBtn = (e: any) => {
@@ -36,7 +36,6 @@ const Header = () => {
           <IconMenu className={style.btn_menu_icon} />
         </button>
         <div className={style.gnb}>
-          <Button type="primary" label="test" onClick={handleClickBtn} />
           <button
             type="button"
             className={classnames(style.gnb_item, style.gnb_item_home)}
