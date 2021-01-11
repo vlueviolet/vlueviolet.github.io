@@ -22,7 +22,9 @@ const List = ({ results }: { results: any }) => {
 const Search = ({ searchText, results }: SearchProps) => {
   const [inputText, setInputText] = useState(searchText);
 
-  const handleChangeSearch = ({ target }) => {
+  const handleChangeSearch = ({
+    target
+  }: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(target.value);
   };
 

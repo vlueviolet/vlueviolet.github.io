@@ -1,6 +1,6 @@
 // /* eslint-disable */
 import React from 'react';
-import style from './ProfileThumbnail.module.scss';
+import style from './index.module.scss';
 
 export interface ProfileThumbnailProps {
   /** 사용자 이미지 경로 */

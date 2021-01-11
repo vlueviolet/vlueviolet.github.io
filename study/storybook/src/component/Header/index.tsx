@@ -1,8 +1,8 @@
 // /* eslint-disable */
 import React from 'react';
 import classnames from 'classnames';
-import style from './Header.module.scss';
-import ProfileThumbnail from '../ProfileThumbnail/ProfileThumbnail';
+import style from './index.module.scss';
+import ProfileThumbnail from '../ProfileThumbnail';
 import IconMenu from 'asset/images/svg/icon-menu.svg';
 import IconHome from 'asset/images/svg/icon-home.svg';
 import IconCloud from 'asset/images/svg/icon-cloud.svg';
@@ -12,13 +12,8 @@ import IconOffice from 'asset/images/svg/icon-office.svg';
 import IconCalendar from 'asset/images/svg/icon-calendar.svg';
 import IconContact from 'asset/images/svg/icon-contact.svg';
 import IconSearch from 'asset/images/svg/icon-search.svg';
-import Button from '../Button';
 
 const Header = () => {
-  const handleClickBtn = (e: any) => {
-    e.preventDefault;
-    console.log(e);
-  };
   return (
     <header className={classnames(style.header, style['header-wrapper'])}>
       <div

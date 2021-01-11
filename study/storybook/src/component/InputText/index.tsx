@@ -1,7 +1,7 @@
 // /* eslint-disable */
 import React, { ChangeEvent, useState } from 'react';
 // import classnames from 'classnames';
-import style from './InputText.module.scss';
+import style from './index.module.scss';
 // import IconSearch from 'asset/images/svg/icon-search.svg';
 
 export interface InputTextProps {
