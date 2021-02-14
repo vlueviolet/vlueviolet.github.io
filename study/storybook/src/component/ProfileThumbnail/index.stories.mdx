@@ -1,0 +1,38 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import ProfileThumbnail from './index';
+
+<Meta title="Component/ProfileThumbnail" component={ProfileThumbnail} />
+
+export const Template = (args) => <ProfileThumbnail {...args} />;
+
+# 프로필 사진
+
+> `thumbnailUrl` 유무에 따라 다른 view를 제공합니다.
+
+<br />
+
+## 사진이 없는 경우
+
+<Canvas>
+  <Story name="프로필 사진 없음" args={{ thumbnailUrl: '' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## 사진이 있는 경우
+
+<Canvas>
+  <Story
+    name="프로필 사진 있음"
+    args={{
+      thumbnailUrl:
+        'https://search.pstatic.net/common?type=a&size=120x150&quality=95&direct=true&src=http%3A%2F%2Fsstatic.naver.net%2Fpeople%2Fportrait%2F202004%2F20200424182024679.jpg'
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+## Props 정보
+
+<ArgsTable of={ProfileThumbnail} />

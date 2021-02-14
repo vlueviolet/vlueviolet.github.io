@@ -1,16 +1,23 @@
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
-import Header from './Header';
+import { action } from '@storybook/addon-actions';
+import Header from './index';
 
 <Meta title="Component/Header" component={Header} />
 
 export const Template = (args) => <Header {...args} />;
 
+# Header
+
+> Header 컴포넌트 입니다.
+
+<br />
+
+## 기본 화면
+
 <Canvas>
-  <Story name="Basic">
-    {Template.bind({})}
-  </Story>
+  <Story name="Basic">{Template.bind({})}</Story>
 </Canvas>
 
-# 안녕하세요
+## props table
 
 <ArgsTable of={Header} />
