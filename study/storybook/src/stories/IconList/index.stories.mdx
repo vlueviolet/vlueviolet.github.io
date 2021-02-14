@@ -1,0 +1,30 @@
+import {
+  Meta,
+  Story,
+  Canvas,
+  ArgsTable,
+  ColorPalette,
+  ColorItem
+} from '@storybook/addon-docs/blocks';
+
+import IconList from './';
+
+export const IconArgsTypes = {
+  color: {
+    control: {
+      type: 'color'
+    }
+  }
+};
+
+<Meta title='Icons/svg/all' component={IconList} argTypes={IconArgsTypes} />
+
+export const Template = (args) => <IconList {...args} />;
+
+## Icon List
+
+> 프로젝트에서 사용되는 `svg` 정보를 볼 수 있습니다.
+
+<Canvas>
+  <Story name='list'>{Template.bind({})}</Story>
+</Canvas>

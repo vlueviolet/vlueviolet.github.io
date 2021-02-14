@@ -33,7 +33,8 @@ export default create({
   inputTextColor: 'black',
   inputBorderRadius: 4,
 
-  brandTitle: 'HIVELAB Storybook',
-  brandUrl: 'http://hivelab.co.kr/',
+  brandTitle: 'Vlueviolet Storybook',
+  brandUrl:
+    'https://github.com/vlueviolet/vlueviolet.github.io/tree/develop/study/storybook'
   // brandImage: './src/asset/images/logo.png',
 });

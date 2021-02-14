@@ -1,0 +1,31 @@
+import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
+import { action } from '@storybook/addon-actions';
+import InputText from './index';
+
+<Meta
+  title="Component/InputText"
+  component={InputText}
+  parameters={{ actions: { argTypesRegex: '^on.*' } }}
+/>
+
+export const Template = (args) => <InputText {...args} />;
+
+<Canvas>
+  <Story
+    name="Basic"
+    args={{ label: 'button' }}
+    onChange={(e) => {
+      {
+        /* action('click')(e);
+      const { target } = e; */
+      }
+      console.log('asdfasdfasdfa');
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+# 안녕하세요
+
+<ArgsTable of={InputText} />

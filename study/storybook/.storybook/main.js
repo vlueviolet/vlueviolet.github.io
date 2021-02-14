@@ -1,4 +1,5 @@
 const path = require('path');
+const paths = require('../config/paths');
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
@@ -8,16 +9,20 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
+    './svg-viewer-custom-addon/register.js'
+    // 'storybook-design-token'
   ],
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
     // You can change the configuration based on that.
     // 'PRODUCTION' is used when building the static version of storybook.
 
+    config.entry.push(`${paths.appSrc}/asset/scss/global.scss`);
+
     // Make whatever fine-grained changes you need
     config.resolve.modules = [
       ...(config.resolve.modules || []),
-      path.resolve(__dirname, '../src'),
+      path.resolve(__dirname, `${paths.appSrc}`)
     ];
 
     // config.resolve.alias = {
@@ -30,68 +35,50 @@ module.exports = {
       exclude: sassModuleRegex,
       use: [
         {
-          loader: 'style-loader',
+          loader: 'style-loader'
         },
         {
           loader: 'css-loader',
           options: {
             modules: {
-              localIdentName: '[local]__[hash:base64:5]',
+              localIdentName: '[local]__[hash:base64:5]'
             },
-            sourceMap: true,
-          },
+            sourceMap: true
+          }
         },
-        {
-          loader: 'sass-loader',
-          options: {
-            additionalData: "@import 'global.scss';",
-            sourceMap: true,
-            sassOptions: {
-              includePaths: ['./src/asset/scss'],
-            },
-          },
-        },
+        'sass-loader',
         {
           loader: 'sass-resources-loader',
           options: {
-            resources: `./src/asset/scss/helper/**/*.scss`,
-          },
-        },
-      ],
+            resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`
+          }
+        }
+      ]
     });
 
     config.module.rules.push({
       test: sassModuleRegex,
       use: [
         {
-          loader: 'style-loader',
+          loader: 'style-loader'
         },
         {
           loader: 'css-loader',
           options: {
             modules: {
-              localIdentName: '[local]__[hash:base64:5]',
+              localIdentName: '[local]__[hash:base64:5]'
             },
-            sourceMap: true,
-          },
+            sourceMap: true
+          }
         },
-        {
-          loader: 'sass-loader',
-          options: {
-            additionalData: "@import 'global.scss';",
-            sourceMap: true,
-            sassOptions: {
-              includePaths: ['./src/asset/scss'],
-            },
-          },
-        },
+        'sass-loader',
         {
           loader: 'sass-resources-loader',
           options: {
-            resources: `./src/asset/scss/helper/**/*.scss`,
-          },
-        },
-      ],
+            resources: `${paths.appSrc}/asset/scss/helper/**/*.scss`
+          }
+        }
+      ]
     });
 
     const fileLoaderRule = config.module.rules.find(
@@ -104,15 +91,38 @@ module.exports = {
       issuer: /\.(js|jsx|tsx|mdx)$/,
       include: /svg/,
       exclude: /node_modules/,
-      use: ['@svgr/webpack'],
+      use: ['@svgr/webpack']
     });
 
-    config.module.rules.push({
-      test: /\.svg$/,
+    // config.module.rules.push({
+    //   test: /\.svg$/,
+    //   issuer: /\.(scss)$/,
+    //   loader: 'url-loader'
+    // });
+
+    config.module.rules.unshift({
+      test: [/\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
       issuer: /\.(scss)$/,
-      loader: 'url-loader',
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+        esModule: false
+        //   publicPath: '/images',
+        //   outputPath: 'images'
+      }
     });
+
+    // config.module.rules.push({
+    //   test: /\.svg$/,
+    //   issuer: /\.(scss)$/,
+    //   loader: 'file-loader',
+    //   options: {
+    //     publicPath: '/img',
+    //     outputPath: 'img',
+    //     name: '[name].[ext]'
+    //   }
+    // });
 
     return config;
-  },
+  }
 };

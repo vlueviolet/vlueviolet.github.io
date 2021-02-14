@@ -1,0 +1,15 @@
+.input_text {
+  &_label {
+    margin-right: 5px;
+    font-size: 15px;
+    color: #2a2a2a;
+  }
+
+  &_elem {
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #000;
+  }
+}
