@@ -8,3 +8,4 @@ vendor
 node_modules
 *.log
 study/storybook/.vscode/bookmarks.json
+.DS_Store
