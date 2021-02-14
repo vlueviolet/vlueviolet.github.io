@@ -7,5 +7,5 @@ vendor
 .bundle
 node_modules
 *.log
-study/storybook/.vscode/bookmarks.json
 .DS_Store
+.vscode
