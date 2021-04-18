@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-compatible" content="chrome=1,IE=edge">
+<title></title>
+<link rel="stylesheet" type="text/css" href="./css/commom.css">
+<script type="text/javascript" src="./js/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+<style type="text/css">
+.wrap {max-width: 900px; margin:0 auto; background:#f1f1f1;}
+.sec01 {height: 3000px;}
+.open_modal {display: inline-block; padding:0 20px; height:45px; font-size:16px; color:#fff; line-height: 45px; background-color:#222;;}
+</style>
+<div class="wrap">
+	<section class="sec01">
+		<div class="btn_wrap">
+			<a herf="javascript:void(0)" class="open_modal">
+				모달 오픈 클릭
+			</a>
+		</div>
+	</section>
+	<section class="modal_wrap">
+		<article class="modal_cnt">
+			<div class="modal_header">
+				<h3>SJ MODAL</h3>
+			</div>
+			<div class="modal_body">
+				<strong>안녕하세요 모달입니다</strong>
+				<p>
+					브라우저별로 스크롤바 크기를 계산합니다. 일반모달, 애니메이션이 걸린 모달을 열고 닫을때 덜컹 거리지 않아요 :) <br>
+
+				</p>
+			</div>
+			<a href="javascript:void(0)" class="close_btn">닫기</a>
+		</article>
+		<div class="modal_dim"></div>
+	</section>
+</div>
+<style type="text/css">
+/**
+ * modal
+ */
+body.modal_in {overflow: hidden;}
+.modal_wrap {display:none;position: absolute; left:0; top:0; z-index:100; width:100%; height:100%; }
+.modal_wrap.active {display: block;}
+.modal_wrap .modal_dim {position: absolute; left: 0; top: 0; z-index: 10; display: block; width:100%; height:100%; content:''; background:rgba(0,0,0,.5);}
+.modal_wrap .modal_cnt {position:relative; top:80px; z-index:20; width: 650px; min-height:500px; padding:20px  20px 0 20px; margin:0 auto;; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,.5); -webkit-box-shadow: 0 4px 10px rgba(0,0,0,.5); border-radius: 4px;}
+.modal_wrap .modal_cnt .close_btn {position: absolute; top:0; right:0; z-index:50; display: inline-block; width:50px; height:50px; background: url('./images/btn_colse.png') no-repeat 0 0; background-size: 100% 100%; text-indent:-99999px;}
+.modal_wrap .modal_cnt .modal_header {padding-bottom:5px; border-bottom:1px solid #ddd; }
+.modal_wrap .modal_cnt .modal_body {padding-top:20px;}
+.fake_sjwidth {overflow: scroll; position: absolute; top: -99999px; width: 60px; height: 60px;}
+</style>
+<script type="text/javascript">
+/**
+ * [ggang_modal ver 0.1]
+ * 애플 스크롤 강좌 : https://www.inflearn.com/course/애플-스크롤-인터렉션-자바스크립트
+ * 유튜브채널 : https://www.youtube.com/channel/UCWJfpq3-gjbreL6mdfPhL-Q?view_as=subscriber
+ * 만든이 : 깡코딩
+ * 피드백 : ggangcodingqna@gmail.com
+ * 상업용 및 소스 수정해서 사용해도 됩니다. 디스크립션은 지우지 말아주세요.
+ * etc : 본소스 코드는 후에 유튜브에 설명과 함께 무료 강좌로 올라올 예정이니 코드분석이 어려운 분들은 유튜브를 참고해주세요 :)
+ */
+$(function(){
+	var sjModal = function(){
+		$body = $('body');
+		$modalWrap = $('.modal_wrap');
+
+		$('.open_modal').on('click',function(){
+			$body.addClass('modal_in');
+			$modalWrap.fadeIn(300);
+			$body.css('padding-right',getScrollWidth());
+		});
+
+		$('.close_btn, .modal_dim').on('click',function(){
+			var speed = 300;
+			$modalWrap.fadeOut(speed);
+			setTimeout(function(){
+				$body.removeClass('modal_in');
+				$body.css('padding-right',0)
+			},speed)
+		});
+
+		function getScrollWidth(){
+			var body = document.querySelector('body');
+		    var scrollDiv = document.createElement('div');
+		    	scrollDiv.className = 'fake_sjwidth';
+		    	body.appendChild(scrollDiv);
+		    var scrollbarWidth = $(document).height() > $(window).height() ? scrollDiv.offsetWidth - scrollDiv.clientWidth : 0;
+
+		    	body.removeChild(scrollDiv);
+		    	return scrollbarWidth;
+		}
+	}();
+
+
+});
+</script>
+</body>
+</html>
+
+
+
+
+

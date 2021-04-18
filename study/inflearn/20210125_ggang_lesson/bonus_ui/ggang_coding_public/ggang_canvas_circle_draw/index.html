@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-compatible" content="chrome=1,IE=edge">
+<title></title>
+<script type="text/javascript" src="./js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="./js/ggang.circledraw.min.js"></script>
+</head>
+<body>
+<style>
+.cnavs_wrap {position:relative; width:800px; height:600px; margin:0 auto; transition:2s;}
+.cnavs_wrap.active{ transform:rotate(360deg); }
+.cnavs_wrap canvas {width: 100%; height: 100%;}
+.cnavs_wrap .count {position: absolute; left: 50%; top: 50%; font-size: 50px; color:#50bdf3; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); -moz-transform: translate(-50%, -50%); -o-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%);}
+
+.cnavs_wrap.type2 {background: url('./images/bg.png') no-repeat 50% 50%; background-size: auto 100%; }
+.cnavs_wrap.type2 .count {color:#8737ff;}
+</style>
+	<div class="cnavs_wrap">
+		<canvas id="canvas" width="800" height="600"></canvas>
+		<span class="count"></span>
+	</div>
+	<div class="cnavs_wrap type2">
+		<canvas id="canvas2" width="800" height="600"></canvas>
+		<span class="count"></span>
+	</div>
+</body>
+</html>
+<script>
+/**
+ *  [ggang.circledraw.js]
+ *  애플 스크롤 강좌 : https://www.inflearn.com/course/애플-스크롤-인터렉션-자바스크립트
+ *  유튜브채널 : https://www.youtube.com/channel/UCWJfpq3-gjbreL6mdfPhL-Q?view_as=subscriber
+ *  만든이 : 깡코딩
+ *  피드백 : ggangcodingqna@gmail.com
+ *  etc : 본소스 코드는 후에 유튜브에 설명과 함께 무료 강좌로 올라올 예정이니 코드분석이 어려운 분들은 유튜브를 참고해주세요 :)
+ *  서포트브라우저 : IE9++
+ *  디스크립션은 지우지 말아주세요
+ *
+ *  컬러셋 그린 옐로~ :)
+ *  그린, 옐로 : #00ff6b, #fbff22
+ *
+ * 	컬러셋 보라 핑크 ~ :)
+ *  보라, 핑크 : #ff80f2, #8737ff
+ *
+ *  선없애기 : 색상을 transparent 로 바꾸기~
+ */
+
+$(function(){
+
+	/************************* 자세히 보면 초딩도 할수있는 사용법! :) *****************************/
+	// com:[선시작위치,그려질거리,라인끝모양]     - 선 시작위치  12시 : 270, 3시 :360, 6시: 450, 9시: 540   -선이그려지는거리: 100(맥시멈) - 라인끝모양 종류: butt|round|square
+	// reverse : true 일경우 역방향 진행, false일경우 정방향 진행
+	// backcircle[ 원사이즈, 그라데이션컬리1, 그라데이션컬러2, 보더넓이 ]
+	// frontCircle[ 원사이즈, 그라데이션컬리1, 그라데이션컬러2, 보더넓이 ]
+	/**************  이해 안가면 숫자를 막 바꿔보면서 이해해 보세요 :) 잘못넣으면 오류나니 따옴표 지우지말고 조심조심 바꾸세요 ^.^; *******/
+	$('#canvas').GgangCircleDraw({com:[570,80,'round'], reverse:false, backCircle:[ 200, '#b1b1b1', '#b1b1b1', 1 ], frontCircle:[ 200, '#090979', '#00d4ff', 70 ]});
+
+	setTimeout(function(){
+		$('#canvas2').GgangCircleDraw({com:[270,90,'round'], reverse:true, backCircle:[ 0, '#b1b1b1', '#b1b1b1', 1 ], frontCircle:[ 200, '#ff80f2', '#8737ff', 70 ]});
+	},1000)
+
+
+
+});
+</script>

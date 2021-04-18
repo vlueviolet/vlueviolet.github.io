@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="history" content="">
+<meta name="author" content="">
+<title></title>
+<link rel="stylesheet" type="text/css" href="./css/common.css">
+<script type="text/javascript" src="./js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="./js/common.js"></script>
+<body>
+<!--
+ * [ggang.Tab.Gallery ver 0.1]
+ * 애플 스크롤 강좌 : https://www.inflearn.com/course/애플-스크롤-인터렉션-자바스크립트
+ * 유튜브채널 : https://www.youtube.com/channel/UCWJfpq3-gjbreL6mdfPhL-Q?view_as=subscriber
+ * 만든이 : 깡코딩
+ * 피드백 : ggangcodingqna@gmail.com
+ * 상업용 및 소스 수정해서 사용해도 됩니다. 디스크립션은 지우지 말아주세요.
+ * etc : 본소스 코드는 후에 유튜브에 설명과 함께 무료 강좌로 올라올 예정이니 코드분석이 어려운 분들은 유튜브를 참고해주세요 :)
+ -->
+ <style type="text/css">
+/*이미지탭*/
+.sec_gallery {padding-top:50px;;}
+.grallery_box {text-align: center;}
+.grallery_box .view_gallery {position: relative; width: 844px; height: 390px; margin:0 auto;;}
+.grallery_box .view_gallery:after{ position: absolute; left: 0; top: 0; z-index:-1; width:100%; height:100%; font-size:0; background:#000; content:"";}
+.grallery_box .view_gallery .img {visibility: hidden; position: absolute; left: 0; top: 0; z-index:10; width:100%; height:100%; opacity: 0; transition:.5s; -webkit-transition:.5s; -moz-transition:.5s; -o-transition:.5s; -ms-transition:.5s;}
+.grallery_box .view_gallery .img img {width: 100%;}
+.grallery_box .view_gallery .img.active {visibility:visible; opacity: 1;}
+.grallery_box .btn_wrap { position: relative; display: inline-block; margin-top:40px;}
+.grallery_box .btn_wrap .move_bg { position: absolute; top: 0px; left: 0px; z-index: 1; width: 88px; min-width: 35px; height: 100%; background: #111; border-radius: 20px; content: ""; transition: .6s cubic-bezier(0.645, 0.045, 0.355, 1); -webkit-transition: .6s cubic-bezier(0.645, 0.045, 0.355, 1); -moz-transition: .6s cubic-bezier(0.645, 0.045, 0.355, 1); -o-transition: .6s cubic-bezier(0.645, 0.045, 0.355, 1); -ms-transition: .6s cubic-bezier(0.645, 0.045, 0.355, 1) }
+.grallery_box .btn_wrap .list {background: #e2e2e2; border-radius: 20.5px; font-weight: 500; font-size: 16px;}
+.grallery_box .btn_wrap .list:after {clear:both; display:block; content:'';}
+.grallery_box .btn_wrap .list li { float: left; }
+.grallery_box .btn_wrap .list li a { position: relative; z-index: 2; display: block; height: 40px; line-height: 40px; padding: 0 25px; text-align: center; transition: color .7s; -webkit-transition: color .7s; -moz-transition: color .7s; -o-transition: color .7s; -ms-transition: color .7s;}
+.grallery_box .btn_wrap .list li a:hover, .grallery_box .btn_wrap .list li a:focus {text-decoration: none;}
+.grallery_box .btn_wrap .list li a.active {color:#fff;}
+ </style>
+<section class="sec_gallery">
+    <article class="grallery_box">
+        <div class="view_gallery">
+            <figure class="img active">
+                <img src="./images/img01.jpg" alt="">
+            </figure>
+            <figure class="img">
+                <img src="./images/img02.jpg" alt="">
+            </figure>
+            <figure class="img">
+                <img src="./images/img03.jpg" alt="">
+            </figure>
+        </div>
+        <div class="btn_wrap">
+            <ul class="list">
+                <li>
+                    <a href="javascript:void(0)" class="active">Crop</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">Skew</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">Filters</a>
+                </li>
+            </ul>
+            <span class="move_bg"></span>
+        </div>
+    </article>
+</section>
+</body>
+</html>
